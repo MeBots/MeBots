@@ -1,0 +1,13 @@
+language: python
+python: 3.7-dev
+notifications:
+    email: false
+install:
+    - "pip install -r requirements.txt"
+    - "pip install -r requirements-test.txt"
+jobs:
+  include:
+    - stage: style
+      script: ./style_test.sh
+cache: pip
+

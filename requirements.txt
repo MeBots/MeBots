@@ -1,0 +1,7 @@
+requests
+Flask
+Flask-SQLAlchemy
+psycopg2
+Flask-SocketIO
+eventlet
+gunicorn
