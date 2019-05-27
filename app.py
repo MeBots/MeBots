@@ -2,15 +2,12 @@ import os
 import requests
 from flask import Flask, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
-import eventlet
-from threading import Thread
 import json
 import random
 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-app.config["SQLALCHEMY_POOL_SIZE"] = 15
 # Suppress errors
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
