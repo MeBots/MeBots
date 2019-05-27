@@ -1,1 +1,1 @@
-web: gunicorn bot:app --workers=1 --worker-class eventlet
+web: gunicorn app:app --workers=1
