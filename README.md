@@ -1,17 +1,13 @@
-# Bot Against Humanity
-[![Build Status](https://travis-ci.org/ErikBoesen/BotAgainstHumanity.svg?branch=master)](https://travis-ci.org/ErikBoesen/BotAgainstHumanity)
+# GroupMeBot
+[![Build Status](https://travis-ci.org/ErikBoesen/GroupMeBot.svg?branch=master)](https://travis-ci.org/ErikBoesen/GroupMeBot)
 
-> Bot Against Humanity allows members of GroupMe chats to virtually play everyone's favorite party game for terrible people.
-
-![Screenshot](screenshot.png)
+> A simple API framework for managing large-scale GroupMe bots.
 
 ## Motivation
-Bot Against Humanity was created by [Erik Boesen](https://github.com/ErikBoesen). It grew out of [Yalebot](https://github.com/ErikBoesen/Yalebot), a bot designed (also by Erik) for Yale University's Class of 2023 GroupMe chats. Yalebot is a very complex bot with several hundred different functions, of which facilitating virtual Cards Against Humanity games was only one. The card game did not fit well into the existing modular infrastructure of Yalebot due to the need for interaction through the chat, a web interface, and websockets. As such, Yalebot's CAH functionality was spun off into this bot.
-
-To add this bot to your own server, go [here](https://botagainsthumanitygroupme.herokuapp.com)!
+GroupMe's bot framework has no native support for third-party adding of bots to servers. Since GroupMe requires the creation of a bot within a single group and essentially mandates mapping group IDs to bot IDs in order for a bot to function across multiple servers, the only option for scalable and open adding of the bot without owner oversight was previously to roll your own database system and custom interface to allow users to log in through the GroupMe API and use a user's token to add the bot, then store the bot's ID. This process is similar between bots and is tedious to develop and configure. So, GroupMeBot abstracts away this  process,
 
 ## Platform
-Bot Against Humanity runs best on [Heroku](https://heroku.com). Simply push the code via Heroku CLI and the bot will launch.
+GroupMeBot runs on [Heroku](https://heroku.com).
 
 ## License
 [GPL](LICENSE)
