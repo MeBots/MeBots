@@ -12,13 +12,44 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
+
+class Bot(db.Model):
+    __tablename__ = "bots"
+    name = db.Column(db.String(16))
+    name_customizable = db.Column(db.Boolean)
+    avatar_url = db.Column(db.String(70))
+    avatar_url_customizable = db.Column(db.Boolean)
+    callback_url = db.Column(db.String(128))
+
+    def __init__(self, name, name_customizable, avatar_url, avatar_url_customizable, callback_url):
+        self.name = name
+        self.name_customizable = name_customizable
+        self.avatar_url = avatar_url
+        self.avatar_url_customizable = avatar_url_customizable
+        self.callback_url = callback_url
+
+
+class BotInstance(db.Model):
+    __tablename__ = "bot_instances"
+    group_id = db.Column(db.String(16), unique=True, primary_key=True)
+    group_name = db.Column(db.String(50))
+    bot_id = db.Column(db.String(26), unique=True)
+    owner_id = db.Column(db.String(16))
+    owner_name = db.Column(db.String(64))
+    access_token = db.Column(db.String(32))
+
+    def __init__(self, group_id, group_name, bot_id, owner_id, owner_name, access_token):
+        self.group_id = group_id
+        self.group_name = group_name
+        self.bot_id = bot_id
+        self.owner_id = owner_id
+        self.owner_name = owner_name
+        self.access_token = access_token
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
-
-
-def in_group(group_id):
-    return db.session.query(db.exists().where(Bot.group_id == group_id)).scalar()
 
 
 @app.route("/manager", methods=["GET", "POST"])
@@ -48,24 +79,6 @@ def manager():
     groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
     bots = Bot.query.filter_by(owner_id=me["user_id"])
     return render_template("manager.html", access_token=access_token, groups=groups, bots=bots)
-
-
-class Bot(db.Model):
-    __tablename__ = "bots"
-    group_id = db.Column(db.String(16), unique=True, primary_key=True)
-    group_name = db.Column(db.String(50))
-    bot_id = db.Column(db.String(26), unique=True)
-    owner_id = db.Column(db.String(16))
-    owner_name = db.Column(db.String(64))
-    access_token = db.Column(db.String(32))
-
-    def __init__(self, group_id, group_name, bot_id, owner_id, owner_name, access_token):
-        self.group_id = group_id
-        self.group_name = group_name
-        self.bot_id = bot_id
-        self.owner_id = owner_id
-        self.owner_name = owner_name
-        self.access_token = access_token
 
 
 @app.route("/delete", methods=["POST"])
