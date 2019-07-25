@@ -1,5 +1,6 @@
 requests
 Flask
 Flask-SQLAlchemy
+Flask-Login
 psycopg2
 gunicorn

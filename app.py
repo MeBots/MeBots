@@ -3,7 +3,6 @@ import requests
 from flask import Flask, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 import json
-import random
 
 
 app = Flask(__name__)
@@ -15,7 +14,8 @@ db = SQLAlchemy(app)
 
 class Bot(db.Model):
     __tablename__ = "bots"
-    name = db.Column(db.String(16))
+    slug = db.Column(db.String(16), primary_key=True)
+    name = db.Column(db.String(32))
     name_customizable = db.Column(db.Boolean)
     avatar_url = db.Column(db.String(70))
     avatar_url_customizable = db.Column(db.Boolean)
@@ -31,7 +31,7 @@ class Bot(db.Model):
 
 class BotInstance(db.Model):
     __tablename__ = "bot_instances"
-    group_id = db.Column(db.String(16), unique=True, primary_key=True)
+    group_id = db.Column(db.String(16), primary_key=True)
     group_name = db.Column(db.String(50))
     bot_id = db.Column(db.String(26), unique=True)
     owner_id = db.Column(db.String(16))
@@ -91,5 +91,6 @@ def delete_bot():
         db.session.delete(bot)
         db.session.commit()
         return "ok", 200
+
 
 print("Loaded!")
