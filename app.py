@@ -1,7 +1,8 @@
 import os
 import requests
-from flask import Flask, request, render_template, redirect
-from flask_login import LoginManager
+from flask import Flask, request, render_template, redirect, abort, url_for
+from flask_login import LoginManager, login_required
+from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from flask_sqlalchemy import SQLAlchemy
 import json
 
@@ -35,6 +36,31 @@ class User(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
+
+
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    email = StringField('Email', [validators.Length(min=6, max=35)])
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        login_user(user)
+
+        next = flask.request.args.get('next')
+        if not is_safe_url(next):
+            return abort(400)
+
+        return redirect(next or url_for('index'))
+    return render_template('login.html', form=form)
+
 
 class Bot(db.Model):
     __tablename__ = "bots"
