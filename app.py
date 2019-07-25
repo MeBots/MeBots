@@ -1,6 +1,7 @@
 import os
 import requests
 from flask import Flask, request, render_template, redirect
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 import json
 
@@ -10,7 +11,30 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 # Suppress errors
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
+
+class User(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.String(16), primary_key=True)
+
+    def is_authenticated(self):
+        return False
+
+    def is_active(self):
+        return False
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 class Bot(db.Model):
     __tablename__ = "bots"
