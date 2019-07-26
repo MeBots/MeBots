@@ -10,10 +10,22 @@
         <meta name="viewport" content="width=device-width">
         <meta name="theme-color" content="#00356b">
         <link rel="stylesheet" href="/static/stylesheets/main.css">
+        <link rel="stylesheet" href="/static/stylesheets/form.css">
         {% block head %}
         {% endblock %}
     </head>
     <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
         <header>
             <h1>GroupMeBot</h1>
         </header>

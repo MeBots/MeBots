@@ -1,16 +1,22 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<h1>Sign In</h1>
+<h3>Sign In</h3>
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
         {{ form.username.label }}<br>
         {{ form.username(size=32) }}
+        {% for error in form.username.errors %}
+        <span class="error">[{{ error }}]</span>
+        {% endfor %}
     </p>
     <p>
         {{ form.password.label }}<br>
         {{ form.password(size=32) }}
+        {% for error in form.password.errors %}
+        <span class="error">[{{ error }}]</span>
+        {% endfor %}
     </p>
     <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
     <p>{{ form.submit() }}</p>

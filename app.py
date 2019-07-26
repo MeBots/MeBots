@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, request, render_template, redirect, abort, url_for
+from flask import Flask, request, render_template, redirect, abort, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required
 from flask_sqlalchemy import SQLAlchemy
