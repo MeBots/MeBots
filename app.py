@@ -52,18 +52,14 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        login_user(user)
-
-        next = flask.request.args.get('next')
-        if not is_safe_url(next):
-            return abort(400)
-
-        return redirect(next or url_for('index'))
-    return render_template('login.html', form=form)
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect('/index')
+    return render_template('login.html', title='Sign In', form=form)
 
 
 class Bot(db.Model):
