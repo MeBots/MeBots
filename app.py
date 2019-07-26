@@ -1,16 +1,20 @@
 import os
 import requests
 from flask import Flask, request, render_template, redirect, abort, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 import json
+import os
 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 # Suppress errors
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -18,7 +22,10 @@ login_manager.init_app(app)
 
 class User(db.Model):
     __tablename__ = "users"
-    id = db.Column(db.String(16), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(128))
 
     def is_authenticated(self):
         return False
@@ -33,20 +40,17 @@ class User(db.Model):
         return self.id
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
 
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember Me')
+    submit = SubmitField('Sign In')
 
-class RegistrationForm(Form):
-    username = StringField('Username', [validators.Length(min=4, max=25)])
-    email = StringField('Email', [validators.Length(min=6, max=35)])
-    password = PasswordField('New Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords must match')
-    ])
-    confirm = PasswordField('Repeat Password')
-    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
