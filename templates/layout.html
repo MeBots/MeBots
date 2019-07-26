@@ -28,6 +28,11 @@
         {% block content %}{% endblock %}
         <header>
             <h1>GroupMeBot</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('root') }}">Home</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+            </nav>
         </header>
         <main>
             {% block main %}
