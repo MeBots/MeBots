@@ -3,11 +3,11 @@ import requests
 from flask import Flask, request, render_template, redirect, abort, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 import json
 import os
+
+from forms import LoginForm
 
 
 app = Flask(__name__)
@@ -40,16 +40,9 @@ class User(db.Model):
         return self.id
 
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
-
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
 
 
 @app.route('/login', methods=['GET', 'POST'])
