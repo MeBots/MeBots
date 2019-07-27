@@ -24,6 +24,7 @@ class User(db.Model):
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(128))
+    bots = db.relationship('Bot', backref='owner', lazy='dynamic')
 
     def is_authenticated(self):
         return False
@@ -55,12 +56,16 @@ def login():
 
 class Bot(db.Model):
     __tablename__ = "bots"
-    slug = db.Column(db.String(16), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    slug = db.Column(db.String(16), unique=True)
     name = db.Column(db.String(32))
     name_customizable = db.Column(db.Boolean)
     avatar_url = db.Column(db.String(70))
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # TODO: store data created and updated?
 
     def __init__(self, name, name_customizable, avatar_url, avatar_url_customizable, callback_url):
         self.name = name
