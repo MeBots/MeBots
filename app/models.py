@@ -62,11 +62,10 @@ class Bot(db.Model):
     instances = db.relationship('BotInstance', backref='bot', lazy='dynamic')
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<{} {}>'.format(self.__class__.__name__, self.slug)
 
 
 class BotInstance(db.Model):
-    __tablename__ = "bot_instances"
     group_id = db.Column(db.String(16), primary_key=True)
     group_name = db.Column(db.String(50))
     bot_id = db.Column(db.String(26), unique=True)
@@ -76,3 +75,6 @@ class BotInstance(db.Model):
 
     # TODO: naming concflicts with bot_id above
     parent_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
+
+    def __repr__(self):
+        return '<{} {} {}>'.format(self.__class__.__name__, self.group_id, self.bot_id)
