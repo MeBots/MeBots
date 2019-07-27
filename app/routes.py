@@ -1,44 +1,3 @@
-import os
-import requests
-from flask import Flask, request, render_template, redirect, abort, url_for, flash
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_required
-from flask_sqlalchemy import SQLAlchemy
-import json
-import os
-
-from config import Config
-from forms import LoginForm
-
-
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
-class User(db.Model):
-    __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(128))
-    bots = db.relationship('Bot', backref='owner', lazy='dynamic')
-
-    def is_authenticated(self):
-        return False
-
-    def is_active(self):
-        return False
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
@@ -53,44 +12,6 @@ def login():
         return redirect(url_for("root"))
     return render_template('login.html', title='Sign In', form=form)
 
-
-class Bot(db.Model):
-    __tablename__ = "bots"
-    id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String(16), unique=True)
-    name = db.Column(db.String(32))
-    name_customizable = db.Column(db.Boolean)
-    avatar_url = db.Column(db.String(70))
-    avatar_url_customizable = db.Column(db.Boolean)
-    callback_url = db.Column(db.String(128))
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # TODO: store data created and updated?
-
-    def __init__(self, name, name_customizable, avatar_url, avatar_url_customizable, callback_url):
-        self.name = name
-        self.name_customizable = name_customizable
-        self.avatar_url = avatar_url
-        self.avatar_url_customizable = avatar_url_customizable
-        self.callback_url = callback_url
-
-
-class BotInstance(db.Model):
-    __tablename__ = "bot_instances"
-    group_id = db.Column(db.String(16), primary_key=True)
-    group_name = db.Column(db.String(50))
-    bot_id = db.Column(db.String(26), unique=True)
-    owner_id = db.Column(db.String(16))
-    owner_name = db.Column(db.String(64))
-    access_token = db.Column(db.String(32))
-
-    def __init__(self, group_id, group_name, bot_id, owner_id, owner_name, access_token):
-        self.group_id = group_id
-        self.group_name = group_name
-        self.bot_id = bot_id
-        self.owner_id = owner_id
-        self.owner_name = owner_name
-        self.access_token = access_token
 
 
 @app.route("/")
@@ -137,6 +58,3 @@ def delete_bot():
         db.session.delete(bot)
         db.session.commit()
         return "ok", 200
-
-
-print("Loaded!")
