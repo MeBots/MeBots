@@ -12,8 +12,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
-    about_me = db.Column(db.String(140))
+    bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -50,11 +49,30 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-class Post(db.Model):
+class Bot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    slug = db.Column(db.String(16), unique=True)
+    name = db.Column(db.String(32))
+    name_customizable = db.Column(db.Boolean)
+    avatar_url = db.Column(db.String(70))
+    avatar_url_customizable = db.Column(db.Boolean)
+    callback_url = db.Column(db.String(128))
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    instances = db.relationship('BotInstance', backref='bot', lazy='dynamic')
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+
+class BotInstance(db.Model):
+    __tablename__ = "bot_instances"
+    group_id = db.Column(db.String(16), primary_key=True)
+    group_name = db.Column(db.String(50))
+    bot_id = db.Column(db.String(26), unique=True)
+    owner_id = db.Column(db.String(16))
+    owner_name = db.Column(db.String(64))
+    access_token = db.Column(db.String(32))
+
+    # TODO: naming concflicts with bot_id above
+    parent_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
