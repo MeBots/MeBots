@@ -7,15 +7,12 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 import os
 
+from config import Config
 from forms import LoginForm
 
 
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///" + os.path.join(basedir, "app.db"))
-# Suppress errors
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "This key shouldn't be used in production.")
+app.config.from_object(Config)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
