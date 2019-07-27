@@ -1,7 +1,8 @@
 requests
+psycopg2
+gunicorn
 Flask
 Flask-SQLAlchemy
 Flask-WTF
 Flask-Login
-psycopg2
-gunicorn
+Flask-Migrate
