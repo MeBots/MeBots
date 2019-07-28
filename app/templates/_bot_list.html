@@ -1,4 +1,8 @@
-{% for bot in bots %}
-    {% include '_bot.html' %}
-{% endfor %}
-{% include '_pagination.html' %}
+{% if bots %}
+    {% for bot in bots %}
+        {% include '_bot.html' %}
+    {% endfor %}
+    {% include '_pagination.html' %}
+{% else %}
+<p>No bots were found. <a href="{{ urlfor('create_bot') }}">Create one?</a></p>
+{% endif %}
