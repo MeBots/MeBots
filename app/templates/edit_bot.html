@@ -2,13 +2,43 @@
 {% block content %}
 <form action="" method="post">
     {{ form.hidden_tag() }}
-    <p>
-        {{ form.post.label }}<br>
-        {{ form.post(cols=32, rows=4) }}<br>
-        {% for error in form.post.errors %}
-        <div class="error">{{ error }}</div>
+
+    <div>
+        {{ form.name.label }}
+        {{ form.name }}
+        {% for error in form.name.errors %}
+        <span class="error">{{ error }}</span>
         {% endfor %}
-    </p>
+    </div>
+
+    <span>{{ form.name_customizable() }} {{ form.name_customizable.label }}</span>
+
+    <div>
+        {{ form.slug.label }}
+        {{ form.slug }}
+        {% for error in form.slug.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div>
+        {{ form.avatar_url.label }}
+        {{ form.avatar_url }}
+        {% for error in form.avatar_url.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <span>{{ form.avatar_url_customizable() }} {{ form.avatar_url_customizable.label }}</span>
+
+    <div>
+        {{ form.callback_url.label }}
+        {{ form.callback_url }}
+        {% for error in form.callback_url.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+
     <p>{{ form.submit() }}</p>
 </form>
 {% endblock %}

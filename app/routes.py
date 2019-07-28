@@ -122,18 +122,20 @@ def edit_profile():
 
 
 @app.route('/create_bot', methods=['GET', 'POST'])
+@login_required
 def create_bot():
     form = BotForm()
     if form.validate_on_submit():
-        bot = Bot(slug=form.shortname.data,
+        bot = Bot(slug=form.slug.data,
                   name=form.name.data,
                   name_customizable=form.name.data,
                   avatar_url=form.avatar_url.data,
                   avatar_url_customizable=form.avatar_url_customizable,
                   callback_url=form.callback_url.data)
+        db.session.commit()
         # TODO: consider a more helpful redirect
-        return redirect(url_for('edit_bot'))
-    return render_template('edit_profile.html',
+        return redirect(url_for('edit_bot', slug=bot.slug))
+    return render_template('edit_bot.html',
                            title='Create new bot',
                            form=form)
 
@@ -141,13 +143,19 @@ def create_bot():
 @app.route('/edit_bot/<slug>', methods=['GET', 'POST'])
 @login_required
 def edit_bot():
+    # TODO: merge with above function
     form = BotForm()
     if form.validate_on_submit():
         bot = Bot.query.filter_by(slug=slug).first_or_404()
-        bot.slug = form.shortname.data
+        bot.slug = form.slug.data
         bot.name = form.name.data
         bot.name_customizable = form.name.data
         bot.avatar_url = form.avatar_url.data
         bot.avatar_url_customizable = form.avatar_url_customizable
         bot.callback_url = form.callback_url.data
         db.session.commit()
+        # TODO; come up with more helpful redirect
+        return redirect(url_for('index'))
+    return render_template('edit_bot.html',
+                           title='Edit bot',
+                           form=form)
