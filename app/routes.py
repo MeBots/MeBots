@@ -128,10 +128,11 @@ def create_bot():
     if form.validate_on_submit():
         bot = Bot(slug=form.slug.data,
                   name=form.name.data,
-                  name_customizable=form.name.data,
+                  name_customizable=form.name_customizable.data,
                   avatar_url=form.avatar_url.data,
                   avatar_url_customizable=form.avatar_url_customizable,
                   callback_url=form.callback_url.data)
+        db.session.add(bot)
         db.session.commit()
         # TODO: consider a more helpful redirect
         return redirect(url_for('edit_bot', slug=bot.slug))
@@ -142,11 +143,11 @@ def create_bot():
 
 @app.route('/edit_bot/<slug>', methods=['GET', 'POST'])
 @login_required
-def edit_bot():
+def edit_bot(slug):
     # TODO: merge with above function
     form = BotForm()
+    bot = Bot.query.filter_by(slug=slug).first_or_404()
     if form.validate_on_submit():
-        bot = Bot.query.filter_by(slug=slug).first_or_404()
         bot.slug = form.slug.data
         bot.name = form.name.data
         bot.name_customizable = form.name.data
@@ -156,6 +157,13 @@ def edit_bot():
         db.session.commit()
         # TODO; come up with more helpful redirect
         return redirect(url_for('index'))
+    # TODO: this repetition feels wrong...
+    form.slug.data = bot.slug
+    form.name.data = bot.name
+    form.name_customizable.data = bot.name_customizable
+    form.avatar_url.data = bot.avatar_url
+    form.avatar_url_customizable.data = bot.avatar_url_customizable
+    form.callback_url.data = bot.callback_url
     return render_template('edit_bot.html',
                            title='Edit bot',
                            form=form)
