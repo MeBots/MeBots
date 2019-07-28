@@ -17,7 +17,7 @@ def before_request():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    page =e request.args.get('page', 1, type=int)
+    page = request.args.get('page', 1, type=int)
     bots = Bot.query.all().paginate(page, app.config['ITEMS_PER_PAGE'], False)
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None

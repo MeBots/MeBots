@@ -1,4 +1,18 @@
 form {}
+form label {
+    display: block;
+}
+form input[type="text"],
+form input[type="password"] {
+    width: 250px;
+    border: solid 1px #ddd;
+    display: inline;
+}
+form span input[type="checkbox"],
+form span label{
+    display: inline;
+}
 form .error {
+    display: inline;
     color: #DD3333;
 }
