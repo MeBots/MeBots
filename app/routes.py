@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, BotForm
 from app.models import User, Bot, BotInstance
 from app.email import send_password_reset_email
 
@@ -119,3 +119,35 @@ def edit_profile():
     return render_template('edit_profile.html',
                            title='Edit Profile',
                            form=form)
+
+
+@app.route('/create_bot', methods=['GET', 'POST'])
+def create_bot():
+    form = BotForm()
+    if form.validate_on_submit():
+        bot = Bot(slug=form.shortname.data,
+                  name=form.name.data,
+                  name_customizable=form.name.data,
+                  avatar_url=form.avatar_url.data,
+                  avatar_url_customizable=form.avatar_url_customizable,
+                  callback_url=form.callback_url.data)
+        # TODO: consider a more helpful redirect
+        return redirect(url_for('edit_bot'))
+    return render_template('edit_profile.html',
+                           title='Create new bot',
+                           form=form)
+
+
+@app.route('/edit_bot/<slug>', methods=['GET', 'POST'])
+@login_required
+def edit_bot():
+    form = BotForm()
+    if form.validate_on_submit():
+        bot = Bot.query.filter_by(slug=slug).first_or_404()
+        bot.slug = form.shortname.data
+        bot.name = form.name.data
+        bot.name_customizable = form.name.data
+        bot.avatar_url = form.avatar_url.data
+        bot.avatar_url_customizable = form.avatar_url_customizable
+        bot.callback_url = form.callback_url.data
+        db.session.commit()
