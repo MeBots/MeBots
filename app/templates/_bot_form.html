@@ -4,7 +4,7 @@
         {{ form.post.label }}<br>
         {{ form.post(cols=32, rows=4) }}<br>
         {% for error in form.post.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <div class="error">{{ error }}</div>
         {% endfor %}
     </p>
     <p>{{ form.submit() }}</p>

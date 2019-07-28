@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User, Bot
 
@@ -57,6 +57,12 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different username.')
 
 
-class PostForm(FlaskForm):
-    post = TextAreaField('Say something', validators=[DataRequired()])
+class BotForm(FlaskForm):
+    name = StringField('Bot name', validators=[DataRequired()])
+    slug = StringField('Shortname', validators=[DataRequired()])
+    name_customizable = BooleanField('Allow customizing name')
+    avatar_url = StringField('Avatar URL')
+    avatar_url_customizable = BooleanField('Allow customizing avatar')
+    callback_url = StringField('Callback URL', validators=[DataRequired()])
+
     submit = SubmitField('Submit')
