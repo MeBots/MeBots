@@ -89,12 +89,14 @@ def reset_password(token):
 
 
 @app.route('/user/<username>')
-@login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    bots = user.bots
-    return render_template('user.html', user=user, bots=bots)
+    bots = Bot.query.filter_by(user_id=user.id).paginate(page, app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('index', page=bots.next_num) if bots.has_next else None
+    prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
+    #bots = user.bots
+    return render_template('user.html', user=user, bots=bots.items)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
