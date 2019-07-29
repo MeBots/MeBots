@@ -4,5 +4,5 @@
     {% endfor %}
     {% include '_pagination.html' %}
 {% else %}
-<p>No bots were found. <a href="{{ urlfor('create_bot') }}">Create one?</a></p>
+<p>No bots were found. <a href="{{ url_for('create_bot') }}">Create one?</a></p>
 {% endif %}
