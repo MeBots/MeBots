@@ -6,15 +6,8 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
+            {{ form.username }}<br>
             {% for error in form.username.errors %}
-            <span class="error">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.about_me.label }}<br>
-            {{ form.about_me(cols=50, rows=4) }}<br>
-            {% for error in form.about_me.errors %}
             <span class="error">{{ error }}</span>
             {% endfor %}
         </p>
