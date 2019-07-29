@@ -101,7 +101,7 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     bots = user.bots
-    return render_template('user.html', user=user, bots=bots.items)
+    return render_template('user.html', user=user, bots=bots)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -134,6 +134,7 @@ def create_bot():
                   callback_url=form.callback_url.data)
         db.session.add(bot)
         db.session.commit()
+        flash('Successfully created bot ' + bot.name + '!')
         # TODO: consider a more helpful redirect
         return redirect(url_for('edit_bot', slug=bot.slug))
     return render_template('edit_bot.html',
@@ -150,7 +151,7 @@ def edit_bot(slug):
     if form.validate_on_submit():
         bot.slug = form.slug.data
         bot.name = form.name.data
-        bot.name_customizable = form.name.data
+        bot.name_customizable = form.name_customizable.data
         bot.avatar_url = form.avatar_url.data
         bot.avatar_url_customizable = form.avatar_url_customizable.data
         bot.callback_url = form.callback_url.data
