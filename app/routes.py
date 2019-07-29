@@ -130,7 +130,7 @@ def create_bot():
                   name=form.name.data,
                   name_customizable=form.name_customizable.data,
                   avatar_url=form.avatar_url.data,
-                  avatar_url_customizable=form.avatar_url_customizable,
+                  avatar_url_customizable=form.avatar_url_customizable.data,
                   callback_url=form.callback_url.data)
         db.session.add(bot)
         db.session.commit()
@@ -152,7 +152,7 @@ def edit_bot(slug):
         bot.name = form.name.data
         bot.name_customizable = form.name.data
         bot.avatar_url = form.avatar_url.data
-        bot.avatar_url_customizable = form.avatar_url_customizable
+        bot.avatar_url_customizable = form.avatar_url_customizable.data
         bot.callback_url = form.callback_url.data
         db.session.commit()
         # TODO; come up with more helpful redirect

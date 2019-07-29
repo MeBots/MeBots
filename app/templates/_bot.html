@@ -1,3 +1,5 @@
 <div class="bot">
-    <a href="{{ url_for('user', username=post.author.username) }}">{{ bot.owner.username }}</a> is in X groups.
+    <h4>{{ bot.name }}</h4>
+    <p>In X groups.</p>
+    <p>Owner: <a href="{{ url_for('user', username=bot.owner.username) }}">{{ bot.owner.username }}</a></p>
 </div>
