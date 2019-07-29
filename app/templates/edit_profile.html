@@ -4,13 +4,13 @@
     <h1>Edit Profile</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username }}<br>
+        <div>
+            {{ form.username.label }}
+            {{ form.username }}
             {% for error in form.username.errors %}
             <span class="error">{{ error }}</span>
             {% endfor %}
-        </p>
+        </div>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
