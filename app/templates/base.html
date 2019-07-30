@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -9,7 +8,7 @@
         <title>GroupMeBot</title>
         {% endif %}
         <meta name="viewport" content="width=device-width">
-        <meta name="theme-color" content="#00356b">
+        <meta name="theme-color" content="#00aff0">
         <link rel="stylesheet" href="/static/stylesheets/main.css">
         <link rel="stylesheet" href="/static/stylesheets/form.css">
         {% block head %}
@@ -18,7 +17,7 @@
     <body>
         <header>
             <nav>
-                <h2 id="logo">GroupMeBot</h2>
+                <h2 id="logo">GMBTK</h2>
                 <ul>
                     <li><a href="{{ url_for('index') }}">Explore Bots</a></li>
                     <li><a href="{{ url_for('create_bot') }}">Create Bot</a></li>
@@ -31,17 +30,17 @@
                     {% endif %}
                 </ul>
             </nav>
+        </header>
+        <main>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
-                    <ul>
+                    <ul class="errors">
                         {% for message in messages %}
                         <li>{{ message }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
             {% endwith %}
-        </header>
-        <main>
             {% block content %}
             {% endblock %}
         </main>

@@ -10,29 +10,29 @@
     padding: 0;
     box-sizing: border-box;
 }
-html, body { height: 100%; }
 body {
     font-family: 'PT Sans', serif;
     font-size: 20px;
     background: white;
     color: #111;
-    border-top: 8px solid #00aff0;
 }
 header, main, footer {
     padding: 10px 0;
 }
 header {
-    padding-bottom: 20px;
-    padding-top: 30px;
+    background: #00aff0;
+    color: white;
 }
 header #logo {
     font-size: 40px;
-    color: #00aff0;
     line-height: 1;
     display: inline-block;
+    margin-right: 10px;
 }
 header nav ul {
     display: inline-block;
+    vertical-align: top;
+    margin-top: 7px;
 }
 header nav li {
     list-style: none;
@@ -47,6 +47,12 @@ h3 {
 }
 main {
     max-width: 12in;
+}
+.errors {
+    list-style: none;
+}
+.errors li {
+    font-style: italic;
 }
 section {
     margin-bottom: 20px;
@@ -71,11 +77,8 @@ section:last-of-type {
 p {
     padding: 10px 0;
 }
-ul {
-    margin-left: 25px;
-}
 a {
-    color: #111;
+    color: inherit;
 }
 select, input, .button {
     font: inherit;
@@ -116,19 +119,12 @@ footer {
     color: #aaa;
     font-size: 10px;
 }
-footer a {
-    color: inherit;
-}
 
 @media (min-width: 800px) {
-    header, main, footer {
+    header, footer {
         padding: 10px 25px;
     }
-    header {
-        padding-top: 25px;
-    }
-    header img {
-        height: 100px;
-        margin-left: -20px;
+    main {
+        padding: 20px 25px;
     }
 }
