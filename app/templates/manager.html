@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+    <h2>Add {{ bot.name }} to a group</h2>
+    <form method="post">
+        <input type="hidden" id="access_token" value="{{ access_token }}">
+        <select name="group_id">
+            {% for group in groups %}
+            <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endfor %}
+        </select>
+        <label>Bot name: <input name="name" type="text" value="Yalebot"></label>
+        <label>Bot avatar: <input name="avatar_url" type="text" value="https://i.groupme.com/310x310.jpeg.1c88aac983ff4587b15ef69c2649a09c"></label>
+        <div id="avatar_preview"></div>
+        <input type="submit" class="button" id="add" value="Add bot">
+    </form>
+</section>
+<section>
+    <h2>Active groups</h2>
+    <table>
+        <thead>
+            <th>Avatar</th>
+            <th>Bot ID</th>
+            <th>Name</th>
+            <th>Group</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for instance in instances %}
+            <tr>
+                <td><img src="{{ instance.avatar_url }}"></td>
+                <td>{{ instance.bot_id }}</td>
+                <td>{{ instance.name }}</td>
+                <td>{{ instance.group_name }}</td>
+                <td><button class="button delete" group_id="{{ instance.group_id }}">Leave</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+<script src="/static/scripts/manager.js"></script>
+{% endblock %}
