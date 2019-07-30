@@ -166,3 +166,8 @@ def edit_bot(slug):
     return render_template('edit_bot.html',
                            title='Edit bot',
                            form=form)
+
+"""
+@app.route('/manage/<bot_name>', methods=['GET', 'POST'])
+def manager
+"""

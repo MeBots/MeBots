@@ -39,6 +39,14 @@
         {% endfor %}
     </div>
 
+    <div>
+        {{ form.description.label }}
+        {{ form.description }}
+        {% for error in form.callback_url.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+
     <p>{{ form.submit() }}</p>
 </form>
 {% endblock %}
