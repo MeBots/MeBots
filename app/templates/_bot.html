@@ -1,6 +1,8 @@
 <div class="bot">
+    <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
     <h4>{{ bot.name }}</h4>
     <p>In X groups.</p>
+    <p>{{ bot.description }}</p>
     {% set owner = bot.owner %}
     <p>Owner: <a href="{{ url_for('user', username=owner.username) }}">{{ owner.username }}</a></p>
 </div>

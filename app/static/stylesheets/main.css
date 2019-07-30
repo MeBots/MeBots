@@ -71,7 +71,7 @@ section:last-of-type {
     display: inline-block;
     vertical-align: top;
 }
-.profile .avatar {
+.avatar {
     width: 100px;
     height: 100px;
 }
@@ -83,7 +83,7 @@ section:last-of-type {
 .bot_list .bot {
     display: inline-block;
     width: 3in;
-    margin: 5px;
+    margin: 5px 5px 0 0;
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
