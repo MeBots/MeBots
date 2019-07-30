@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, abort
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
@@ -144,6 +144,8 @@ def edit_bot(slug):
     # TODO: merge with above function
     form = BotForm()
     bot = Bot.query.filter_by(slug=slug).first_or_404()
+    if current_user != bot.owner:
+        abort(401)
     if form.validate_on_submit():
         bot.slug = form.slug.data
         bot.name = form.name.data

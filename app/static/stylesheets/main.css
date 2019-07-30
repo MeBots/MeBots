@@ -82,6 +82,7 @@ section:last-of-type {
 }
 .bot_list .bot {
     display: inline-block;
+    vertical-align: top;
     width: 3in;
     margin: 5px 5px 0 0;
     padding: 20px;
