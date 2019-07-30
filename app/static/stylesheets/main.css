@@ -34,6 +34,9 @@ header nav ul {
     vertical-align: top;
     margin-top: 7px;
 }
+header nav ul.session {
+    float: right;
+}
 header nav li {
     list-style: none;
     display: inline-block;
@@ -73,6 +76,16 @@ section:last-of-type {
     height: 100px;
 }
 .profile .details {
+}
+.bot_list {
+
+}
+.bot_list .bot {
+    display: inline-block;
+    width: 3in;
+    margin: 5px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 p {
     padding: 10px 0;
