@@ -178,13 +178,16 @@ def manager(slug):
 
     bot = Bot.query.filter_by(slug=slug).first_or_404()
     me = requests.get(f"https://api.groupme.com/v3/users/me?token={access_token}").json()["response"]
+    groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
+    form = InstanceForm()
+    form.group_id.choices = [(group["id"], group["name"]) for group in groups]
     if form.validate_on_submit():
-        # Build and send bot data
+        # Build and send instance data
         group_id = form.group_id.data
         bot = {
             "name": form.name.data if bot.name_customizable else bot.name,
             "group_id": group_id,
-            "avatar_url": bot.avatar_url,
+            "avatar_url": form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
             # TODO: handle callback URLs ourselves!
             "callback_url": bot.callback_url,
         }
@@ -201,11 +204,8 @@ def manager(slug):
                             access_token=access_token)
         db.session.add(instance)
         db.session.commit()
-    #groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
     # TODO: go through instances in database and re-add anything that's not in GroupMe's list
-    groups = Instance.query.filter_by(owner=current_user)
-    form = InstanceForm()
-    form.group_id.choices = [(group["id"], group["name"]) for group in groups]
+    instances = [instance for instance in bot.instances if instance.owner_id == me["user_id"]]
 
     groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
     bots = Bot.query.filter_by(owner_id=me["user_id"])
