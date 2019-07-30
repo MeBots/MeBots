@@ -193,12 +193,17 @@ def manager(slug):
         group = requests.get(f"https://api.groupme.com/v3/groups/{group_id}?token={access_token}").json()["response"]
 
         # Store in database
-        registrant = Instance(group_id=group_id,
-                              group["name"], result["bot_id"], me["user_id"], me["name"], access_token)
-        db.session.add(registrant)
+        instance = Instance(group_id=group_id,
+                            group_name=group["name"],
+                            bot_id=result["bot_id"],
+                            owner_id=me["user_id"],
+                            owner_name=me["name"],
+                            access_token=access_token)
+        db.session.add(instance)
         db.session.commit()
-    groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
-    groups = [group for group in groups if not Bot.query.get(group["group_id"])]
+    #groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
+    # TODO: go through instances in database and re-add anything that's not in GroupMe's list
+    groups = Instance.query.filter_by(owner=current_user)
     form = InstanceForm()
     form.group_id.choices = [(group["id"], group["name"]) for group in groups]
 
