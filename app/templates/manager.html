@@ -9,10 +9,21 @@
             <option value="{{ group.id }}">{{ group.name }}</option>
             {% endfor %}
         </select>
-        <label>Bot name: <input name="name" type="text" value="Yalebot"></label>
-        <label>Bot avatar: <input name="avatar_url" type="text" value="https://i.groupme.com/310x310.jpeg.1c88aac983ff4587b15ef69c2649a09c"></label>
-        <div id="avatar_preview"></div>
-        <input type="submit" class="button" id="add" value="Add bot">
+        <div>
+            {% if bot.name_customizable %}
+            {% form.name.label %}
+            {% form.name %}
+            {% endif %}
+        </div>
+        <div>
+            {% if bot.name_customizable %}
+            {% form.name.label %}
+            {% form.name %}
+            {% endif %}
+        </div>
+        <div>
+            {% form.submit %}
+        </div>
     </form>
 </section>
 <section>

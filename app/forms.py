@@ -67,3 +67,12 @@ class BotForm(FlaskForm):
     description = TextAreaField('Description')
 
     submit = SubmitField('Submit')
+
+
+class InstanceForm(FlaskForm):
+    group_id = SelectField('Group')
+    name = StringField('Bot name')
+    avatar_url = StringField('Bot avatar')
+
+    submit = SubmitField('Add bot')
+

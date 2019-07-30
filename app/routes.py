@@ -173,30 +173,38 @@ def edit_bot(slug):
 @app.route("/manager/<slug>", methods=["GET", "POST"])
 def manager(slug):
     access_token = request.args["access_token"]
-    callback_url = "https://botagainsthumanitygroupme.herokuapp.com/message"
+    if access_token is None:
+        return redirect("https://oauth.groupme.com/oauth/authorize?client_id=46tkWF26m1juUxxvRGKUjVqVjbejYK4Njz3VA4ZZjWhr5dtH", code=302)
+
+    bot = Bot.query.filter_by(slug=slug).first_or_404()
     me = requests.get(f"https://api.groupme.com/v3/users/me?token={access_token}").json()["response"]
-    if request.method == "POST":
+    if form.validate_on_submit():
         # Build and send bot data
-        group_id = request.form["group_id"]
+        group_id = form.group_id.data
         bot = {
-            "name": "Bot Against Humanity",
+            "name": form.name.data if bot.name_customizable else bot.name,
             "group_id": group_id,
-            "avatar_url": "https://i.groupme.com/200x200.png.092e3648ee2745aeb3296a51b3a85e0f",
-            "callback_url": callback_url,
+            "avatar_url": bot.avatar_url,
+            # TODO: handle callback URLs ourselves!
+            "callback_url": bot.callback_url,
         }
         result = requests.post(f"https://api.groupme.com/v3/bots?token={access_token}",
                                json={"bot": bot}).json()["response"]["bot"]
         group = requests.get(f"https://api.groupme.com/v3/groups/{group_id}?token={access_token}").json()["response"]
 
         # Store in database
-        registrant = Bot(group_id, group["name"], result["bot_id"], me["user_id"], me["name"], access_token)
+        registrant = Instance(group_id=group_id,
+                              group["name"], result["bot_id"], me["user_id"], me["name"], access_token)
         db.session.add(registrant)
         db.session.commit()
     groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
     groups = [group for group in groups if not Bot.query.get(group["group_id"])]
+    form = InstanceForm()
+    form.group_id.choices = [(group["id"], group["name"]) for group in groups]
+
     groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
     bots = Bot.query.filter_by(owner_id=me["user_id"])
-    return render_template("manager.html", access_token=access_token, groups=groups, bots=bots)
+    return render_template("manager.html", access_token=access_token, groups=groups, bots=bots, form=form)
 
 
 @app.route("/delete", methods=["POST"])
