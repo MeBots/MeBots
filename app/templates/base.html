@@ -22,10 +22,15 @@
                     <li><a href="{{ url_for('index') }}">Explore Bots</a></li>
                     <li><a href="{{ url_for('create_bot') }}">Create Bot</a></li>
                     {% if current_user.is_anonymous %}
+                    {% else %}
+                    <li><a href="{{ url_for('user', username=current_user.username) }}">My Bots</a></li>
+                    {% endif %}
+                </ul>
+                <ul class="session">
+                    {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('login') }}">Login</a></li>
                     <li><a href="{{ url_for('register') }}">Register</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('user', username=current_user.username) }}">My Bots</a></li>
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     {% endif %}
                 </ul>

@@ -26,7 +26,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Invalid credentials.')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -125,7 +125,8 @@ def create_bot():
                   name_customizable=form.name_customizable.data,
                   avatar_url=form.avatar_url.data,
                   avatar_url_customizable=form.avatar_url_customizable.data,
-                  callback_url=form.callback_url.data)
+                  callback_url=form.callback_url.data,
+                  description=form.description.data)
         db.session.add(bot)
         db.session.commit()
         flash('Successfully created bot ' + bot.name + '!')
@@ -149,6 +150,7 @@ def edit_bot(slug):
         bot.avatar_url = form.avatar_url.data
         bot.avatar_url_customizable = form.avatar_url_customizable.data
         bot.callback_url = form.callback_url.data
+        bot.description = form.description.data
         db.session.commit()
         # TODO; come up with more helpful redirect
         return redirect(url_for('index'))
@@ -159,6 +161,7 @@ def edit_bot(slug):
     form.avatar_url.data = bot.avatar_url
     form.avatar_url_customizable.data = bot.avatar_url_customizable
     form.callback_url.data = bot.callback_url
+    form.description.data = bot.description
     return render_template('edit_bot.html',
                            title='Edit bot',
                            form=form)

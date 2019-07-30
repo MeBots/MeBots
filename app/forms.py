@@ -64,5 +64,6 @@ class BotForm(FlaskForm):
     avatar_url = StringField('Avatar URL')
     avatar_url_customizable = BooleanField('Allow customizing avatar')
     callback_url = StringField('Callback URL', validators=[DataRequired()])
+    description = TextAreaField('Description')
 
     submit = SubmitField('Submit')
