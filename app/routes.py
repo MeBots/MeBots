@@ -21,22 +21,24 @@ def index():
                            bots=bots.items, next_url=next_url,
                            prev_url=prev_url)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+    access_token = request.args.get('access_token')
+    if access_token is None:
+        redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID'])
+    else:
+        user = User.query.get(form.username)
         if user is None or not user.check_password(form.password.data):
             flash('Invalid credentials.')
             return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
+        login_user(user)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
 
 
 @app.route('/logout')
