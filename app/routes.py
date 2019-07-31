@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, BotForm
-from app.models import User, Bot, BotInstance
+from app.models import User, Bot, Instance
 from app.email import send_password_reset_email
 
 
@@ -203,11 +203,10 @@ def manager(slug):
         group = requests.get(f"https://api.groupme.com/v3/groups/{group_id}?token={access_token}").json()["response"]
 
         # Store in database
-        instance = Instance(group_id=group_id,
+        instance = Instance(id=result["bot_id"],
+                            group_id=group_id,
                             group_name=group["name"],
-                            bot_id=result["bot_id"],
                             owner_id=me["user_id"],
-                            owner_name=me["name"],
                             access_token=access_token)
         db.session.add(instance)
         db.session.commit()

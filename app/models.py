@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
+    instances = db.relationship('Instance', backref='owner', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -60,22 +61,21 @@ class Bot(db.Model):
     client_id = db.Column(db.String(48))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    instances = db.relationship('BotInstance', backref='bot', lazy='dynamic')
+    instances = db.relationship('Instance', backref='bot', lazy='dynamic')
 
     def __repr__(self):
         return '<{} {}>'.format(self.__class__.__name__, self.slug)
 
 
-class BotInstance(db.Model):
-    group_id = db.Column(db.String(16), primary_key=True)
+class Instance(db.Model):
+    # This is both the internal primary key and GroupMe's bot_id field.
+    id = db.Column(db.String(26), primary_key=True)
+    group_id = db.Column(db.String(16))
     group_name = db.Column(db.String(50))
-    bot_id = db.Column(db.String(26), unique=True)
-    owner_id = db.Column(db.String(16))
-    owner_name = db.Column(db.String(64))
     access_token = db.Column(db.String(32))
 
-    # TODO: naming concflicts with bot_id above
-    parent_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
+    bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<{} {} {}>'.format(self.__class__.__name__, self.group_id, self.bot_id)
