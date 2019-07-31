@@ -8,6 +8,9 @@ from app.models import User, Bot, BotInstance
 from app.email import send_password_reset_email
 
 
+OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     page = request.args.get('page', 1, type=int)
@@ -120,13 +123,15 @@ def edit_profile():
 def create_bot():
     form = BotForm()
     if form.validate_on_submit():
+        client_id = form.client_id.data
         bot = Bot(slug=form.slug.data,
                   name=form.name.data,
                   name_customizable=form.name_customizable.data,
                   avatar_url=form.avatar_url.data,
                   avatar_url_customizable=form.avatar_url_customizable.data,
                   callback_url=form.callback_url.data,
-                  description=form.description.data)
+                  description=form.description.data,
+                  client_id=client_id)
         bot.owner = current_user
         db.session.add(bot)
         db.session.commit()
@@ -154,6 +159,7 @@ def edit_bot(slug):
         bot.avatar_url_customizable = form.avatar_url_customizable.data
         bot.callback_url = form.callback_url.data
         bot.description = form.description.data
+        bot.client_id = form.client_id.data
         db.session.commit()
         # TODO; come up with more helpful redirect
         return redirect(url_for('index'))
@@ -165,6 +171,7 @@ def edit_bot(slug):
     form.avatar_url_customizable.data = bot.avatar_url_customizable
     form.callback_url.data = bot.callback_url
     form.description.data = bot.description
+    form.client_id.data = bot.client_id
     return render_template('edit_bot.html',
                            title='Edit bot',
                            form=form)
