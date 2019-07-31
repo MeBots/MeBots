@@ -42,7 +42,15 @@
     <div>
         {{ form.description.label }}
         {{ form.description }}
-        {% for error in form.callback_url.errors %}
+        {% for error in form.description.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div>
+        {{ form.client_id.label }}
+        {{ form.client_id }}
+        {% for error in form.client_id.errors %}
         <span class="error">{{ error }}</span>
         {% endfor %}
     </div>

@@ -179,11 +179,11 @@ def edit_bot(slug):
 
 @app.route("/manager/<slug>", methods=["GET", "POST"])
 def manager(slug):
-    access_token = request.args["access_token"]
-    if access_token is None:
-        return redirect("https://oauth.groupme.com/oauth/authorize?client_id=46tkWF26m1juUxxvRGKUjVqVjbejYK4Njz3VA4ZZjWhr5dtH")
-
     bot = Bot.query.filter_by(slug=slug).first_or_404()
+    access_token = request.args.get("access_token")
+    if access_token is None:
+        return redirect(OAUTH_ENDPOINT + bot.client_id)
+
     me = requests.get(f"https://api.groupme.com/v3/users/me?token={access_token}").json()["response"]
     groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
     form = InstanceForm()
