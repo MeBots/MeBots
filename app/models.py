@@ -10,8 +10,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     # TODO: can we get this from GM?
-    #email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    email = db.Column(db.String(120))
     access_token = db.Column(db.String(32))
     # TODO: avatar?
 
