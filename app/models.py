@@ -9,9 +9,12 @@ from app import app, db, login
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
+    name = db.Column(db.String(64))
+    # TODO: can we get this from GM?
+    #email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    access_token = db.Column(db.String(32))
+
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
 
@@ -72,7 +75,6 @@ class Instance(db.Model):
     id = db.Column(db.String(26), primary_key=True)
     group_id = db.Column(db.String(16))
     group_name = db.Column(db.String(50))
-    access_token = db.Column(db.String(32))
 
     bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
