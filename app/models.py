@@ -18,9 +18,6 @@ class User(UserMixin, db.Model):
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
 
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
-
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -66,9 +63,6 @@ class Bot(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
 
-    def __repr__(self):
-        return '<{} {}>'.format(self.__class__.__name__, self.slug)
-
 
 class Instance(db.Model):
     # This is both the internal primary key and GroupMe's bot_id field.
@@ -78,6 +72,3 @@ class Instance(db.Model):
 
     bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<{} {} {}>'.format(self.__class__.__name__, self.group_id, self.bot_id)
