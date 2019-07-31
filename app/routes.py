@@ -174,7 +174,7 @@ def edit_bot(slug):
 def manager(slug):
     access_token = request.args["access_token"]
     if access_token is None:
-        return redirect("https://oauth.groupme.com/oauth/authorize?client_id=46tkWF26m1juUxxvRGKUjVqVjbejYK4Njz3VA4ZZjWhr5dtH", code=302)
+        return redirect("https://oauth.groupme.com/oauth/authorize?client_id=46tkWF26m1juUxxvRGKUjVqVjbejYK4Njz3VA4ZZjWhr5dtH")
 
     bot = Bot.query.filter_by(slug=slug).first_or_404()
     me = requests.get(f"https://api.groupme.com/v3/users/me?token={access_token}").json()["response"]
@@ -205,10 +205,9 @@ def manager(slug):
         db.session.add(instance)
         db.session.commit()
     # TODO: go through instances in database and re-add anything that's not in GroupMe's list
+    #groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
     instances = [instance for instance in bot.instances if instance.owner_id == me["user_id"]]
 
-    groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
-    bots = Bot.query.filter_by(owner_id=me["user_id"])
     return render_template("manager.html", access_token=access_token, groups=groups, bots=bots, form=form)
 
 
