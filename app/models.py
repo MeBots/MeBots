@@ -6,21 +6,19 @@ import jwt
 from app import app, db, login
 
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    # TODO: can we get this from GM?
     email = db.Column(db.String(120))
     access_token = db.Column(db.String(32))
-    # TODO: avatar?
+    avatar = db.Column(db.String(45))
 
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
 
-    def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
-            digest, size)
+    def avatar(self, size='preview'):
+        return app.config['IMAGE_ROOT'] + self.avatar_url + '.' + size
 
 
 @login.user_loader
