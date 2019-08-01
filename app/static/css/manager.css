@@ -1,0 +1,18 @@
+table img {
+    width: 50px;
+}
+th, td {
+    padding: 0 10px;
+}
+th:first-child, td:first-child {
+    padding-left: 0;
+}
+
+.button.delete {
+    border-color: #ea0404;
+    color: #ea0404;
+}
+.button.delete:hover, .button.delete:focus, .button.delete:active {
+    color: white;
+    background-color: #ea0404;
+}
