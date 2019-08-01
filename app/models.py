@@ -11,8 +11,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     email = db.Column(db.String(120))
-    access_token = db.Column(db.String(32))
     avatar = db.Column(db.String(45))
+    access_token = db.Column(db.String(32))
 
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
@@ -31,6 +31,7 @@ class Bot(db.Model):
     slug = db.Column(db.String(16), unique=True)
     name = db.Column(db.String(32))
     name_customizable = db.Column(db.Boolean)
+    # TODO: store this always as a GroupMe URL string so we don't use up resources with every instance
     avatar_url = db.Column(db.String(70))
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))

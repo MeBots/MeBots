@@ -27,23 +27,33 @@ def index():
                            prev_url=prev_url)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login')
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     access_token = request.args.get('access_token')
     if access_token is None:
-        redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID'])
-    else:
-        user = User.query.get(form.username)
-        if user is None or not user.check_password(form.password.data):
-            flash('Invalid credentials.')
-            return redirect(url_for('login'))
-        login_user(user)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
-        return redirect(next_page)
+        return redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID'])
+    me = api_get('users/me', access_token)
+    user_id = me.get('user_id')
+    if not user_id:
+        flash('Invalid user.')
+        return redirect(url_for('index'))
+    user = User.query.get(user_id)
+    if user is None:
+        user = User(id=user_id,
+                    name=me['name'],
+                    email=me['email'],
+                    avatar_url=me['image_url'][len(app.config['IMAGE_ROOT']):],
+                    access_token=access_token)
+        db.session.add(user)
+        db.session.commit()
+    login_user(user)
+    # TODO: does this actually work? I don't think it would...
+    next_page = request.args.get('next')
+    if not next_page or url_parse(next_page).netloc != '':
+        next_page = url_for('index')
+    return redirect(next_page)
 
 
 @app.route('/logout')
