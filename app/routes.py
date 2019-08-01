@@ -44,7 +44,7 @@ def login():
         user = User(id=user_id,
                     name=me['name'],
                     email=me['email'],
-                    avatar_url=me['image_url'][len(app.config['IMAGE_ROOT']):],
+                    avatar=me['image_url'][len(app.config['IMAGE_ROOT']):],
                     access_token=access_token)
         db.session.add(user)
         db.session.commit()
@@ -108,9 +108,9 @@ def reset_password(token):
     return render_template('reset_password.html', form=form)
 
 
-@app.route('/user/<username>')
-def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+@app.route('/user/<user_id>')
+def user(user_id):
+    user = User.query.get_or_404(user_id)
     page = request.args.get('page', 1, type=int)
     bots = Bot.query.filter_by(user_id=user.id).paginate(page, app.config['ITEMS_PER_PAGE'], False)
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
