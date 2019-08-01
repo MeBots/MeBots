@@ -205,12 +205,10 @@ def manager(slug):
     groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
     form = InstanceForm()
     form.group_id.choices = [(group["id"], group["name"]) for group in groups]
-    form.name.data = bot.name
-    form.avatar_url.data = bot.avatar_url
     if form.validate_on_submit():
         # Build and send instance data
         group_id = form.group_id.data
-        bot = {
+        bot_params = {
             "name": form.name.data if bot.name_customizable else bot.name,
             "group_id": group_id,
             "avatar_url": form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
@@ -218,20 +216,23 @@ def manager(slug):
             "callback_url": bot.callback_url,
         }
         result = requests.post(f"https://api.groupme.com/v3/bots?token={access_token}",
-                               json={"bot": bot}).json()["response"]["bot"]
+                               json={"bot": bot_params}).json()["response"]["bot"]
         group = requests.get(f"https://api.groupme.com/v3/groups/{group_id}?token={access_token}").json()["response"]
 
         # Store in database
         instance = Instance(id=result["bot_id"],
                             group_id=group_id,
                             group_name=group["name"],
-                            owner_id=me["user_id"],
-                            access_token=access_token)
+                            owner_id=me["user_id"])
         db.session.add(instance)
         db.session.commit()
+    else:
+        form.name.data = bot.name
+        form.avatar_url.data = bot.avatar_url
     # TODO: go through instances in database and re-add anything that's not in GroupMe's list
     #groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
     instances = [instance for instance in bot.instances if instance.owner_id == me["user_id"]]
+    instances = bot.instances.all()
 
     return render_template("manager.html", form=form, bot=bot, groups=groups, instances=instances, access_token=access_token)
 

@@ -76,4 +76,3 @@ class InstanceForm(FlaskForm):
     avatar_url = StringField('Bot avatar')
 
     submit = SubmitField('Add bot')
-
