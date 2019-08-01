@@ -13,12 +13,12 @@ OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
 API_ROOT = 'https://api.groupme.com/v3/'
 
 
-def api_get(endpoint, access_token=current_user.access_token):
-    return requests.get(API_ROOT + endpoint, params={'token': access_token}).json()['response']
+def api_get(endpoint, token=current_user.token):
+    return requests.get(API_ROOT + endpoint, params={'token': token}).json()['response']
 
-def api_post(endpoint, data={}, access_token=current_user.access_tokenv):
+def api_post(endpoint, data={}, token=current_user.tokenv):
     return requests.post(API_ROOT + endpoint,
-                         params={'token': access_token},
+                         params={'token': token},
                          data=data).json()['response']
 
 
@@ -37,10 +37,10 @@ def index():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    access_token = request.args.get('access_token')
-    if access_token is None:
+    token = request.args.get('access_token')
+    if token is None:
         return redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID'])
-    me = api_get('users/me', access_token=access_token)
+    me = api_get('users/me', token=token)
     user_id = me.get('user_id')
     if not user_id:
         flash('Invalid user.')
@@ -51,7 +51,7 @@ def login():
                     name=me['name'],
                     email=me['email'],
                     avatar=me['image_url'][len(app.config['IMAGE_ROOT']):],
-                    access_token=access_token)
+                    token=token)
         db.session.add(user)
         db.session.commit()
     login_user(user)
@@ -234,7 +234,7 @@ def manager(slug):
         form.name.data = bot.name
         form.avatar_url.data = bot.avatar_url
     # TODO: go through instances in database and re-add anything that's not in GroupMe's list
-    #groupme_bots = requests.get(f'https://api.groupme.com/v3/bots?token={access_token}').json()['response']
+    #groupme_bots = requests.get(f'https://api.groupme.com/v3/bots?token={token}').json()['response']
     instances = [instance for instance in bot.instances if instance.owner_id == me['user_id']]
 
     return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
@@ -244,7 +244,7 @@ def manager(slug):
 def delete_bot():
     data = request.get_json()
     bot = Bot.query.get(data['group_id'])
-    req = api_post('bots/destroy', current_user.access_token, {'bot_id': bot.bot_id})
+    req = api_post('bots/destroy', current_user.token, {'bot_id': bot.bot_id})
     if req:
         db.session.delete(bot)
         db.session.commit()
