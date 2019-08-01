@@ -14,3 +14,4 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     CLIENT_ID = ''
     ITEMS_PER_PAGE = 8
+    IMAGE_ROOT = 'https://i.groupme.com/'
