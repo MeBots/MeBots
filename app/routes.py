@@ -231,7 +231,7 @@ def manager(slug):
     #groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
     instances = [instance for instance in bot.instances if instance.owner_id == me["user_id"]]
 
-    return render_template("manager.html", access_token=access_token, groups=groups, instances=instances, form=form)
+    return render_template("manager.html", form=form, bot=bot, groups=groups, instances=instances, access_token=access_token)
 
 
 @app.route("/delete", methods=["POST"])
