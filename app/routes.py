@@ -13,10 +13,10 @@ OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
 API_ROOT = 'https://api.groupme.com/v3/'
 
 
-def api_get(endpoint, access_token):
+def api_get(endpoint, access_token=current_user.access_token):
     return requests.get(API_ROOT + endpoint, params={'token': access_token}).json()['response']
 
-def api_post(endpoint, access_token, data={}):
+def api_post(endpoint, data={}, access_token=current_user.access_tokenv):
     return requests.post(API_ROOT + endpoint,
                          params={'token': access_token},
                          data=data).json()['response']
@@ -40,7 +40,7 @@ def login():
     access_token = request.args.get('access_token')
     if access_token is None:
         return redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID'])
-    me = api_get('users/me', access_token)
+    me = api_get('users/me', access_token=access_token)
     user_id = me.get('user_id')
     if not user_id:
         flash('Invalid user.')
@@ -205,8 +205,8 @@ def edit_bot(slug):
 def manager(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
 
-    me = api_get('users/me', current_user.access_token)
-    groups = api_get('groups', current_user.access_token)
+    me = api_get('users/me')
+    groups = api_get('groups')
     form = InstanceForm()
     form.group_id.choices = [(group['id'], group['name']) for group in groups]
     if form.validate_on_submit():
@@ -219,8 +219,8 @@ def manager(slug):
             # TODO: handle callback URLs ourselves!
             'callback_url': bot.callback_url,
         }
-        result = api_post('bots', current_user.access_token, {'bot': bot_params})['bot']
-        group = api_get(f'groups/{group_id}', current_user.access_token)
+        result = api_post('bots', {'bot': bot_params})['bot']
+        group = api_get(f'groups/{group_id}')
 
         # Store in database
         instance = Instance(id=result['bot_id'],
