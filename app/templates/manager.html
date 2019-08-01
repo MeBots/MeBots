@@ -9,20 +9,23 @@
         <div>
             {{ form.group_id }}
         </div>
+
+        {% if bot.name_customizable %}
         <div>
-            {% if bot.name_customizable %}
-            {% form.name.label %}
-            {% form.name %}
-            {% endif %}
+            {{ form.name.label }}
+            {{ form.name }}
         </div>
+        {% endif %}
+
+        {% if bot.name_customizable %}
         <div>
-            {% if bot.name_customizable %}
-            {% form.name.label %}
-            {% form.name %}
-            {% endif %}
+            {{ form.name.label }}
+            {{ form.name }}
         </div>
+        {% endif %}
+
         <div>
-            {% form.submit %}
+            {{ form.submit }}
         </div>
     </form>
 </section>
