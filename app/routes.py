@@ -1,4 +1,3 @@
-from datetime import datetime
 import requests
 from flask import render_template, flash, redirect, url_for, request, abort
 from flask_login import login_user, logout_user, current_user, login_required
@@ -20,9 +19,11 @@ def api_get(endpoint, token=None):
 def api_post(endpoint, data={}, token=None):
     if token is None:
         token = current_user.token
-    return requests.post(API_ROOT + endpoint,
+    print(token)
+    req = requests.post(API_ROOT + endpoint,
                          params={'token': token},
-                         data=data).json()['response']
+                         data=data)
+    return req.json()['response']
 
 
 @app.route('/', methods=['GET', 'POST'])
