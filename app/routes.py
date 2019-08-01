@@ -200,35 +200,33 @@ def edit_bot(slug):
                            form=form)
 
 
-@app.route("/manager/<slug>", methods=["GET", "POST"])
+@app.route('/manager/<slug>', methods=['GET', 'POST'])
+@login_required
 def manager(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
-    access_token = request.args.get("access_token")
-    if access_token is None:
-        return redirect(OAUTH_ENDPOINT + bot.client_id)
 
-    me = api_get('users/me', access_token)
-    groups = api_get('groups', access_token)
+    me = api_get('users/me', current_user.access_token)
+    groups = api_get('groups', current_user.access_token)
     form = InstanceForm()
-    form.group_id.choices = [(group["id"], group["name"]) for group in groups]
+    form.group_id.choices = [(group['id'], group['name']) for group in groups]
     if form.validate_on_submit():
         # Build and send instance data
         group_id = form.group_id.data
         bot_params = {
-            "name": form.name.data if bot.name_customizable else bot.name,
-            "group_id": group_id,
-            "avatar_url": form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
+            'name': form.name.data if bot.name_customizable else bot.name,
+            'group_id': group_id,
+            'avatar_url': form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
             # TODO: handle callback URLs ourselves!
-            "callback_url": bot.callback_url,
+            'callback_url': bot.callback_url,
         }
-        result = api_post('bots', access_token, {"bot": bot_params})["bot"]
-        group = api_get(f"groups/{group_id}", access_token)
+        result = api_post('bots', current_user.access_token, {'bot': bot_params})['bot']
+        group = api_get(f'groups/{group_id}', current_user.access_token)
 
         # Store in database
-        instance = Instance(id=result["bot_id"],
+        instance = Instance(id=result['bot_id'],
                             group_id=group_id,
-                            group_name=group["name"],
-                            owner_id=me["user_id"],
+                            group_name=group['name'],
+                            owner_id=me['user_id'],
                             bot_id=bot.id)
         db.session.add(instance)
         db.session.commit()
@@ -236,19 +234,18 @@ def manager(slug):
         form.name.data = bot.name
         form.avatar_url.data = bot.avatar_url
     # TODO: go through instances in database and re-add anything that's not in GroupMe's list
-    #groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
-    instances = [instance for instance in bot.instances if instance.owner_id == me["user_id"]]
+    #groupme_bots = requests.get(f'https://api.groupme.com/v3/bots?token={access_token}').json()['response']
+    instances = [instance for instance in bot.instances if instance.owner_id == me['user_id']]
 
-    return render_template("manager.html", form=form, bot=bot, groups=groups, instances=instances, access_token=access_token)
+    return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
 
 
-@app.route("/delete", methods=["POST"])
+@app.route('/delete', methods=['POST'])
 def delete_bot():
     data = request.get_json()
-    access_token = data["access_token"]
-    bot = Bot.query.get(data["group_id"])
-    req = requests.post(f"https://api.groupme.com/v3/bots/destroy', access_token, {"bot_id": bot.bot_id})
-    if req.ok:
+    bot = Bot.query.get(data['group_id'])
+    req = api_post('bots/destroy', current_user.access_token, {'bot_id': bot.bot_id})
+    if req:
         db.session.delete(bot)
         db.session.commit()
-        return "ok", 200
+        return 'ok', 200
