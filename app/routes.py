@@ -205,6 +205,8 @@ def manager(slug):
     groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
     form = InstanceForm()
     form.group_id.choices = [(group["id"], group["name"]) for group in groups]
+    form.name.data = bot.name
+    form.avatar_url.data = bot.avatar_url
     if form.validate_on_submit():
         # Build and send instance data
         group_id = form.group_id.data
