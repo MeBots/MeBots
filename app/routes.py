@@ -10,10 +10,16 @@ from app.email import send_password_reset_email
 
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
+API_ROOT = 'https://api.groupme.com/v3/'
 
 
 def api_get(endpoint, access_token):
-    return requests.get('https://api.groupme.com/v3/' + endpoint, params={'token': access_token}).json()['response']
+    return requests.get(API_ROOT + endpoint, params={'token': access_token}).json()['response']
+
+def api_post(endpoint, access_token, data={}):
+    return requests.post(API_ROOT + endpoint,
+                         params={'token': access_token},
+                         data=data).json()['response']
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -201,8 +207,8 @@ def manager(slug):
     if access_token is None:
         return redirect(OAUTH_ENDPOINT + bot.client_id)
 
-    me = requests.get(f"https://api.groupme.com/v3/users/me?token={access_token}").json()["response"]
-    groups = requests.get(f"https://api.groupme.com/v3/groups?token={access_token}").json()["response"]
+    me = api_get('users/me', access_token)
+    groups = api_get('groups', access_token)
     form = InstanceForm()
     form.group_id.choices = [(group["id"], group["name"]) for group in groups]
     if form.validate_on_submit():
@@ -215,15 +221,15 @@ def manager(slug):
             # TODO: handle callback URLs ourselves!
             "callback_url": bot.callback_url,
         }
-        result = requests.post(f"https://api.groupme.com/v3/bots?token={access_token}",
-                               json={"bot": bot_params}).json()["response"]["bot"]
-        group = requests.get(f"https://api.groupme.com/v3/groups/{group_id}?token={access_token}").json()["response"]
+        result = api_post('bots', access_token, {"bot": bot_params})["bot"]
+        group = api_get(f"groups/{group_id}", access_token)
 
         # Store in database
         instance = Instance(id=result["bot_id"],
                             group_id=group_id,
                             group_name=group["name"],
-                            owner_id=me["user_id"])
+                            owner_id=me["user_id"],
+                            bot_id=bot.id)
         db.session.add(instance)
         db.session.commit()
     else:
@@ -232,7 +238,6 @@ def manager(slug):
     # TODO: go through instances in database and re-add anything that's not in GroupMe's list
     #groupme_bots = requests.get(f"https://api.groupme.com/v3/bots?token={access_token}").json()["response"]
     instances = [instance for instance in bot.instances if instance.owner_id == me["user_id"]]
-    instances = bot.instances.all()
 
     return render_template("manager.html", form=form, bot=bot, groups=groups, instances=instances, access_token=access_token)
 
