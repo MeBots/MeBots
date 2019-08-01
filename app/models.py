@@ -34,7 +34,6 @@ class Bot(db.Model):
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))
     description = db.Column(db.String(200))
-    client_id = db.Column(db.String(48))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
