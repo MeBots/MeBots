@@ -4,7 +4,7 @@
     <p>In X groups.</p>
     <p>{{ bot.description }}</p>
     {% set owner = bot.owner %}
-    <p>Owner: <a href="{{ url_for('user', username=owner.username) }}">{{ owner.username }}</a></p>
+    <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.username }}</a></p>
     <p><a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a></p>
     {% if owner == current_user %}
     <p><a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a></p>

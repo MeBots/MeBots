@@ -6,7 +6,6 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, BotForm, InstanceForm
 from app.models import User, Bot, Instance
-from app.email import send_password_reset_email
 
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
