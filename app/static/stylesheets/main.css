@@ -23,6 +23,9 @@ header {
     background: #00aff0;
     color: white;
 }
+header a {
+    text-decoration: none;
+}
 header #logo {
     font-size: 40px;
     line-height: 1;
@@ -41,8 +44,7 @@ header nav li {
     list-style: none;
     display: inline-block;
 }
-header nav a {
-    text-decoration: none;
+header nav ul a {
     padding: 5px 3px;
 }
 h3 {
