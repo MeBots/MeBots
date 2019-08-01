@@ -47,14 +47,6 @@
         {% endfor %}
     </div>
 
-    <div>
-        {{ form.client_id.label }}
-        {{ form.client_id }}
-        {% for error in form.client_id.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
-
     <p>{{ form.submit() }}</p>
 </form>
 {% endblock %}
