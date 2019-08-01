@@ -17,8 +17,8 @@ class User(UserMixin, db.Model):
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
 
-    def avatar(self, size='preview'):
-        return app.config['IMAGE_ROOT'] + self.avatar_url + '.' + size
+    def avatar_url(self, size='preview'):
+        return app.config['IMAGE_ROOT'] + self.avatar + '.' + size
 
 
 @login.user_loader
