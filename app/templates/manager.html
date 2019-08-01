@@ -31,6 +31,7 @@
 </section>
 <section>
     <h2>Active groups</h2>
+    {% if instances %}
     <table>
         <thead>
             <th>Avatar</th>
@@ -51,6 +52,9 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <p>You haven't added this bot to any groups yet!</p>
+    {% endif %}
 </section>
 <script src="/static/scripts/manager.js"></script>
 {% endblock %}
