@@ -131,6 +131,14 @@ button:hover, button:focus, button:active,
 .button-row {
     margin: 10px 0 20px;
 }
+.button.delete {
+    border-color: #ea0404;
+    color: #ea0404;
+}
+.button.delete:hover, .button.delete:focus, .button.delete:active {
+    color: white;
+    background-color: #ea0404;
+}
 footer {
     color: #aaa;
     font-size: 10px;
