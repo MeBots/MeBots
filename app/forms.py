@@ -4,18 +4,6 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Le
 from app.models import User, Bot
 
 
-class ResetPasswordRequestForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    submit = SubmitField('Request Password Reset')
-
-
-class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Request Password Reset')
-
-
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     submit = SubmitField('Submit')
