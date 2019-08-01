@@ -23,3 +23,11 @@ form .error {
     display: inline;
     color: #DD3333;
 }
+
+#avatar_preview {
+    width: 150px;
+    height: 150px;
+    display: block;
+    background-size: cover;
+    background-position: center;
+}
