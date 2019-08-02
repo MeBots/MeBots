@@ -26,10 +26,33 @@ def api_post(endpoint, data={}, token=None):
     return req.json()['response']
 
 
+def fill_user(user, data, token=None):
+    user.name = data['name']
+    user.email = data['email']
+    user.avatar = data['image_url'][len(app.config['IMAGE_ROOT']):],
+    if token is not None:
+        user.token = token
+
+
+@app.before_request
+def prereq():
+    print(request.endpoint)
+    if current_user.is_authenticated and request.endpoint != 'login':
+        print('Redirecting from ' + request.endpoint)
+        try:
+            data = api_get('users/me')
+            user = User.query.get(data['user_id'])
+            fill_user(user, data)
+            db.session.commit()
+        except:
+            logout_user()
+            return redirect(url_for('login'))
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     page = request.args.get('page', 1, type=int)
-    bots = Bot.query.order_by(Bot.instances.count().desc()).paginate(page, app.config['ITEMS_PER_PAGE'], False)
+    bots = Bot.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
     return render_template('index.html', title='Home',
@@ -52,17 +75,18 @@ def login():
     user = User.query.get(user_id)
     if user is None:
         user = User(id=user_id,
-                    name=me['name'],
-                    email=me['email'],
-                    avatar=me['image_url'][len(app.config['IMAGE_ROOT']):],
                     token=token)
+        fill_user(user, me)
         db.session.add(user)
         db.session.commit()
     login_user(user)
     # TODO: does this actually work? I don't think it would...
+    """
     next_page = request.args.get('next')
     if not next_page or url_parse(next_page).netloc != '':
         next_page = url_for('index')
+    """
+    next_page = url_for('index')
     return redirect(next_page)
 
 
