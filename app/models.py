@@ -35,6 +35,9 @@ class Bot(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
 
+    def json(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 
 class Instance(db.Model):
     # This is both the internal primary key and GroupMe's bot_id field.

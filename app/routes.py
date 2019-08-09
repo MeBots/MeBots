@@ -19,11 +19,9 @@ def api_get(endpoint, token=None):
 def api_post(endpoint, data={}, token=None):
     if token is None:
         token = current_user.token
-    print(token)
-    req = requests.post(API_ROOT + endpoint,
+    return requests.post(API_ROOT + endpoint,
                          params={'token': token},
-                         data=data)
-    return req.json()['response']
+                         data=data).json()['response']
 
 
 def fill_user(user, data, token=None):
@@ -36,17 +34,21 @@ def fill_user(user, data, token=None):
 
 @app.before_request
 def prereq():
-    print(request.endpoint)
     if current_user.is_authenticated and request.endpoint != 'login':
-        print('Redirecting from ' + request.endpoint)
-        try:
-            data = api_get('users/me')
-            user = User.query.get(data['user_id'])
-            fill_user(user, data)
-            db.session.commit()
+        #try:
+        data = api_get('users/me')
+        user = User.query.get(data['user_id'])
+        print('User:')
+        print(user)
+        #fill_user(user, data)
+        #db.session.commit()
+        """
         except:
             logout_user()
             return redirect(url_for('login'))
+            """
+    else:
+        print('User isn\'t logged in.')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -65,6 +67,7 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     token = request.args.get('access_token')
+    print('token: %s' % token)
     if token is None:
         return redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID'])
     me = api_get('users/me', token=token)
@@ -80,6 +83,7 @@ def login():
         db.session.add(user)
         db.session.commit()
     login_user(user)
+    print('GOT HERE' * 20)
     # TODO: does this actually work? I don't think it would...
     """
     next_page = request.args.get('next')
