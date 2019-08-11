@@ -19,9 +19,10 @@ def api_get(endpoint, token=None):
 def api_post(endpoint, data={}, token=None):
     if token is None:
         token = current_user.token
-    return requests.post(API_ROOT + endpoint,
-                         params={'token': token},
-                         data=data).json()['response']
+    req = requests.post(API_ROOT + endpoint + '?token=' + token,
+                         data=data)
+    print(req)
+    return req.json()['response']
 
 
 def fill_user(user, data, token=None):
@@ -184,6 +185,7 @@ def manager(slug):
             'avatar_url': form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
             # TODO: handle callback URLs ourselves!
             'callback_url': bot.callback_url,
+            'dm_notification': False,
         }
         result = api_post('bots', {'bot': bot_params})['bot']
         group = api_get(f'groups/{group_id}')
