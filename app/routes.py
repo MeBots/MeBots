@@ -25,14 +25,6 @@ def api_post(endpoint, data={}, token=None):
     return req.json()['response']
 
 
-def fill_user(user, data, token=None):
-    user.name = data['name']
-    user.email = data['email']
-    user.avatar = data['image_url'][len(app.config['IMAGE_ROOT']):],
-    if token is not None:
-        user.token = token
-
-
 @app.before_request
 def prereq():
     if current_user.is_authenticated and request.endpoint != 'login':
@@ -41,7 +33,7 @@ def prereq():
         user = User.query.get(data['user_id'])
         print('User:')
         print(user)
-        #fill_user(user, data)
+        #user.from_json(data)
         #db.session.commit()
         """
         except:
@@ -80,7 +72,7 @@ def login():
     if user is None:
         user = User(id=user_id,
                     token=token)
-        fill_user(user, me)
+        user.from_json(me)
         db.session.add(user)
         db.session.commit()
     login_user(user)

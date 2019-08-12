@@ -15,6 +15,13 @@ class User(UserMixin, db.Model):
     def avatar_url(self, size='preview'):
         return app.config['IMAGE_ROOT'] + self.avatar + '.' + size
 
+    def from_json(self, json, token=None):
+        self.name = json['name']
+        self.email = json['email']
+        self.avatar = json['image_url'][len(app.config['IMAGE_ROOT']):],
+        if token is not None:
+            self.token = token
+
 
 @login.user_loader
 def load_user(id):
