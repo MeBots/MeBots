@@ -12,16 +12,17 @@ API_ROOT = 'https://api.groupme.com/v3/'
 
 
 def api_get(endpoint, token=None):
+    print('THE TOKEN IS ', current_user.token)
+
     if token is None:
         token = current_user.token
     return requests.get(API_ROOT + endpoint, params={'token': token}).json()['response']
 
-def api_post(endpoint, data={}, token=None):
+def api_post(endpoint, json={}, token=None):
     if token is None:
         token = current_user.token
     req = requests.post(API_ROOT + endpoint + '?token=' + token,
-                         data=data)
-    print(req)
+                        json=json)
     return req.json()['response']
 
 
@@ -180,6 +181,10 @@ def manager(slug):
             'dm_notification': False,
         }
         result = api_post('bots', {'bot': bot_params})['bot']
+        """
+        result = requests.post(f"https://api.groupme.com/v3/bots?token={current_user.token}",
+                               json={"bot": bot_params}).json()["response"]["bot"]
+                               """
         group = api_get(f'groups/{group_id}')
 
         # Store in database
