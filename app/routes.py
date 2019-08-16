@@ -12,8 +12,6 @@ API_ROOT = 'https://api.groupme.com/v3/'
 
 
 def api_get(endpoint, token=None):
-    print('THE TOKEN IS ', current_user.token)
-
     if token is None:
         token = current_user.token
     return requests.get(API_ROOT + endpoint, params={'token': token}).json()['response']
@@ -21,9 +19,9 @@ def api_get(endpoint, token=None):
 def api_post(endpoint, json={}, token=None):
     if token is None:
         token = current_user.token
-    req = requests.post(API_ROOT + endpoint + '?token=' + token,
-                        json=json)
-    return req.json()['response']
+    return requests.post(API_ROOT + endpoint,
+                         params={'token': token},
+                         json=json).json()['response']
 
 
 @app.before_request
@@ -32,8 +30,6 @@ def prereq():
         #try:
         data = api_get('users/me')
         user = User.query.get(data['user_id'])
-        print('User:')
-        print(user)
         #user.from_json(data)
         #db.session.commit()
         """
@@ -77,7 +73,6 @@ def login():
         db.session.add(user)
         db.session.commit()
     login_user(user)
-    print('GOT HERE' * 20)
     # TODO: does this actually work? I don't think it would...
     """
     next_page = request.args.get('next')
@@ -200,7 +195,7 @@ def manager(slug):
         form.avatar_url.data = bot.avatar_url
     # TODO: go through instances in database and re-add anything that's not in GroupMe's list
     #groupme_bots = requests.get(f'https://api.groupme.com/v3/bots?token={token}').json()['response']
-    instances = [instance for instance in bot.instances if instance.owner_id == me['user_id']]
+    instances = Instance.query.filter_by(owner_id=me['user_id']).all()
 
     return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
 
