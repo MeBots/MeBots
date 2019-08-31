@@ -1,5 +1,7 @@
 from flask_login import UserMixin
 from app import app, db, login
+import os
+import binascii
 
 
 class User(UserMixin, db.Model):
@@ -38,12 +40,16 @@ class Bot(db.Model):
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))
     description = db.Column(db.String(200))
+    token = db.Column(db.String(30))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
 
     def json(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+    def reset_token(self):
+        self.token = binascii.b2a_hex(os.urandom(15))
 
 
 class Instance(db.Model):

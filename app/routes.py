@@ -112,6 +112,7 @@ def create_bot():
                   avatar_url_customizable=form.avatar_url_customizable.data,
                   callback_url=form.callback_url.data,
                   description=form.description.data)
+        bot.reset_token()
         bot.owner = current_user
         db.session.add(bot)
         db.session.commit()
