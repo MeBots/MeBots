@@ -40,7 +40,7 @@ class Bot(db.Model):
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))
     description = db.Column(db.String(200))
-    token = db.Column(db.String(24))
+    token = db.Column(db.String(22))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
@@ -50,7 +50,7 @@ class Bot(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def reset_token(self):
-        self.token = binascii.b2a_hex(os.urandom(12)).decode()
+        self.token = binascii.b2a_hex(os.urandom(11)).decode()
 
 
 class Instance(db.Model):
