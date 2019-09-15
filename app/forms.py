@@ -5,13 +5,13 @@ from app.models import User
 
 
 class BotForm(FlaskForm):
-    name = StringField('Bot name', validators=[DataRequired()])
-    slug = StringField('Shortname', validators=[DataRequired()])
+    name = StringField('Bot name', validators=[DataRequired(), Length(max=32)])
+    slug = StringField('Shortname', validators=[DataRequired(), Length(max=32)])
     name_customizable = BooleanField('Allow customizing name')
     avatar_url = StringField('Avatar URL')
     avatar_url_customizable = BooleanField('Allow customizing avatar')
-    callback_url = StringField('Callback URL', validators=[DataRequired()])
-    description = TextAreaField('Description')
+    callback_url = StringField('Callback URL', validators=[DataRequired(), Length(max=128)])
+    description = TextAreaField('Description', Length(max=200))
 
     submit = SubmitField('Submit')
 

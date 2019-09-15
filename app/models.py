@@ -32,7 +32,7 @@ def load_user(id):
 
 class Bot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String(16), unique=True)
+    slug = db.Column(db.String(32), unique=True)
     name = db.Column(db.String(32))
     name_customizable = db.Column(db.Boolean)
     # TODO: store this always as a GroupMe URL string so we don't use up resources with every instance
