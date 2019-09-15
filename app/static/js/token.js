@@ -1,4 +1,15 @@
-document.getElementById("reset_token").onclick = function(e) {
+const readout_token = document.getElementById("readout_token"),
+      copy_token = document.getElementById("copy_token"),
+      reset_token = document.getElementById("reset_token");
+
+
+copy_token.onclick = function(e) {
+    console.log(readout_token);
+    readout_token.select();
+    document.execCommand('copy');
+}
+
+reset_token.onclick = function(e) {
     var req = new XMLHttpRequest();
     req.open("POST", "/reset_token");
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -12,6 +23,6 @@ document.getElementById("reset_token").onclick = function(e) {
     };
 };
 
-document.getElementById("readout_token").onfocus = function(e) {
+readout_token.onfocus = function(e) {
     this.select();
 }
