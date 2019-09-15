@@ -46,6 +46,7 @@ class Bot(db.Model):
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
 
     def json(self):
+        # TODO: don't expose private fields
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def reset_token(self):
