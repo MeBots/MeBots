@@ -4,9 +4,6 @@ onclick = function(e) {
             var req = new XMLHttpRequest();
             req.open("POST", "/delete");
             req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            console.log({
-                "instance_id": e.target.getAttribute("instance_id"),
-            });
             req.send(JSON.stringify({
                 "instance_id": e.target.getAttribute("instance_id"),
             }));

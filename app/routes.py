@@ -17,12 +17,13 @@ def api_get(endpoint, token=None):
     return requests.get(API_ROOT + endpoint, params={'token': token}).json()['response']
 
 
-def api_post(endpoint, json={}, token=None):
+def api_post(endpoint, json={}, token=None, expect_json=True):
     if token is None:
         token = current_user.token
-    return requests.post(API_ROOT + endpoint,
-                         params={'token': token},
-                         json=json).json()['response']
+    req = requests.post(API_ROOT + endpoint,
+                        params={'token': token},
+                        json=json)
+    return req.json()['response'] if expect_json else req
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -145,9 +146,29 @@ def edit_bot(slug):
 @login_required
 def manager(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
-
     me = api_get('users/me')
+
     groups = api_get('groups')
+
+    # TODO: this is a lot of logic and definitely could be shorter and not repeated every single time.
+    groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] == bot.callback_url]
+    instances = Instance.query.filter_by(owner_id=me['user_id']).all()
+    groups = [group for group in groups if group['id'] not in [instance.group_id for instance in instances]]
+    missing_instances = [ours for ours in instances if ours.group_id not in
+                         [theirs['group_id'] for theirs in groupme_instances]]
+    if missing_instances:
+        for instance in missing_instances:
+            bot_params = {
+                'name': instance.name or bot.name,
+                'group_id': instance.group_id,
+                'avatar_url': instance.avatar_url or bot.avatar_url,
+                'callback_url': bot.callback_url,
+            }
+            result = api_post('bots', {'bot': bot_params})['bot']
+            instance.id = result['bot_id']
+        db.session.commit()
+        flash("Missing bots have been restored.")
+
     form = InstanceForm()
     form.group_id.choices = [(group['id'], group['name']) for group in groups]
     if form.validate_on_submit():
@@ -180,19 +201,8 @@ def manager(slug):
     else:
         form.name.data = bot.name
         form.avatar_url.data = bot.avatar_url
-    groupme_instances = api_get('bots')
+
     instances = Instance.query.filter_by(owner_id=me['user_id']).all()
-    missing_instances = [ours for ours in instances if ours.group_id not in
-                         [theirs['group_id'] for theirs in groupme_instances]]
-    if missing_instances:
-        for instance in missing_instances:
-            bot_params = {
-                'name': instance.name or bot.name,
-                'group_id': instance.group_id,
-                'avatar_url': instance.avatar_url or bot.avatar_url,
-                'callback_url': bot.callback_url,
-            }
-        flash("Missing bots have been restored.")
 
     return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
 
@@ -201,8 +211,8 @@ def manager(slug):
 def delete_instance():
     data = request.get_json()
     instance = Instance.query.get(data['instance_id'])
-    req = api_post('bots/destroy', {'bot_id': instance.id})
-    if req:
+    req = api_post('bots/destroy', {'bot_id': instance.id}, expect_json=False)
+    if req.ok:
         db.session.delete(instance)
         db.session.commit()
         return 'ok', 200
