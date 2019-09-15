@@ -3,8 +3,8 @@ form label {
     display: block;
 }
 textarea,
-form input[type="text"],
-form input[type="password"] {
+input[type="text"],
+input[type="password"] {
     padding: 5px;
     width: 250px;
     border: solid 1px #ddd;
@@ -30,4 +30,19 @@ form .error {
     display: block;
     background-size: cover;
     background-position: center;
+}
+
+#token {
+
+}
+#token input,
+#token button {
+    display: inline-block;
+}
+#token input {
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+#token button {
+    margin-top: -2px;
 }

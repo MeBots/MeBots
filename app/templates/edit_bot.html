@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% include "_token.html" %}
 <form action="" method="post">
     {{ form.hidden_tag() }}
 
@@ -49,5 +50,4 @@
 
     <p>{{ form.submit() }}</p>
 </form>
-{% include "_token.html" %}
 {% endblock %}

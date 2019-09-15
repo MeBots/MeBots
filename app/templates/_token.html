@@ -1,7 +1,8 @@
 {% if token %}
-<div>
-    <input type="text" id="token" value="{{ token }}" disabled>
-    <button id="reset_token" slug="{{ token }}">Reset</button>
+Token
+<div id="token">
+    <input type="text" id="readout_token" value="{{ token }}" readonly>
+    <button id="reset_token" slug="{{ slug }}">Reset</button>
 </div>
 <script src="/static/js/token.js"></script>
 {% endif %}

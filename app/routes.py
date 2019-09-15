@@ -154,7 +154,8 @@ def edit_bot(slug):
     return render_template('edit_bot.html',
                            title='Edit bot',
                            form=form,
-                           token=bot.token)
+                           token=bot.token,
+                           slug=bot.slug)
 
 
 @app.route('/manager/<slug>', methods=['GET', 'POST'])
@@ -212,7 +213,10 @@ def delete_bot():
 @app.route('/reset_token', methods=['POST'])
 def reset_token():
     data = request.get_json()
-    bot = Bot.query.get(data['slug'])
-    bot.reset_token()
-    db.session.commit()
-    return '', 200
+    bot = Bot.query.filter_by(slug=data['slug']).first_or_404()
+    if bot is not None:
+        bot.reset_token()
+        db.session.commit()
+        flash('Regenerated token.')
+        return '', 200
+    return '', 500

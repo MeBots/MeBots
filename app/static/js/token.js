@@ -11,3 +11,7 @@ document.getElementById("reset_token").onclick = function(e) {
         }
     };
 };
+
+document.getElementById("readout_token").onfocus = function(e) {
+    this.select();
+}
