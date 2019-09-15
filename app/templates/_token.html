@@ -1,6 +1,6 @@
-{% if show_token %}
+{% if token %}
 <div>
-    <input type="text" disabled>
-    <button id="regenerate_token">Regenerate</button>
+    <input type="text" id="token" value="{{ token }}" disabled>
+    <button id="reset_token" slug="{{ token }}">Reset</button>
 </div>
 {% endif %}

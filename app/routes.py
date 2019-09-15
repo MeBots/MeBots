@@ -153,7 +153,8 @@ def edit_bot(slug):
     form.description.data = bot.description
     return render_template('edit_bot.html',
                            title='Edit bot',
-                           form=form)
+                           form=form,
+                           token=bot.token)
 
 
 @app.route('/manager/<slug>', methods=['GET', 'POST'])
@@ -177,10 +178,6 @@ def manager(slug):
             'dm_notification': False,
         }
         result = api_post('bots', {'bot': bot_params})['bot']
-        """
-        result = requests.post(f"https://api.groupme.com/v3/bots?token={current_user.token}",
-                               json={"bot": bot_params}).json()["response"]["bot"]
-                               """
         group = api_get(f'groups/{group_id}')
 
         # Store in database
@@ -210,3 +207,12 @@ def delete_bot():
         db.session.delete(bot)
         db.session.commit()
         return 'ok', 200
+
+
+@app.route('/reset_token', methods=['POST'])
+def reset_token():
+    data = request.get_json()
+    bot = Bot.query.get(data['slug'])
+    bot.reset_token()
+    db.session.commit()
+    return '', 200

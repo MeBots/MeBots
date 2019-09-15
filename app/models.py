@@ -50,7 +50,7 @@ class Bot(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def reset_token(self):
-        self.token = binascii.b2a_hex(os.urandom(15))
+        self.token = binascii.b2a_hex(os.urandom(15)).decode()
 
 
 class Instance(db.Model):
