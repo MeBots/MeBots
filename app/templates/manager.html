@@ -48,7 +48,7 @@
             {% for instance in instances %}
             <tr>
                 <td><img src="{{ instance.avatar_url }}"></td>
-                <td>{{ instance.id }}</td>
+                {#<td>{{ instance.id }}</td>$}
                 <td>{{ instance.name }}</td>
                 <td>{{ instance.group_name }}</td>
                 <td><button class="button delete" group_id="{{ instance.group_id }}">Leave</button></td>

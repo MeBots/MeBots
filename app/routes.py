@@ -153,10 +153,14 @@ def manager(slug):
     if form.validate_on_submit():
         # Build and send instance data
         group_id = form.group_id.data
+        name = form.name.data if bot.name_customizable else bot.name
+        name_changed = not (name == bot.name)
+        avatar_url = form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url
+        avatar_url_changed = not (avatar_url == bot.avatar_url)
         bot_params = {
-            'name': form.name.data if bot.name_customizable else bot.name,
+            'name': name,
             'group_id': group_id,
-            'avatar_url': form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
+            'avatar_url': avatar_url,
             # TODO: handle callback URLs ourselves!
             'callback_url': bot.callback_url,
         }
@@ -167,6 +171,8 @@ def manager(slug):
         instance = Instance(id=result['bot_id'],
                             group_id=group_id,
                             group_name=group['name'],
+                            name=name if name_changed else None,
+                            avatar_url=avatar_url if avatar_url_changed else None,
                             owner_id=me['user_id'],
                             bot_id=bot.id)
         db.session.add(instance)
@@ -181,13 +187,12 @@ def manager(slug):
     if missing_instances:
         for instance in missing_instances:
             bot_params = {
-                'name': form.name.data if bot.name_customizable else bot.name,
-                'group_id': group_id,
-                'avatar_url': form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
-                # TODO: handle callback URLs ourselves!
+                'name': instance.name or bot.name,
+                'group_id': instance.group_id,
+                'avatar_url': instance.avatar_url or bot.avatar_url,
                 'callback_url': bot.callback_url,
             }
-
+        flash("Missing bots have been restored.")
 
     return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
 

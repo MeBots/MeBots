@@ -59,5 +59,9 @@ class Instance(db.Model):
     group_id = db.Column(db.String(16))
     group_name = db.Column(db.String(50))
 
+    # These two fields will be nulled if the user cannot or has not made these customizations.
+    name = db.Column(db.String(32), nullable=True)
+    avatar_url = db.Column(db.String(70), nullable=True)
+
     bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
