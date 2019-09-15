@@ -198,12 +198,12 @@ def manager(slug):
 
 
 @app.route('/delete', methods=['POST'])
-def delete_bot():
+def delete_instance():
     data = request.get_json()
-    bot = Bot.query.get(data['group_id'])
-    req = api_post('bots/destroy', current_user.token, {'bot_id': bot.bot_id})
+    instance = Instance.query.get(data['instance_id'])
+    req = api_post('bots/destroy', {'bot_id': instance.id})
     if req:
-        db.session.delete(bot)
+        db.session.delete(instance)
         db.session.commit()
         return 'ok', 200
 

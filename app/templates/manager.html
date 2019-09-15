@@ -51,7 +51,9 @@
                 {#<td>{{ instance.id }}</td>#}
                 <td>{{ instance.name or bot.name }}</td>
                 <td>{{ instance.group_name }}</td>
-                <td><button class="button delete" group_id="{{ instance.group_id }}">Leave</button></td>
+                {# we should avoid revealing the bot IDs if we can! That'd be neat. Although they
+                   could just get it through the bot management panel anyway... #}
+                <td><button class="button delete" instance_id="{{ instance.id }}">Leave</button></td>
             </tr>
             {% endfor %}
         </tbody>
