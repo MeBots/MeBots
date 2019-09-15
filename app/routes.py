@@ -16,6 +16,7 @@ def api_get(endpoint, token=None):
         token = current_user.token
     return requests.get(API_ROOT + endpoint, params={'token': token}).json()['response']
 
+
 def api_post(endpoint, json={}, token=None):
     if token is None:
         token = current_user.token
