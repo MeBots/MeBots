@@ -110,6 +110,7 @@ label {
 input[type="submit"],
 button,
 .button {
+    font: inherit;
     color: #00aff0;
     background: none;
     padding: 8px 10px;
