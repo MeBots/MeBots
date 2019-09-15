@@ -32,9 +32,6 @@ form .error {
     background-position: center;
 }
 
-#token {
-
-}
 #token input,
 #token button {
     display: inline-block;

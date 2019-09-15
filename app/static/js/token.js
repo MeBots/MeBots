@@ -4,7 +4,6 @@ const readout_token = document.getElementById("readout_token"),
 
 
 copy_token.onclick = function(e) {
-    console.log(readout_token);
     readout_token.select();
     document.execCommand('copy');
 }
