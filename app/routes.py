@@ -25,23 +25,6 @@ def api_post(endpoint, json={}, token=None):
                          json=json).json()['response']
 
 
-@app.before_request
-def prereq():
-    if current_user.is_authenticated and request.endpoint != 'login':
-        #try:
-        data = api_get('users/me')
-        user = User.query.get(data['user_id'])
-        #user.from_json(data)
-        #db.session.commit()
-        """
-        except:
-            logout_user()
-            return redirect(url_for('login'))
-            """
-    else:
-        print('User isn\'t logged in.')
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     page = request.args.get('page', 1, type=int)
