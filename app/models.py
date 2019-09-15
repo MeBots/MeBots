@@ -47,7 +47,7 @@ class Bot(db.Model):
 
     def json(self):
         return {c.name: getattr(self, c.name) for c in ('slug', 'name',
-                                                        'avatar_url')}.update({'instances': len(self.instances.items())})
+                                                        'avatar_url')}.update({'instances': len(self.instances.all())})
 
     def reset_token(self):
         self.token = binascii.b2a_hex(os.urandom(11)).decode()

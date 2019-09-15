@@ -101,7 +101,6 @@ def create_bot():
         db.session.add(bot)
         db.session.commit()
         flash('Successfully created bot ' + bot.name + '!')
-        # TODO: consider a more helpful redirect
         return redirect(url_for('edit_bot', slug=bot.slug))
     return render_template('edit_bot.html',
                            title='Create new bot',
@@ -160,7 +159,6 @@ def manager(slug):
             'avatar_url': form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
             # TODO: handle callback URLs ourselves!
             'callback_url': bot.callback_url,
-            'dm_notification': False,
         }
         result = api_post('bots', {'bot': bot_params})['bot']
         group = api_get(f'groups/{group_id}')
@@ -176,9 +174,20 @@ def manager(slug):
     else:
         form.name.data = bot.name
         form.avatar_url.data = bot.avatar_url
-    # TODO: go through instances in database and re-add anything that's not in GroupMe's list
-    #groupme_bots = requests.get(f'https://api.groupme.com/v3/bots?token={token}').json()['response']
+    groupme_instances = api_get('bots')
     instances = Instance.query.filter_by(owner_id=me['user_id']).all()
+    missing_instances = [ours for ours in instances if ours.group_id not in
+                         [theirs['group_id'] for theirs in groupme_instances]]
+    if missing_instances:
+        for instance in missing_instances:
+            bot_params = {
+                'name': form.name.data if bot.name_customizable else bot.name,
+                'group_id': group_id,
+                'avatar_url': form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url,
+                # TODO: handle callback URLs ourselves!
+                'callback_url': bot.callback_url,
+            }
+
 
     return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
 
