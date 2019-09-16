@@ -36,7 +36,11 @@ header a {
     text-decoration: none;
 }
 header #logo {
-    font-size: 40px;
+    height: 40px;
+    margin-right: 5px;
+}
+header #logo-text {
+    font-size: 50px;
     line-height: 1;
     display: inline-block;
     margin-right: 10px;
