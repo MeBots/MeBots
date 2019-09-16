@@ -1,4 +1,12 @@
 @font-face {
+    font-family: 'BIG JOHN';
+    font-style: normal;
+    font-weight: 800;
+    src: local('BIG JOHN'), url('/static/font/big_john.otf') format('opentype');
+}
+
+/* Body font */
+@font-face {
     font-family: 'PT Sans';
     font-style: normal;
     font-weight: 400;
@@ -22,6 +30,7 @@ header, main, footer {
 header {
     background: #00aff0;
     color: white;
+    font-family: 'BIG JOHN', 'PT Sans', serif;
 }
 header a {
     text-decoration: none;

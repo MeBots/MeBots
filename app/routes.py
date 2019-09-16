@@ -37,6 +37,10 @@ def index():
                            prev_url=prev_url)
 
 
+@app.route('/docs')
+def docs():
+    return 'Not available yet!'
+
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
