@@ -32,7 +32,7 @@ def index():
     bots = Bot.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
-    return render_template('index.html', title='Home',
+    return render_template('index.html',
                            bots=bots.items, next_url=next_url,
                            prev_url=prev_url)
 
