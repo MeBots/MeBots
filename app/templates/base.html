@@ -31,7 +31,7 @@
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('login') }}" class="session">Log in with GroupMe</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('logout') }}" class="session">Logout</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     {% endif %}
                 </ul>
             </nav>
