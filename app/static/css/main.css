@@ -24,10 +24,11 @@ body {
     background: white;
     color: #111;
 }
-header, main, footer {
-    padding: 10px 0;
+main, footer {
+    padding: 10px;
 }
 header {
+    padding: 3px 0 0 10px;
     background: #00aff0;
     color: white;
     font-family: 'BIG JOHN', 'PT Sans', serif;
@@ -48,9 +49,7 @@ header #logo-text {
 header nav ul {
     display: inline-block;
     vertical-align: top;
-    margin-top: 7px;
-}
-header nav ul.session {
+    margin-top: 3px;
     float: right;
 }
 header nav li {
@@ -58,7 +57,31 @@ header nav li {
     display: inline-block;
 }
 header nav ul a {
-    padding: 5px 3px;
+    padding: 8px 0;
+    margin: 0 6px;
+
+    display: inline-block;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+header nav ul a:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    background: white;
+    height: 3px;
+    transition: right 0.3s ease-out;
+}
+header nav ul a:hover:before, header nav ul a:focus:before, header nav ul a:active:before {
+    right: 0;
+}
+header .session {
+    padding: 8px;
+    background: white;
+    color: #00aff0;
 }
 h3 {
     font-size: 30px;
@@ -151,7 +174,7 @@ footer {
 
 @media (min-width: 800px) {
     header, footer {
-        padding: 10px 25px;
+        padding-left: 25px;
     }
     main {
         padding: 20px 25px;
