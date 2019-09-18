@@ -25,13 +25,18 @@ body {
     color: #111;
 }
 main, footer {
-    padding: 10px;
+    padding: 0 10px 10px;
 }
 header {
     padding: 3px 0 0 10px;
     background: #00aff0;
     color: white;
+}
+header, h1, h2, h3, h4, h5, h6 {
     font-family: 'BIG JOHN', 'PT Sans', serif;
+}
+h1 {
+    margin-bottom: 10px;
 }
 header a {
     text-decoration: none;
@@ -124,6 +129,13 @@ section:last-of-type {
     margin: 5px 5px 0 0;
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.bot_list .bot .row img {
+    float: left;
+}
+.bot_list .bot .row > * {
+    display: inline-block;
+    vertical-align: top;
 }
 p {
     padding: 10px 0;

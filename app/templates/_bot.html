@@ -1,7 +1,13 @@
 <div class="bot">
-    <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
-    <h4>{{ bot.name }}</h4>
-    <p>In {{ bot.instances.count() }} groups.</p>
+    <div class="row">
+        <div>
+            <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
+        </div>
+        <div>
+            <h4>{{ bot.name }}</h4>
+            <p>In {{ bot.instances.count() }} groups.</p>
+        </div>
+    </div>
     <p>{{ bot.description }}</p>
     {% set owner = bot.owner %}
     <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
