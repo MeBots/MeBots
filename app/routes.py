@@ -26,7 +26,7 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
     return req.json()['response'] if expect_json else req
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
     bots = Bot.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
@@ -49,7 +49,12 @@ def login():
     token = request.args.get('access_token')
     print('token: %s' % token)
     if token is None:
-        return redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID'])
+        # Store next parameter in cookie to be used after login
+        resp = make_response(redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID']))
+        next_page = request.args.get('next')
+        if next_page:
+            resp.set_cookie('next', next_page)
+        return resp
     me = api_get('users/me', token=token)
     user_id = me.get('user_id')
     if not user_id:
@@ -63,14 +68,9 @@ def login():
         db.session.add(user)
         db.session.commit()
     login_user(user)
-    # TODO: does this actually work? I don't think it would...
-    """
-    next_page = request.args.get('next')
-    if not next_page or url_parse(next_page).netloc != '':
-        next_page = url_for('index')
-    """
-    next_page = url_for('index')
-    return redirect(next_page)
+    # Check next cookie to see if we need to go anywhere
+    return redirect(request.cookies.get('next',
+                                        url_for('index')))
 
 
 @app.route('/logout')
