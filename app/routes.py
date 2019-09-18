@@ -37,6 +37,11 @@ def index():
                            prev_url=prev_url)
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 @app.route('/docs')
 def docs():
     return 'Not available yet!'
