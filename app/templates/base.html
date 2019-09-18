@@ -22,6 +22,7 @@
                 <img src="/static/images/logo/icon-plain.png" alt="MeBots logo" id="logo"><h2 id="logo-text"><a href="{{ url_for('index') }}">MeBots</a></h2>
                 <ul>
                     <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
                     <li><a href="{{ url_for('create_bot') }}">Create Bot</a></li>
                     {% if current_user.is_anonymous %}
                     {% else %}
