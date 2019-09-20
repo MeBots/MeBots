@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
+    <h1>{{ bot.name }}</h1>
+    <p>In {{ bot.instances.count() }} groups.</p>
+    <p>{{ bot.description }}</p>
+    {% set owner = bot.owner %}
+    <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
+    <p><a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a></p>
+    {% if owner == current_user %}
+    <p><a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a></p>
+    {% endif %}
+{% endblock %}

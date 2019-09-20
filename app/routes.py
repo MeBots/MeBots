@@ -95,6 +95,12 @@ def user(user_id):
     return render_template('user.html', user=user, bots=bots.items)
 
 
+@app.route('/bot/<slug>')
+def bot(slug):
+    bot = Bot.query.filter_by(slug=slug).first_or_404()
+    return render_template('bot.html', bot=bot)
+
+
 @app.route('/create_bot', methods=['GET', 'POST'])
 @login_required
 def create_bot():
