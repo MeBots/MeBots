@@ -1,8 +1,8 @@
 @font-face {
-    font-family: 'BIG JOHN';
+    font-family: 'Wavehaus';
     font-style: normal;
     font-weight: 800;
-    src: local('BIG JOHN'), url('/static/font/big_john.otf') format('opentype');
+    src: local('Wavehaus'), url('/static/font/wavehaus.otf') format('opentype');
 }
 
 /* Body font */
@@ -33,7 +33,7 @@ header {
     color: white;
 }
 header, h1, h2, h3, h4, h5, h6 {
-    font-family: 'BIG JOHN', 'PT Sans', serif;
+    font-family: 'Wavehaus', 'PT Sans', serif;
 }
 h1 {
     margin-bottom: 10px;
