@@ -114,6 +114,11 @@ section:last-of-type {
     width: 100px;
     height: 100px;
 }
+.avatar.large {
+    width: 250px;
+    height: 250px;
+    float: left;
+}
 .profile .details {
 }
 .bot_list {

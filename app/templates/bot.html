@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
+    <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large">
     <h1>{{ bot.name }}</h1>
     <p>In {{ bot.instances.count() }} groups.</p>
     <p>{{ bot.description }}</p>
