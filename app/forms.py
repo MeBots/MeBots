@@ -12,7 +12,7 @@ class BotForm(FlaskForm):
     avatar_url_customizable = BooleanField('Allow customizing avatar')
     callback_url = StringField('Callback URL', validators=[DataRequired(), Length(max=128)])
     description = TextAreaField('Description', validators=[Length(max=200)])
-    webite = TextAreaField('Website', validators=[Length(max=128)])
+    website = StringField('Website', validators=[Length(max=128)])
 
     submit = SubmitField('Submit')
 

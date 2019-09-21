@@ -4,7 +4,7 @@ function insertAfter(element, anchor) {
 }
 let avatarInput = document.getElementById('avatar_url'), avatarPreview;
 function previewAvatar() {
-    avatarPreview.style.backgroundImage = 'url(' + avatarInput.value + ')';
+    avatarPreview.style.backgroundImage = 'url(' + avatarInput.value + '), url(/static/images/unknown.png)';
 }
 if (avatarInput) {
     avatarPreview = document.createElement('div');

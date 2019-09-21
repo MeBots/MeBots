@@ -1,4 +1,7 @@
 form {}
+form div {
+    margin: 5px 0;
+}
 form label {
     display: block;
 }
@@ -6,7 +9,7 @@ textarea,
 input[type="text"],
 input[type="password"] {
     padding: 5px;
-    width: 250px;
+    width: 350px;
     border: solid 1px #ddd;
     display: inline;
     font: inherit;
