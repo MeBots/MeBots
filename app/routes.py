@@ -144,7 +144,7 @@ def edit_bot(slug):
         bot.website = form.website.data
         db.session.commit()
         # TODO; come up with more helpful redirect
-        return redirect(url_for('index'))
+        return redirect(url_for('bot', slug=bot.slug))
     # TODO: this repetition feels wrong...
     form.slug.data = bot.slug
     form.name.data = bot.name
