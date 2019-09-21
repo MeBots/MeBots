@@ -38,11 +38,12 @@ form .error {
 #token input,
 #token button {
     display: inline-block;
+    vertical-align: top;
 }
 #token input {
-    padding-top: 9px;
-    padding-bottom: 9px;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 #token button {
-    margin-top: -2px;
+    margin-top: 2px;
 }

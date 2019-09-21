@@ -5,7 +5,8 @@
         </div>
         <div>
             <h4><a href="{{ url_for('bot', slug=bot.slug) }}">{{ bot.name }}</a></h4>
-            <div class="pill">{{ bot.instances.count() }} groups</div>{% include "_status.html" %}
+            <div class="pill">{{ bot.instances.count() }} groups</div>
+            {% include "_status.html" %}
             <div class="buton-row">
                 <a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a>
                 <a class="button" href="{{ url_for('bot', slug=bot.slug) }}">View</a>

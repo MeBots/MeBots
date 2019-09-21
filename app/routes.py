@@ -114,8 +114,9 @@ def create_bot():
                   callback_url=form.callback_url.data,
                   description=form.description.data,
                   website=form.website.data,
+                  prefix=form.prefix.data,
                   test_group=form.test_group.data,
-                  prefix=form.prefix.data)
+                  repo=form.repo.data)
         bot.reset_token()
         bot.owner = current_user
         db.session.add(bot)
@@ -146,6 +147,7 @@ def edit_bot(slug):
         bot.website = form.website.data
         bot.prefix = form.prefix.data
         bot.test_group = form.test_group.data
+        bot.repo = form.repo.data
         db.session.commit()
         return redirect(url_for('bot', slug=bot.slug))
     # TODO: this repetition feels wrong...
@@ -159,8 +161,9 @@ def edit_bot(slug):
     form.website.data = bot.website
     form.prefix.data = bot.prefix
     form.test_group.data = bot.test_group
+    form.repo.data = bot.repo
     return render_template('edit_bot.html',
-                           title='Edit bot',
+                           title='Editing ' + bot.name,
                            form=form,
                            token=bot.token,
                            slug=bot.slug)

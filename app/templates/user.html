@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="profile">
-    <img class="avatar" src="{{ user.avatar_url() }}" alt="Avatar of {{ user.username }}">
+   <img class="avatar" src="{{ user.avatar_url() }}" alt="Avatar of {{ user.username }}">
     <div class="details">
         <h1>{{ user.name }}</h1>
         {% if user == current_user %}

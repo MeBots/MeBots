@@ -43,6 +43,7 @@ class Bot(db.Model):
     website = db.Column(db.String(128))
     prefix = db.Column(db.String(20))
     test_group = db.Column(db.String(60))
+    repo = db.Column(db.String(100))
 
     token = db.Column(db.String(22))
 

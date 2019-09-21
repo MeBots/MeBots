@@ -2,13 +2,26 @@
 
 {% block content %}
     <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large">
-    <h1>{{ bot.name }}</h1>
-    <p>In {{ bot.instances.count() }} groups.</p>
+    <h1>{{ bot.name }}
+        {% if owner == current_user %}
+        (<a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a>)
+        {% endif %}
+    </h1>
+    <div class="pill">{{ bot.instances.count() }} groups</div>
+    {% include "_status.html" %}
     <p>{{ bot.description }}</p>
     {% set owner = bot.owner %}
     <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
-    <p><a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a></p>
-    {% if owner == current_user %}
-    <p><a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a></p>
-    {% endif %}
+    <div class="button-row">
+        <a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a>
+        {% if bot.website %}
+        <a class="button" href="{{ bot.website }}">Bot website</a>
+        {% endif %}
+        {% if bot.test_group %}
+        <a class="button" href="{{ bot.test_group }}">Join test/info group</a>
+        {% endif %}
+        {% if bot.repo %}
+        <a class="button" href="{{ bot.repo }}">Source repository</a>
+        {% endif %}
+    </div>
 {% endblock %}

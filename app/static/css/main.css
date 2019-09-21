@@ -142,7 +142,7 @@ section:last-of-type {
 .bot h4 {
     font-size: 30px;
 }
-.bot .status {
+.status {
     display: inline-block;
     margin-left: 10px;
     color: #31c793;
@@ -179,6 +179,7 @@ button,
     font: inherit;
     background: #00aff0;
     color: white;
+    border: none;
     padding: 8px 10px;
     text-decoration: none;
     vertical-align: middle;
