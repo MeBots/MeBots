@@ -15,6 +15,7 @@ class BotForm(FlaskForm):
     website = StringField('Website', validators=[Length(max=128)])
     prefix = StringField('Prefix', validators=[Length(max=20)])
     test_group = StringField('Link for testing/informational group', validators=[Length(max=60)])
+    repo = StringField('GitHub/source code repository', validators=[Length(max=100)])
 
     submit = SubmitField('Submit')
 
