@@ -13,7 +13,7 @@ class BotForm(FlaskForm):
     callback_url = StringField('Callback URL', validators=[DataRequired(), Length(max=128), URL()])
     description = TextAreaField('Description', validators=[Length(max=200)])
     website = StringField('Website', validators=[Length(max=128), URL()])
-    prefix = StringField('Prefix', validators=[Length(max=20)])
+    prefix = StringField('Command prefix', validators=[Length(max=20)])
     test_group = StringField('Link for testing/informational group', validators=[Length(max=60), URL()])
     repo = StringField('GitHub/source code repository', validators=[Length(max=100), URL()])
 
