@@ -99,6 +99,12 @@ section {
 section:last-of-type {
     margin-bottom: 0;
 }
+ol {
+    margin-left: 22px;
+}
+ol, main p {
+    line-height: 1.4;
+}
 .profile {
     padding-bottom: 10px;
 }
