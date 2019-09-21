@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if current_user.is_anonymous %}
-    <h1>Spice up your GroupMe chats.</h1>
+    <h1>Enhance your GroupMe chats!</h1>
     <a class="button" href="{{ url_for('create_bot') }}">Create bot</a>
     <a class="button" href="{{ url_for('login') }}">Browse bots</a>
     {% endif %}

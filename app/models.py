@@ -40,6 +40,8 @@ class Bot(db.Model):
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))
     description = db.Column(db.String(200))
+    website = db.Column(db.String(128))
+
     token = db.Column(db.String(22))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

@@ -48,6 +48,14 @@
         {% endfor %}
     </div>
 
+    <div>
+        {{ form.website.label }}
+        {{ form.website }}
+        {% for error in form.description.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+
     <p>{{ form.submit() }}</p>
 </form>
 {% endblock %}

@@ -112,7 +112,8 @@ def create_bot():
                   avatar_url=form.avatar_url.data,
                   avatar_url_customizable=form.avatar_url_customizable.data,
                   callback_url=form.callback_url.data,
-                  description=form.description.data)
+                  description=form.description.data,
+                  website=form.website.data)
         bot.reset_token()
         bot.owner = current_user
         db.session.add(bot)
@@ -140,6 +141,7 @@ def edit_bot(slug):
         bot.avatar_url_customizable = form.avatar_url_customizable.data
         bot.callback_url = form.callback_url.data
         bot.description = form.description.data
+        bot.website = form.website.data
         db.session.commit()
         # TODO; come up with more helpful redirect
         return redirect(url_for('index'))
@@ -151,6 +153,7 @@ def edit_bot(slug):
     form.avatar_url_customizable.data = bot.avatar_url_customizable
     form.callback_url.data = bot.callback_url
     form.description.data = bot.description
+    form.website.data = bot.website
     return render_template('edit_bot.html',
                            title='Edit bot',
                            form=form,
