@@ -13,3 +13,17 @@ if (avatarInput) {
     previewAvatar();
     avatarInput.oninput = previewAvatar;
 }
+
+let nameInput = document.querySelector('input#name'),
+    slugInput = document.querySelector('input#slug');
+if (nameInput && slugInput) {
+    let slugModified = false;
+    nameInput.oninput = function() {
+        if (!slugModified) {
+            slugInput.value = nameInput.value.toLowerCase().split(' ').join('_');
+        }
+    }
+    slugInput.oninput = function() {
+        slugModified = true;
+    }
+}
