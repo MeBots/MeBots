@@ -23,6 +23,7 @@
                 <ul>
                     <li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('documentation') }}">Documentation</a></li>
                     <li><a href="{{ url_for('create_bot') }}">Create Bot</a></li>
                     {% if current_user.is_anonymous %}
                     {% else %}

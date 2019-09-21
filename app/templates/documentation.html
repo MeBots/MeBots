@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Creating a bot</h3>
+<p>Before you use the MeBots API, you need to create a bot.</p>
+<ol>
+    <li>To create a bot, first ensure that you're signed in to MeBots.</li>
+    <li>Click "Create Bot" in the toolbar.</li>
+    <li>Fill out the form! Most fields are not mandatory, but will help people locate and use your bot more effectively.</li>
+    <li>Hit submit to create your bot.</li>
+    <li>When the creation is successful, you will notice that there is a new "Token" input at the top, with an automatically generated hexadecimal string. Take note of this token and your bot's shortname, as you will need them for authentication from your bot's code later on. Do not share the token with anyone.</li>
+</ol>
+<h3>Authenticating your bot with the API</h3>
+<p><strong>NOTE: There are official premade libraries for some languages that handle connection logic for you, so you can more easily integrate the MeBots API with your bot code.</strong> Choose your language: <a href="https://github.com/ErikBoesen/mebots.py">Python</a>, <a href="https://github.com/ErikBoesen/mebotsjs">JavaScript</a></strong>. Please see the READMEs of those projects for detailed information on API interaction in these languages.</p>
+<p>If there's no library for your language, or if you want to handle things yourself, you will need to communicate directly to the MeBots API. Don't worry—this process is quite simple!</p>
+<p>The entire API is essentially one endpoint, which allows you to provide the ID of a group (which is available in received message data) and get back the bot ID of the version of your bot which is in that group. This way, your bot doesn't need to worry about keeping track of which servers you're in. MeBots does that for you.</p>
+<p>To get your instance's ID, you'll need to make a GET request to <pre>http://mebots.co/api/bot/{shortname}/instance/{group_id}</pre>, substituting <pre>{shortname}</pre> for the shortname of your bot, and <pre>{group_id}</pre> for the ID of the group. You will receive a JSON response such as the following:</p>
+<pre>
+{"id": "0123456789abcdef"}
+</pre>
+<p><em>That's it. That's the API.</em> The response can be parsed as JSON, and you can pass the <pre>id</pre> field as the <pre>bot_id</pre> parameter to the message post endpoint described in GroupMe's documentation <a href="https://dev.groupme.com/docs/v3#bots_post">here</a>.</p>
+{% endblock %}

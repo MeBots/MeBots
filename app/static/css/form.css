@@ -23,7 +23,7 @@ form span label {
     display: inline;
 }
 form .error {
-    display: inline;
+    display: block;
     color: #DD3333;
 }
 

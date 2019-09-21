@@ -42,9 +42,9 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/docs')
-def docs():
-    return 'Not available yet!'
+@app.route('/documentation')
+def documentation():
+    return render_template('documentation.html')
 
 
 @app.route('/login')
