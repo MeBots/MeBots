@@ -39,7 +39,7 @@ class Bot(db.Model):
     avatar_url = db.Column(db.String(70))
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))
-    description = db.Column(db.String(200))
+    description = db.Column(db.String(1000))
     website = db.Column(db.String(128))
     prefix = db.Column(db.String(20))
     test_group = db.Column(db.String(60))

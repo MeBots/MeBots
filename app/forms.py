@@ -11,7 +11,7 @@ class BotForm(FlaskForm):
     avatar_url = StringField('Avatar URL', validators=[URL()])
     avatar_url_customizable = BooleanField('Allow customizing avatar')
     callback_url = StringField('Callback URL', validators=[DataRequired(), Length(max=128), URL()])
-    description = TextAreaField('Description', validators=[Length(max=200)])
+    description = TextAreaField('Description', validators=[Length(max=1000)])
     website = StringField('Website', validators=[Length(max=128), URL()])
     prefix = StringField('Command prefix', validators=[Length(max=20)])
     test_group = StringField('Link for testing/informational group', validators=[Length(max=60), URL()])
