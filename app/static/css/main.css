@@ -1,9 +1,10 @@
 /* Body font */
+
 @font-face {
-  font-family: 'Quicksand';
+  font-family: 'Lexend Deca';
   font-style: normal;
-  font-weight: 500;
-  src: url(https://fonts.gstatic.com/s/quicksand/v14/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkM0o58a-xDwxUD2GFw.woff) format('woff');
+  font-weight: 400;
+  src: local('Lexend Deca Regular'), local('LexendDeca-Regular'), url(https://fonts.gstatic.com/s/lexenddeca/v1/K2F1fZFYk-dHSE0UPPuwQ5qnJy_YZ2ON.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -15,7 +16,7 @@
     box-sizing: border-box;
 }
 body {
-    font-family: 'Quicksand', serif;
+    font-family: 'Lexend Deca', serif;
     font-size: 20px;
     background: white;
     color: #111;
@@ -29,7 +30,7 @@ header {
     color: white;
 }
 header, h1, h2, h3, h4, h5, h6 {
-    font-family: 'Somatic', 'Quicksand', serif;
+    font-family: 'Somatic', 'Lexend Deca', serif;
 }
 h1 {
     margin-bottom: 10px;
@@ -40,12 +41,12 @@ header a {
 header #logo {
     height: 40px;
     margin-right: 5px;
+    margin-top: 4px;
 }
 header #logo-text {
     font-size: 50px;
     line-height: 1;
     display: inline-block;
-    margin-right: 10px;
 }
 header nav ul {
     display: inline-block;
