@@ -134,6 +134,9 @@ section:last-of-type {
     display: inline-block;
     vertical-align: top;
 }
+.bot .status {
+    color: #31c793;
+}
 p {
     padding: 10px 0;
 }

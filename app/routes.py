@@ -113,7 +113,9 @@ def create_bot():
                   avatar_url_customizable=form.avatar_url_customizable.data,
                   callback_url=form.callback_url.data,
                   description=form.description.data,
-                  website=form.website.data)
+                  website=form.website.data,
+                  test_group=form.test_group.data,
+                  prefix=form.prefix.data)
         bot.reset_token()
         bot.owner = current_user
         db.session.add(bot)
@@ -142,8 +144,9 @@ def edit_bot(slug):
         bot.callback_url = form.callback_url.data
         bot.description = form.description.data
         bot.website = form.website.data
+        bot.prefix = form.prefix.data
+        bot.test_group = form.test_group.data
         db.session.commit()
-        # TODO; come up with more helpful redirect
         return redirect(url_for('bot', slug=bot.slug))
     # TODO: this repetition feels wrong...
     form.slug.data = bot.slug
@@ -154,6 +157,8 @@ def edit_bot(slug):
     form.callback_url.data = bot.callback_url
     form.description.data = bot.description
     form.website.data = bot.website
+    form.prefix.data = bot.prefix
+    form.test_group.data = bot.test_group
     return render_template('edit_bot.html',
                            title='Edit bot',
                            form=form,

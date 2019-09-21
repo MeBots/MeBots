@@ -41,6 +41,8 @@ class Bot(db.Model):
     callback_url = db.Column(db.String(128))
     description = db.Column(db.String(200))
     website = db.Column(db.String(128))
+    prefix = db.Column(db.String(20))
+    test_group = db.Column(db.String(60))
 
     token = db.Column(db.String(22))
 
