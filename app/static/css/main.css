@@ -32,9 +32,6 @@ header {
 header, h1, h2, h3, h4, h5, h6 {
     font-family: 'Somatic', 'Lexend Deca', serif;
 }
-h1 {
-    margin-bottom: 10px;
-}
 header a {
     text-decoration: none;
 }
@@ -144,7 +141,6 @@ section:last-of-type {
 }
 .status {
     display: inline-block;
-    margin-left: 10px;
     color: #31c793;
 }
 .pill {

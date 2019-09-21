@@ -2,15 +2,21 @@
 
 {% block content %}
     <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large">
-    <h1>{{ bot.name }}
+    {% set owner = bot.owner %}
+    <h1>
+        {{ bot.name }}
         {% if owner == current_user %}
-        (<a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a>)
+        [<a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a>]
         {% endif %}
     </h1>
+
     <div class="pill">{{ bot.instances.count() }} groups</div>
     {% include "_status.html" %}
+    {% if bot.prefix %}
+    <div class="pill">Prefix: {{ bot.prefix }}</div>
+    {% endif %}
+
     <p>{{ bot.description }}</p>
-    {% set owner = bot.owner %}
     <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
     <div class="button-row">
         <a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a>
