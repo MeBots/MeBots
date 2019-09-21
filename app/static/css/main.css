@@ -115,6 +115,7 @@ section:last-of-type {
     width: 250px;
     height: 250px;
     float: left;
+    margin-right: 10px;
 }
 .profile .details {
 }
@@ -138,6 +139,7 @@ section:last-of-type {
 }
 .bot h4 {
     font-size: 30px;
+    width: 160px;
 }
 .status {
     display: inline-block;
