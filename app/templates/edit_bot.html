@@ -4,73 +4,20 @@
 <form action="" method="post">
     {{ form.hidden_tag() }}
 
-    <div>
-        {{ form.name.label }}
-        {{ form.name }}
-        {% for error in form.name.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
+    {% with item = form.name %}{% include "_input.html" %}{% endwith %}
 
     <span>{{ form.name_customizable() }} {{ form.name_customizable.label }}</span>
 
-    <div>
-        {{ form.slug.label }}
-        {{ form.slug }}
-        {% for error in form.slug.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
-
-    <div>
-        {{ form.avatar_url.label }}
-        {{ form.avatar_url }}
-        {% for error in form.avatar_url.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
+    {% with item = form.slug %}{% include "_input.html" %}{% endwith %}
+    {% with item = form.avatar_url %}{% include "_input.html" %}{% endwith %}
 
     <span>{{ form.avatar_url_customizable() }} {{ form.avatar_url_customizable.label }}</span>
 
-    <div>
-        {{ form.callback_url.label }}
-        {{ form.callback_url }}
-        {% for error in form.callback_url.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
-
-    <div>
-        {{ form.description.label }}
-        {{ form.description }}
-        {% for error in form.description.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
-
-    <div>
-        {{ form.website.label }}
-        {{ form.website }}
-        {% for error in form.website.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
-
-    <div>
-        {{ form.prefix.label }}
-        {{ form.prefix }}
-        {% for error in form.prefix.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
-
-    <div>
-        {{ form.test_group.label }}
-        {{ form.test_group }}
-        {% for error in form.test_group.errors %}
-        <span class="error">{{ error }}</span>
-        {% endfor %}
-    </div>
+    {% with item = form.callback_url %}{% include "_input.html" %}{% endwith %}
+    {% with item = form.description %}{% include "_input.html" %}{% endwith %}
+    {% with item = form.website %}{% include "_input.html" %}{% endwith %}
+    {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
+    {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
 
     <p>{{ form.submit() }}</p>
 </form>
