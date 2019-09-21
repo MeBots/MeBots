@@ -18,6 +18,7 @@
     {% with item = form.website %}{% include "_input.html" %}{% endwith %}
     {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
     {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
+    {% with item = form.repo %}{% include "_input.html" %}{% endwith %}
 
     <p>{{ form.submit() }}</p>
 </form>
