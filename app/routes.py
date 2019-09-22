@@ -179,7 +179,7 @@ def manager(slug):
 
     # TODO: this is a lot of logic and definitely could be shorter and not repeated every single time.
     groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] == bot.callback_url]
-    instances = Instance.query.filter_by(owner_id=me['user_id']).all()
+    instances = Instance.query.filter_by(owner_id=me['user_id'], bot_id=bot.id).all()
     groups = [group for group in groups if group['id'] not in [instance.group_id for instance in instances]]
     missing_instances = [ours for ours in instances if ours.group_id not in
                          [theirs['group_id'] for theirs in groupme_instances]]
