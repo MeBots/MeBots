@@ -53,7 +53,8 @@ def documentation():
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(request.cookies.get('next',
+                                            url_for('index')))
     token = request.args.get('access_token')
     print('token: %s' % token)
     if token is None:
@@ -77,8 +78,7 @@ def login():
         db.session.commit()
     login_user(user)
     # Check next cookie to see if we need to go anywhere
-    return redirect(request.cookies.get('next',
-                                        url_for('index')))
+    return redirect(url_for('index'))
 
 
 @app.route('/logout')
@@ -95,13 +95,13 @@ def user(user_id):
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
     #bots = user.bots
-    return render_template('user.html', user=user, bots=bots.items)
+    return render_template('user.html', user=user, bots=bots.items, title=user.name)
 
 
 @app.route('/bot/<slug>')
 def bot(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
-    return render_template('bot.html', bot=bot)
+    return render_template('bot.html', bot=bot, title=bot.name)
 
 
 @app.route('/create_bot', methods=['GET', 'POST'])
@@ -242,7 +242,7 @@ def manager(slug):
         form.name.data = bot.name
         form.avatar_url.data = bot.avatar_url
 
-    return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
+    return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances, title='Add ' + bot.name)
 
 
 @app.route('/delete', methods=['POST'])
