@@ -9,7 +9,5 @@ th:first-child, td:first-child {
 }
 
 .button.delete {
-    color: #ea0404;
-}
-.button.delete:hover, .button.delete:focus, .button.delete:active {
+    background: #ea0404;
 }
