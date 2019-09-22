@@ -23,7 +23,10 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
     req = requests.post(API_ROOT + endpoint,
                         params={'token': token},
                         json=json)
-    return req.json()['response'] if expect_json else req
+    j = req.json()
+    print('Response from GroupMe API:')
+    print(j)
+    return j['response'] if expect_json else req
 
 
 @app.route('/')
@@ -190,6 +193,7 @@ def manager(slug):
 
     if missing_instances:
         for instance in missing_instances:
+            print('Adding back to group ' + instance.group_name)
             bot_params = {
                 'name': instance.name or bot.name,
                 'group_id': instance.group_id,
