@@ -177,12 +177,17 @@ def manager(slug):
 
     groups = api_get('groups')
 
-    # TODO: this is a lot of logic and definitely could be shorter and not repeated every single time.
+    # TODO: simplify
+    # Dictionary list of the bots that GroupMe has registered with the same callback URL
     groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] == bot.callback_url]
-    instances = Instance.query.filter_by(owner_id=me['user_id'], bot_id=bot.id).all()
+    # All the instances we have in our database owned by you for this bot
+    instances = Instance.query.filter_by(bot_id=bot.id, owner_id=me['user_id']).all()
+    # Groups without the bot in them
     groups = [group for group in groups if group['id'] not in [instance.group_id for instance in instances]]
-    missing_instances = [ours for ours in instances if ours.group_id not in
-                         [theirs['group_id'] for theirs in groupme_instances]]
+    # Groups that we have a record of a bot for, but for which GroupMe's copy is gone
+    missing_instances = [instance for instance in instances if instance.group_id not in
+                         [groupme_instance['group_id'] for groupme_instance in groupme_instances]]
+
     if missing_instances:
         for instance in missing_instances:
             bot_params = {
