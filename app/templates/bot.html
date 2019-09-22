@@ -10,7 +10,7 @@
         {% endif %}
     </h1>
 
-    <div class="pill">{{ bot.instances.count() }} groups</div>
+    {% include "_population.html" %}
     {% include "_status.html" %}
     {% if bot.prefix %}
     <div class="pill">Prefix: {{ bot.prefix }}</div>

@@ -5,7 +5,7 @@
         </div>
         <div>
             <h4>{{ bot.name }}</h4>
-            <div class="pill">{{ bot.instances.count() }} groups</div>
+            {% include "_population.html" %}
             {% include "_status.html" %}
             <div class="buton-row">
                 <a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a>
