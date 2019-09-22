@@ -234,8 +234,6 @@ def manager(slug):
         form.name.data = bot.name
         form.avatar_url.data = bot.avatar_url
 
-    instances = Instance.query.filter_by(owner_id=me['user_id']).all()
-
     return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances)
 
 
