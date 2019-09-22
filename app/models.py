@@ -62,7 +62,7 @@ class Instance(db.Model):
     # This is both the internal primary key and GroupMe's bot_id field.
     id = db.Column(db.String(26), primary_key=True)
     group_id = db.Column(db.String(16))
-    group_name = db.Column(db.String(50))
+    group_name = db.Column(db.String(200))
 
     # These two fields will be nulled if the user cannot or has not made these customizations.
     name = db.Column(db.String(32), nullable=True)
