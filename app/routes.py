@@ -200,10 +200,14 @@ def manager(slug):
                 'avatar_url': instance.avatar_url or bot.avatar_url,
                 'callback_url': bot.callback_url,
             }
-            result = api_post('bots', {'bot': bot_params})['bot']
-            instance.id = result['bot_id']
+            try:
+                result = api_post('bots', {'bot': bot_params})['bot']
+                instance.id = result['bot_id']
+            except TypeError:
+                # Usually an unauthorized error.
+                pass
         db.session.commit()
-        flash("Missing bots have been restored.")
+        flash("Missing bots have been restored where possible.")
 
     form = InstanceForm()
     form.group_id.choices = [(group['id'], group['name']) for group in groups]
