@@ -53,10 +53,11 @@ def documentation():
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
-        next_url = request.cookies.get('next')
-        if next_url is not None:
-            request.cookies['next'] = ''
-        return redirect(next_url or url_for('index'))
+        next_page = request.cookies.get('next')
+        resp = make_response(redirect(next_page or url_for('index')))
+        if next_page is not None:
+            resp.set_cookie('next', '')
+        return resp
     token = request.args.get('access_token')
     print('token: %s' % token)
     if token is None:
