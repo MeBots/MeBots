@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64))
     email = db.Column(db.String(120))
     avatar = db.Column(db.String(45))
-    token = db.Column(db.String(32))
+    token = db.Column(db.String(60))
 
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
