@@ -1,7 +1,9 @@
 <div class="bot">
     <div class="row">
         <div>
-            <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
+            <a href="{{ url_for('bot', slug=bot.slug) }}">
+                <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
+            </a>
         </div>
         <div>
             <h4><a href="{{ url_for('bot', slug=bot.slug) }}">{{ bot.name }}</a></h4>
