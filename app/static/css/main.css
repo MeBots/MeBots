@@ -131,7 +131,12 @@ ol, main p {
     width: 4in;
     padding: 10px;
     padding-bottom: 0;
-    border: solid 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s;
+}
+.bot_list .bot:hover {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
 }
 .bot_list .bot .row img {
     float: left;
@@ -143,6 +148,9 @@ ol, main p {
 .bot h4 {
     font-size: 35px;
     width: 210px;
+}
+.bot h4 a {
+    text-decoration: none;
 }
 .status {
     display: inline-block;

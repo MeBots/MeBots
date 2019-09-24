@@ -4,7 +4,7 @@
             <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
         </div>
         <div>
-            <h4>{{ bot.name }}</h4>
+            <h4><a href="{{ url_for('bot', slug=bot.slug) }}">{{ bot.name }}</a></h4>
             {% include "_population.html" %}
             {% include "_status.html" %}
             <div class="buton-row">
