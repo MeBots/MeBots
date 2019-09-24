@@ -121,8 +121,7 @@ ol, main p {
     float: left;
     margin-right: 10px;
 }
-.profile .details {
-}
+
 .bot_list {
 
 }
@@ -130,9 +129,9 @@ ol, main p {
     display: inline-block;
     vertical-align: top;
     width: 4in;
-    margin: 5px 5px 0 0;
-    padding: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    padding-bottom: 0;
+    border: solid 4px rgba(0, 0, 0, 0.05);
 }
 .bot_list .bot .row img {
     float: left;
@@ -142,8 +141,8 @@ ol, main p {
     vertical-align: top;
 }
 .bot h4 {
-    font-size: 30px;
-    width: 160px;
+    font-size: 35px;
+    width: 210px;
 }
 .status {
     display: inline-block;
