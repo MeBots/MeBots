@@ -15,7 +15,8 @@
             </div>
         </div>
     </div>
-    <p>{{ bot.description|truncate(120, True) }}</p>
+    <p>{{ bot.description|truncate(100, True) }}</p>
+    {% set owner = bot.owner %}
     {% if owner == current_user %}
     <p><a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a></p>
     {% endif %}
