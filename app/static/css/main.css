@@ -130,6 +130,7 @@ ol, main p {
     vertical-align: top;
     width: 4in;
     padding: 10px;
+    margin: 4px;
     padding-bottom: 0;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
