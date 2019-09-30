@@ -11,7 +11,7 @@ MeBots handles the entire bot lifecycle process and extends it beyond what Group
 Read more about MeBots' goals and implementation [here](http://mebots.co/about), and read the documentation [here](http://mebots.co/documentation)!
 
 ## Platform
-GroupMeBot runs on [Heroku](https://heroku.com).
+GroupMeBot runs on [Heroku](https://heroku.com). It is build upon Flask and uses PostgreSQL for database management.
 
 ## License
 [GPL](LICENSE)
