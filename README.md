@@ -1,5 +1,5 @@
-# GroupMeBot
-[![Build Status](https://travis-ci.org/ErikBoesen/GroupMeBot.svg?branch=master)](https://travis-ci.org/ErikBoesen/GroupMeBot)
+# MeBots
+[![Build Status](https://travis-ci.org/ErikBoesen/MeBots.svg?branch=master)](https://travis-ci.org/ErikBoesen/MeBots)
 
 > A simple API framework for managing large-scale GroupMe bots.
 
@@ -11,7 +11,10 @@ MeBots handles the entire bot lifecycle process and extends it beyond what Group
 Read more about MeBots' goals and implementation [here](http://mebots.co/about), and read the documentation [here](http://mebots.co/documentation)!
 
 ## Platform
-GroupMeBot runs on [Heroku](https://heroku.com). It is build upon Flask and uses PostgreSQL for database management.
+MeBots runs on [Heroku](https://heroku.com). It is build upon Flask and uses PostgreSQL for database management.
+
+## Author
+[Erik Boesen](https://github.com/ErikBoesen)
 
 ## License
 [GPL](LICENSE)
