@@ -26,6 +26,7 @@ header {
     padding: 3px 0 0 10px;
     background: #00aff0;
     color: white;
+    overflow: auto;
 }
 header, h1, h2, h3, h4, h5, h6 {
     font-family: 'Somatic', 'Lexend Deca', serif;
