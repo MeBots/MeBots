@@ -23,10 +23,12 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
     req = requests.post(API_ROOT + endpoint,
                         params={'token': token},
                         json=json)
-    j = req.json()
-    print('Response from GroupMe API:')
-    print(j)
-    return j['response'] if expect_json else req
+    if expect_json:
+        j = req.json()
+        print('Response from GroupMe API:')
+        print(j)
+        return j['response']
+    return req
 
 
 @app.route('/')
