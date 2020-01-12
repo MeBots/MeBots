@@ -254,6 +254,8 @@ def delete_instance():
     instance = Instance.query.get(data['instance_id'])
     req = api_post('bots/destroy', {'bot_id': instance.id}, expect_json=False)
     if req.ok:
+        bot = Bot.query.get(instance.bot_id)
+        bot.instances.remove(instance)
         db.session.delete(instance)
         db.session.commit()
         return 'ok', 200
