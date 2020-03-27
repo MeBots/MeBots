@@ -8,5 +8,5 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CLIENT_ID = 'ZdSzatBHBT06cjk100Bvk4RHuPCyKy53FQFpnnnHZFbPu9lB'
-    ITEMS_PER_PAGE = 15
+    ITEMS_PER_PAGE = 16
     IMAGE_ROOT = 'https://i.groupme.com/'
