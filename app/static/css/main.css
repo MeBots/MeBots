@@ -142,6 +142,9 @@ ol, main p {
     display: inline-block;
     vertical-align: top;
 }
+.bot_list > a {
+    display: block;
+}
 .bot h4 {
     font-size: 35px;
     width: 210px;
