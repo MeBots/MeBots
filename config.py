@@ -7,6 +7,6 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    CLIENT_ID = 'ZdSzatBHBT06cjk100Bvk4RHuPCyKy53FQFpnnnHZFbPu9lB'
+    CLIENT_ID = os.environ.get('CLIENT_ID')
     ITEMS_PER_PAGE = 16
     IMAGE_ROOT = 'https://i.groupme.com/'
