@@ -1,10 +1,8 @@
 requests
 psycopg2
 gunicorn
-jwt
 Flask
 Flask-SQLAlchemy
 Flask-WTF
 Flask-Login
 Flask-Migrate
-Flask-Mail
