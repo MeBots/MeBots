@@ -1,4 +1,4 @@
-# MeBots
+# [MeBots](http://mebots.co)
 [![Build Status](https://travis-ci.org/ErikBoesen/MeBots.svg?branch=master)](https://travis-ci.org/ErikBoesen/MeBots)
 
 > A simple API framework for managing large-scale GroupMe bots.
