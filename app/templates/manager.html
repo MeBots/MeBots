@@ -49,7 +49,7 @@
         <tbody>
             {% for instance in instances %}
             <tr>
-                <td><img src="{{ instance.avatar_url or bot.avatar_url }}"></td>
+                <td><img class="avatar small" src="{{ instance.avatar_url or bot.avatar_url }}"></td>
                 {#<td>{{ instance.id }}</td>#}
                 <td>{{ instance.name or bot.name }}</td>
                 <td>{{ instance.group_name }}</td>
