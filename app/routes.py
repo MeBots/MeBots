@@ -56,6 +56,7 @@ def documentation():
 def login():
     if current_user.is_authenticated:
         next_page = request.cookies.get('next')
+        print('Next page: ' + next_page)
         resp = make_response(redirect(next_page or url_for('index')))
         if next_page is not None:
             resp.set_cookie('next', '')
