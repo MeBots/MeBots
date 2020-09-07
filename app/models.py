@@ -44,6 +44,7 @@ class Bot(db.Model):
     prefix = db.Column(db.String(20))
     test_group = db.Column(db.String(60))
     repo = db.Column(db.String(100))
+    has_user_token_access = db.Column(db.Boolean, default=False)
 
     token = db.Column(db.String(22))
 

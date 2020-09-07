@@ -24,4 +24,6 @@ def api_bot(slug):
 def api_instance(slug, group_id):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
     instance = Instance.query.filter_by(bot_id=bot.id, group_id=group_id).first_or_404()
-    return {"id": instance.id}
+    json = {"id": instance.id}
+    if bot.has_user_token_access:
+        json["token"] = User.query.get(instance.owner_id).token
