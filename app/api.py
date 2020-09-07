@@ -27,3 +27,4 @@ def api_instance(slug, group_id):
     json = {"id": instance.id}
     if bot.has_user_token_access:
         json["token"] = User.query.get(instance.owner_id).token
+    return jsonify(json)
