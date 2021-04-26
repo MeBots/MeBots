@@ -194,6 +194,7 @@ def manager(slug):
             'page_size': GROUPS_PAGE_SIZE,
             'omit': 'memberships',
         })
+        print('Found page of %d groups.' % len(groups_page))
         groups += groups_page
         if len(groups_page) < GROUPS_PAGE_SIZE:
             break
