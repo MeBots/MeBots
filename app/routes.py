@@ -11,10 +11,10 @@ OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
 API_ROOT = 'https://api.groupme.com/v3/'
 
 
-def api_get(endpoint, token=None):
+def api_get(endpoint, token=None, params={}):
     if token is None:
         token = current_user.token
-    return requests.get(API_ROOT + endpoint, params={'token': token}).json()['response']
+    return requests.get(API_ROOT + endpoint, params={'token': token, **params}).json()['response']
 
 
 def api_post(endpoint, json={}, token=None, expect_json=True):
