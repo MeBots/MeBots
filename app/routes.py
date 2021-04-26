@@ -186,18 +186,18 @@ def manager(slug):
     me = api_get('users/me')
 
     groups = []
-    page = 0
+    page = 1
     while True:
-        page += 1
         groups_page = api_get('groups', params={
             'page': page,
-            'page_size': GROUPS_PAGE_SIZE,
+            'per_page': GROUPS_PAGE_SIZE,
             'omit': 'memberships',
         })
         print('Found page of %d groups.' % len(groups_page))
         groups += groups_page
         if len(groups_page) < GROUPS_PAGE_SIZE:
             break
+        page += 1
 
     # TODO: simplify
     # Dictionary list of the bots that GroupMe has registered with the same callback URL
