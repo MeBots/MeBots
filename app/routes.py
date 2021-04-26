@@ -9,6 +9,7 @@ from app.models import User, Bot, Instance
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
 API_ROOT = 'https://api.groupme.com/v3/'
+GROUPS_PAGE_SIZE = 50
 
 
 def api_get(endpoint, token=None, params={}):
@@ -184,7 +185,18 @@ def manager(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
     me = api_get('users/me')
 
-    groups = api_get('groups')
+    groups = []
+    page = 0
+    while True:
+        page += 1
+        groups_page = api_get('groups', params={
+            'page': page,
+            'page_size': GROUPS_PAGE_SIZE,
+            'omit': 'memberships',
+        })
+        groups += groups_page
+        if len(groups_page) < GROUPS_PAGE_SIZE:
+            break
 
     # TODO: simplify
     # Dictionary list of the bots that GroupMe has registered with the same callback URL
