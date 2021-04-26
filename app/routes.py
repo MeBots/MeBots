@@ -9,7 +9,7 @@ from app.models import User, Bot, Instance
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
 API_ROOT = 'https://api.groupme.com/v3/'
-GROUPS_PAGE_SIZE = 50
+GROUPS_PAGE_SIZE = 500
 
 
 def api_get(endpoint, token=None, params={}):
@@ -193,7 +193,6 @@ def manager(slug):
             'per_page': GROUPS_PAGE_SIZE,
             'omit': 'memberships',
         })
-        print('Found page of %d groups.' % len(groups_page))
         groups += groups_page
         if len(groups_page) < GROUPS_PAGE_SIZE:
             break
