@@ -15,7 +15,12 @@ GROUPS_PAGE_SIZE = 500
 def api_get(endpoint, token=None, params={}):
     if token is None:
         token = current_user.token
-    return requests.get(API_ROOT + endpoint, params={'token': token, **params}).json()['response']
+    j = requests.get(API_ROOT + endpoint, params={'token': token, **params}).json()
+    response = j.get('response')
+    if response is None:
+        print('Error response from GroupMe API:')
+        print(j)
+    return response
 
 
 def api_post(endpoint, json={}, token=None, expect_json=True):
