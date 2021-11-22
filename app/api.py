@@ -15,6 +15,16 @@ def api_bot(slug):
     return g.bot.json()
 
 
+@api_blueprint.route('/bot/<slug>/instances')
+def api_instances(slug):
+    g.bot = Bot.query.filter_by(slug=slug).first_or_404()
+    instances = g.bot.instances
+    json = [{'id': instance.id} for instance in instances]
+    return jsonify(json)
+
+
+@api_blueprint.route('/bot/<slug>/instances/<group_id>')
+# Legacy
 @api_blueprint.route('/bot/<slug>/instance/<group_id>')
 def api_instance(slug, group_id):
     token = request.args.get("token")
