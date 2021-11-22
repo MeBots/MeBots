@@ -6,6 +6,8 @@ from app.models import User, Bot, Instance
 api_blueprint = Blueprint('api', __name__)
 
 
+@api_blueprint.route('/bots/<slug>')
+# Legacy
 @api_blueprint.route('/bot/<slug>')
 def api_bot(slug):
     token = request.args.get("token")
@@ -15,7 +17,7 @@ def api_bot(slug):
     return g.bot.json()
 
 
-@api_blueprint.route('/bot/<slug>/instances')
+@api_blueprint.route('/bots/<slug>/instances')
 def api_instances(slug):
     g.bot = Bot.query.filter_by(slug=slug).first_or_404()
     instances = g.bot.instances
@@ -23,7 +25,7 @@ def api_instances(slug):
     return jsonify(json)
 
 
-@api_blueprint.route('/bot/<slug>/instances/<group_id>')
+@api_blueprint.route('/bots/<slug>/instances/<group_id>')
 # Legacy
 @api_blueprint.route('/bot/<slug>/instance/<group_id>')
 def api_instance(slug, group_id):
