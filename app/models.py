@@ -20,6 +20,7 @@ class User(UserMixin, db.Model):
     def from_json(self, json, token=None):
         self.name = json['name']
         self.email = json['email']
+        print(json)
         self.avatar = json['image_url'][len(app.config['IMAGE_ROOT']):]
         if token is not None:
             self.token = token
