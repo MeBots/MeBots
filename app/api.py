@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, g
 import requests
 from app import db
 from app.models import User, Bot, Instance
-from app.util import succ, fial,
+from app.util import to_json, succ, fail
 
 
 api_blueprint = Blueprint('api', __name__)
