@@ -190,6 +190,9 @@ def manager(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
     me = api_get('users/me')
 
+    legacy_callback_url = bot.callback_url
+    callback_url = f'https://mebots.co/api/bots/{bot.id}/callback'
+
     groups = []
     page = 1
     while True:
@@ -205,7 +208,7 @@ def manager(slug):
 
     # TODO: simplify
     # Dictionary list of the bots that GroupMe has registered with the same callback URL
-    groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] == bot.callback_url]
+    groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] == legacy_callback_url]
     # All the instances we have in our database owned by you for this bot
     instances = Instance.query.filter_by(bot_id=bot.id, owner_id=me['user_id']).all()
     # Groups without the bot in them
@@ -221,7 +224,7 @@ def manager(slug):
                 'name': instance.name or bot.name,
                 'group_id': instance.group_id,
                 'avatar_url': instance.avatar_url or bot.avatar_url,
-                'callback_url': bot.callback_url,
+                'callback_url': callback_url,
             }
             try:
                 result = api_post('bots', {'bot': bot_params})['bot']
@@ -245,8 +248,7 @@ def manager(slug):
             'name': name,
             'group_id': group_id,
             'avatar_url': avatar_url,
-            # TODO: handle callback URLs ourselves!
-            'callback_url': bot.callback_url,
+            'callback_url': callback_url,
         }
         result = api_post('bots', {'bot': bot_params})['bot']
         group = api_get(f'groups/{group_id}')

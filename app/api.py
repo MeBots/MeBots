@@ -43,11 +43,12 @@ def api_instance(slug, group_id):
 
 
 # Receiving messages
-@api_blueprint.route('/bots/<slug>/messages', methods=['POST'])
-def api_bot_receive(slug):
-    g.bot = Bot.query.filter_by(slug=slug).first_or_404()
+@api_blueprint.route('/bots/<bot_id>/callback', methods=['POST'])
+def api_bot_receive(bot_id):
+    g.bot = Bot.query.get_or_404(bot_id)
     payload = request.get_json()
     print('Received message; payload:')
     print(payload)
+    # TODO: only forward if prefix present
     forward = requests.post(g.bot.callback_url, json=payload)
     return succ('Message processed.', 202)
