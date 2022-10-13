@@ -208,7 +208,8 @@ def manager(slug):
 
     # TODO: simplify
     # Dictionary list of the bots that GroupMe has registered with the same callback URL
-    groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] == legacy_callback_url]
+    # TODO: stop allowing legacy
+    groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] in (legacy_callback_url, callback_url)]
     # All the instances we have in our database owned by you for this bot
     instances = Instance.query.filter_by(bot_id=bot.id, owner_id=me['user_id']).all()
     # Groups without the bot in them
