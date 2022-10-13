@@ -71,11 +71,11 @@ def api_instance(slug, group_id):
 @api_blueprint.route('/bots/<bot_id>/callback', methods=['POST'])
 def api_bot_receive(bot_id):
     g.bot = Bot.query.get_or_404(bot_id)
+    print('Received callback for ' + g.bot.name)
     try:
         payload = request.get_json()
     except Exception:
-        print('Invalid content')
-        abort(500)
+        return fail('Invalid JSON payload.')
     print('Received message; payload:')
     print(payload)
     # TODO: only forward if prefix present
