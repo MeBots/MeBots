@@ -230,7 +230,7 @@ def manager(slug):
                 # Usually an unauthorized error.
                 pass
         db.session.commit()
-        flash("Missing bots have been restored where possible.")
+        flash('Missing bots have been restored where possible.')
 
     form = InstanceForm()
     form.group_id.choices = [(group['id'], group['name']) for group in groups]
