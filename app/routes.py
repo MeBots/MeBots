@@ -39,7 +39,7 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
 
 def centralize_bots():
     groupme_bots = api_get('bots')
-    instances = current_user.instances.query.all()
+    instances = current_user.instances
     instance_bot_ids = {instance.id for instance in instances}
     problematic_bots = [
         bot for bot in groupme_bots
