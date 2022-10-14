@@ -38,10 +38,15 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
 
 
 def centralize_bots():
-    groupme_instances = api_get('bots')
-    instances = Instance.query.all()
-    print(groupme_instances)
-    print(instances)
+    groupme_bots = api_get('bots')
+    instances = current_user.instances.query.all()
+    instance_bot_ids = {instance.id for instance in instances}
+    problematic_bots = [
+        bot for bot in groupme_bots
+        # Check if each bot instance is in our database and has a non-centralized callback URL
+        if bot['bot_id'] in instance_bot_ids and 'https://mebots.co/api/bots/' not in bot['callback_url']
+    ]
+    print(problematic_bots)
 
 
 @app.route('/')
