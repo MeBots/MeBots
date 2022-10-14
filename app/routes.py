@@ -40,7 +40,7 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
 def centralize_bots():
     groupme_instances = api_get('bots')
     instances = Instance.query.all()
-    print(bots)
+    print(groupme_instances)
     print(instances)
 
 
