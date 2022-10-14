@@ -7,6 +7,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import BotForm, InstanceForm
 from app.models import User, Bot, Instance
+from sqlalchemy import func, desc
 
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
@@ -110,7 +111,11 @@ def index():
         Thread(target=do_centralization, args=()).start()
 
     page = request.args.get('page', 1, type=int)
-    bots = Bot.query.paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
+    bots = (db.session.query(Bot)
+            .join(Instance)
+            .group_by(Bot.id)
+            .order_by(desc(func.count(Instance.bot_id)))
+            .paginate(page=page, per_page=app.config['ITEMS_PER_PAGE']))
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
     return render_template('index.html',
