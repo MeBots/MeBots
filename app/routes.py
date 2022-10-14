@@ -1,4 +1,5 @@
 import requests
+import traceback
 from flask import render_template, flash, redirect, url_for, request, abort, make_response, send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
@@ -88,8 +89,10 @@ def centralize_bots():
             instance.id = result['bot_id']
             db.session.commit()
             print('Instated new bot instance ID ' + instance.id)
-        except Exception:
+        except Exception as e:
             print('Failed!')
+            print(e)
+            print(traceback.format_exc())
         print('Doing early exit in case something went horribly wrong')
         break
 
