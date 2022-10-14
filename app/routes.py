@@ -45,7 +45,8 @@ def centralize_bots():
 @app.route('/')
 def index():
     # Temporary! Until everybody is migrated over
-    centralize_bots()
+    if current_user:
+        centralize_bots()
 
     page = request.args.get('page', 1, type=int)
     bots = Bot.query.paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
