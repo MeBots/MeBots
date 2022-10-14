@@ -45,7 +45,8 @@ def centralize_bots():
 @app.route('/')
 def index():
     # Temporary! Until everybody is migrated over
-    if current_user:
+    if current_user is not None:
+        print(current_user)
         centralize_bots()
 
     page = request.args.get('page', 1, type=int)
