@@ -40,7 +40,7 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
 @app.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    bots = Bot.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
+    bots = Bot.query.paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
     return render_template('index.html',
@@ -103,7 +103,7 @@ def logout():
 def user(user_id):
     user = User.query.get_or_404(user_id)
     page = request.args.get('page', 1, type=int)
-    bots = Bot.query.filter_by(user_id=user.id).paginate(page, app.config['ITEMS_PER_PAGE'], False)
+    bots = Bot.query.filter_by(user_id=user.id).paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
     #bots = user.bots
