@@ -47,6 +47,10 @@ def api_create_bot_instance(bot, group_id, name=None, avatar_url=None):
     return api_post('bots', {'bot': bot_params})['bot']
 
 
+def api_destroy_bot_instance(bot_id):
+    return api_post('bots/destroy', {'bot_id': bot_id}, expect_json=False)
+
+
 def centralize_bots():
     groupme_bots = api_get('bots')
     instances = current_user.instances
