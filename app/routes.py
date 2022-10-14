@@ -55,19 +55,44 @@ def centralize_bots():
     groupme_bots = api_get('bots')
     instances = current_user.instances
     instance_ids = {instance.id for instance in instances}
-    instance_ids_to_bot_ids = {instance.id: instance.bot_id for instance in instances}
+    instance_ids_to_instances = {instance.id: instance for instance in instances}
     problematic_bots = [
         bot for bot in groupme_bots
         # Check if each bot instance is in our database and has a non-centralized callback URL
         if bot['bot_id'] in instance_ids and 'https://mebots.co/api/bots/' not in bot['callback_url']
     ]
 
-    for bot in problematic_bots:
-        print('Would create new bot name={name} in group_id={group_id} to replace old instance {old_bot_id} with callback {callback_url}'.format(
-            name=bot['name'],
-            group_id=bot['group_id'],
-            old_bot_id=bot['bot_id'],
-            callback_url=bot['callback_url']))
+    for old_bot in problematic_bots:
+        print('Will create new bot name={name} in group_id={group_id} to replace old instance {old_bot_id} with callback {callback_url}'.format(
+            name=old_bot['name'],
+            group_id=old_bot['group_id'],
+            old_bot_id=old_bot['bot_id'],
+            callback_url=old_bot['callback_url']))
+        try:
+            # TODO: should use api_create_bot_instance but this is a special case and also very temporary
+            bot_params = {
+                'name': name or bot.name,
+                'group_id': group_id,
+                # This time, let's ignore custom bot IDs since many are broken anyway
+                'avatar_url': bot.avatar_url,
+                'callback_url': f'https://mebots.co/api/bots/{bot.id}/callback',
+            }
+            print('Creating new bot instance...')
+            result = api_post('bots', {'bot': bot_params})['bot']
+            # If we get here, the bot has been created
+            print('Creation successful. Destroying old instance ' + old_bot['bot_id'])
+            api_destroy_bot_instance(old_bot['bot_id'])
+
+            print('Updating instance record...')
+            instance = instance_ids_to_instances[old_bot['bot_id']]
+            instance.id = result['bot_id']
+            db.session.commit()
+            print('Instated new bot instance ID ' + instance.id)
+        except Exception:
+            print('Failed!')
+        print('Doing early exit in case something went horribly wrong')
+        break
+
 
 
 @app.route('/')
