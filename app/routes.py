@@ -72,8 +72,8 @@ def centralize_bots():
         try:
             # TODO: should use api_create_bot_instance but this is a special case and also very temporary
             bot_params = {
-                'name': name or bot.name,
-                'group_id': group_id,
+                'name': old_bot['name'],
+                'group_id': old_bot['group_id'],
                 # This time, let's ignore custom bot IDs since many are broken anyway
                 'avatar_url': bot.avatar_url,
                 'callback_url': f'https://mebots.co/api/bots/{bot.id}/callback',
