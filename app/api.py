@@ -76,8 +76,6 @@ def api_bot_receive(bot_id):
         payload = request.get_json()
     except Exception:
         return fail('Invalid JSON payload.')
-    print('Received message; payload:')
-    print(payload)
-    # TODO: only forward if prefix present
-    forward = requests.post(g.bot.callback_url, json=payload)
+    if not g.bot.prefix_filter or payload['text'].strip().lower().startswith(g.bot.prefix.strip().lower()):
+        forward = requests.post(g.bot.callback_url, json=payload)
     return succ('Message processed.', 202)
