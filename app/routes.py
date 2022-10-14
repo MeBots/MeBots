@@ -70,6 +70,8 @@ def centralize_bots():
             old_bot_id=old_bot['bot_id'],
             callback_url=old_bot['callback_url']))
         try:
+            instance = instance_ids_to_instances[old_bot['bot_id']]
+            bot = Bot.query.get(instance.bot_id)
             # TODO: should use api_create_bot_instance but this is a special case and also very temporary
             bot_params = {
                 'name': old_bot['name'],
@@ -85,7 +87,6 @@ def centralize_bots():
             api_destroy_bot_instance(old_bot['bot_id'])
 
             print('Updating instance record...')
-            instance = instance_ids_to_instances[old_bot['bot_id']]
             instance.id = result['bot_id']
             db.session.commit()
             print('Instated new bot instance ID ' + instance.id)
