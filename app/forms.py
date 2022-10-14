@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, TextAreaField, BooleanField, SelectField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Length, URL
+from wtforms.validators import ValidationError, DataRequired, Optional, Length, URL
 from app.models import User
 
 
@@ -10,7 +10,7 @@ class BotForm(FlaskForm):
     name_customizable = BooleanField('Allow customizing name')
     avatar_url = StringField('Avatar URL', validators=[])
     avatar_url_customizable = BooleanField('Allow customizing avatar')
-    callback_url = StringField('Callback URL', validators=[Length(max=128), URL()])
+    callback_url = StringField('Callback URL', validators=[Optional(), Length(max=128), URL()])
     description = TextAreaField('Description', validators=[Length(max=1000)])
     website = StringField('Website', validators=[Length(max=128)])
     prefix = StringField('Command prefix', validators=[Length(max=20)])
