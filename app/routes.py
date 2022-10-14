@@ -84,7 +84,8 @@ def centralize_bots():
             result = api_post('bots', {'bot': bot_params})['bot']
             # If we get here, the bot has been created
             print('Creation successful. Destroying old instance ' + old_bot['bot_id'])
-            api_destroy_bot_instance(old_bot['bot_id'])
+            destroy = api_destroy_bot_instance(old_bot['bot_id'])
+            print(destroy)
 
             print('Updating instance record...')
             instance.id = result['bot_id']
@@ -95,8 +96,6 @@ def centralize_bots():
             print('Failed!')
             print(e)
             print(traceback.format_exc())
-        print('Doing early exit in case something went horribly wrong')
-        break
 
 
 
