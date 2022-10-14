@@ -37,16 +37,33 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
     return req
 
 
+def api_create_bot_instance(bot, group_id, name=None, avatar_url=None):
+    bot_params = {
+        'name': name or bot.name,
+        'group_id': group_id,
+        'avatar_url': avatar_url or bot.avatar_url,
+        'callback_url': f'https://mebots.co/api/bots/{bot.id}/callback',
+    }
+    return api_post('bots', {'bot': bot_params})['bot']
+
+
 def centralize_bots():
     groupme_bots = api_get('bots')
     instances = current_user.instances
-    instance_bot_ids = {instance.id for instance in instances}
+    instance_ids = {instance.id for instance in instances}
+    instance_ids_to_bot_ids = {instance.id: instance.bot_id for instance in instances}
     problematic_bots = [
         bot for bot in groupme_bots
         # Check if each bot instance is in our database and has a non-centralized callback URL
-        if bot['bot_id'] in instance_bot_ids and 'https://mebots.co/api/bots/' not in bot['callback_url']
+        if bot['bot_id'] in instance_ids and 'https://mebots.co/api/bots/' not in bot['callback_url']
     ]
-    print(problematic_bots)
+
+    for bot in problematic_bots:
+        print('Would create new bot name={name} in group_id={group_id} to replace old instance {old_bot_id} with callback {callback_url}'.format(
+            name=bot['name'],
+            group_id=bot['group_id'],
+            old_bot_id=bot['bot_id'],
+            callback_url=bot['callback_url']))
 
 
 @app.route('/')
@@ -237,14 +254,8 @@ def manager(slug):
     if missing_instances:
         for instance in missing_instances:
             print('Adding back to group ' + instance.group_name)
-            bot_params = {
-                'name': instance.name or bot.name,
-                'group_id': instance.group_id,
-                'avatar_url': instance.avatar_url or bot.avatar_url,
-                'callback_url': callback_url,
-            }
             try:
-                result = api_post('bots', {'bot': bot_params})['bot']
+                result = api_create_bot_instance(bot, instance.group_id, instance.name, instance.avatar_url)
                 instance.id = result['bot_id']
             except TypeError:
                 # Usually an unauthorized error.
@@ -261,13 +272,7 @@ def manager(slug):
         name_changed = not (name == bot.name)
         avatar_url = form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url
         avatar_url_changed = not (avatar_url == bot.avatar_url)
-        bot_params = {
-            'name': name,
-            'group_id': group_id,
-            'avatar_url': avatar_url,
-            'callback_url': callback_url,
-        }
-        result = api_post('bots', {'bot': bot_params})['bot']
+        result = api_create_bot_instance(bot, group_id, name, avatar_url)
         group = api_get(f'groups/{group_id}')
 
         # Store in database
