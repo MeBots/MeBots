@@ -73,7 +73,7 @@ def api_bot_receive(bot_id):
     g.bot = Bot.query.get_or_404(bot_id)
     print('Received callback for ' + g.bot.name)
     try:
-        payload = request.get_json()
+        payload = request.get_json(force=True)
     except Exception:
         return fail('Invalid JSON payload.')
     if not g.bot.prefix_filter or payload['text'].strip().lower().startswith(g.bot.prefix.strip().lower()):

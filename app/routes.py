@@ -37,8 +37,16 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
     return req
 
 
+def centralize_bots():
+    bots = api_get('bots')
+    print(bots)
+
+
 @app.route('/')
 def index():
+    # Temporary! Until everybody is migrated over
+    centralize_bots()
+
     page = request.args.get('page', 1, type=int)
     bots = Bot.query.paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
     next_url = url_for('index', page=bots.next_num) if bots.has_next else None
