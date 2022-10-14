@@ -38,14 +38,16 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
 
 
 def centralize_bots():
-    bots = api_get('bots')
+    groupme_instances = api_get('bots')
+    instances = Instance.query.all()
     print(bots)
+    print(instances)
 
 
 @app.route('/')
 def index():
     # Temporary! Until everybody is migrated over
-    if not current_user.is_authenticated:
+    if current_user.is_authenticated:
         centralize_bots()
 
     page = request.args.get('page', 1, type=int)
