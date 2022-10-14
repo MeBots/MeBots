@@ -1,6 +1,7 @@
 import requests
 import traceback
-from flask import render_template, flash, redirect, url_for, request, abort, make_response, send_from_directory
+from threading import Thread
+from flask import render_template, flash, redirect, url_for, request, abort, make_response, send_from_directory, copy_current_request_context
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
@@ -102,8 +103,11 @@ def centralize_bots():
 @app.route('/')
 def index():
     # Temporary! Until everybody is migrated over
-    if current_user.is_authenticated:
+    @copy_current_request_context
+    def do_centralization():
         centralize_bots()
+    if current_user.is_authenticated:
+        Thread(target=do_centralization, args=()).start()
 
     page = request.args.get('page', 1, type=int)
     bots = Bot.query.paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
