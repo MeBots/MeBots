@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<article>
     <p><strong>MeBots is a powerful toolkit for building, sharing, and using GroupMe chat bots with ease.</strong> It's a public list of bots that anyone can install in their own chats, and a developer platform for making your bots scalable. MeBots extends GroupMe's bot system and adds new features, such as a user interface for adding bots to groups, automatic storage of basic bot information, and more!</p>
     <p>The MeBots API makes bot development way easier. It's ideal for simplifying maintenance of bots at many scales, as well as for promoting them through the Bot Shop. Anyone can sign in with GroupMe, browse through your bots, and add what they like to servers they're in.</p>
     <p>What are you waiting for? <a href="{{ url_for('create_bot') }}">Create your first bot</a> and <a href="{{ url_for('documentation') }}">dive into the documentation!</a></p>
     <p>MeBots was developed by <a href="https://github.com/ErikBoesen">Erik Boesen</a> as a personal project, and its source code is available on <a href="https://github.com/MeBots/MeBots">GitHub</a>. MeBots is provided completely free of charge, but if you like my work, you can <a href="https://paypal.me/ErikBoesen">help me pay for college!</a> :)</p>
+</article>
 {% endblock %}

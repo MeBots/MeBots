@@ -175,6 +175,10 @@ ol, main p {
     margin: 4px 0;
 }
 
+article {
+    max-width: 8in;
+    color: white;
+}
 article p {
     margin: 10px 0;
 }
@@ -216,13 +220,9 @@ button:hover, button:focus, button:active,
 }
 .button-row {
 }
-footer {
-    color: #aaa;
-    font-size: 10px;
-}
 
 @media (min-width: 800px) {
-    header, footer {
+    header {
         padding-left: 25px;
     }
     main {
