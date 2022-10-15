@@ -37,10 +37,8 @@ button,
     font: inherit;
     background: #00aff0;
     color: white;
-    padding: 8px 10px;
-    border-radius: 50px;
+    padding: 8px 12px;
     text-decoration: none;
-    vertical-align: middle;
     transition: 0.5s color background;
     cursor: pointer;
     display: inline-block;

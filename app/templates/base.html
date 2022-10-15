@@ -26,22 +26,21 @@
     </head>
     <body>
         <header>
+            <a id="logo" href="{{ url_for('index') }}">
+                <img src="/static/images/logo/icon-plain.png" alt="MeBots logo">
+                <h2>MeBots</h2>
+            </a>
             <nav>
-                <img src="/static/images/logo/icon-plain.png" alt="MeBots logo" id="logo"><h2 id="logo-text"><a href="{{ url_for('index') }}">MeBots</a></h2>
                 <ul>
                     <li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('about') }}">About</a></li>
-                    <li><a href="{{ url_for('documentation') }}">Documentation</a></li>
+                    <li><a href="{{ url_for('documentation') }}">Docs</a></li>
                     <li><a href="{{ url_for('create_bot') }}">Create Bot</a></li>
-                    {% if current_user.is_anonymous %}
-                    {% else %}
-                    <li><a href="{{ url_for('user', user_id=current_user.id) }}">My Bots</a></li>
-                    {% endif %}
 
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('login') }}" class="session">Log in with GroupMe</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li><a href="{{ url_for('user', user_id=current_user.id) }}" class="iconic"><i class="fa fa-user-circle-o"></i></a></li>
                     {% endif %}
                 </ul>
             </nav>

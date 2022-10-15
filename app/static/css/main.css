@@ -17,42 +17,45 @@ body {
     background: #32bff3;
     color: #222;
 }
-main, footer {
-    padding: 0 10px 10px;
+main {
+    padding: 10px;
 }
 header {
     padding: 8px 5px 8px 10px;
     background: #00aff0;
     color: white;
     overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
 }
 header, h1, h2, h3, h4, h5, h6 {
     font-family: 'Lexend Deca', serif;
 }
-header a {
+#logo {
     text-decoration: none;
-}
-header #logo {
-    height: 40px;
     margin-right: 5px;
+    flex: 1;
+    white-space: nowrap;
 }
-header #logo-text {
+#logo img {
+    height: 40px;
+}
+#logo h2 {
     font-size: 50px;
     line-height: 1;
     display: inline-block;
     transform: translateY(-3px);
 }
-header nav ul {
-    display: inline-block;
-    vertical-align: top;
+nav {
     margin-top: 8px;
-    float: right;
+    margin-right: 10px;
 }
-header nav li {
+nav li {
     list-style: none;
     display: inline-block;
 }
-header nav ul a {
+nav a {
+    text-decoration: none;
     padding: 8px 0;
     margin: 0 6px;
 
@@ -60,7 +63,7 @@ header nav ul a {
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 }
-header nav ul a:before {
+nav a:before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -69,10 +72,21 @@ header nav ul a:before {
     bottom: 0;
     background: white;
     height: 3px;
-    transition: right 0.3s ease-out;
+    transition: 0.3s ease-out;
 }
-header nav ul a:hover:before, header nav ul a:focus:before, header nav ul a:active:before {
+nav a:hover:before, nav a:focus:before, nav a:active:before {
     right: 0;
+}
+nav a.iconic {
+    transform: scale(1.3);
+    transition: 0.3s;
+}
+nav a.iconic:hover {
+    transform: scale(1.5);
+    transition: 0.4s;
+}
+nav a.iconic:before {
+    display: none;
 }
 header .session {
     padding: 8px;
@@ -119,13 +133,6 @@ ol, main p {
     max-width: 100%;
 }
 
-.profile {
-    padding-bottom: 10px;
-}
-.profile > * {
-    display: inline-block;
-    vertical-align: top;
-}
 .avatar {
     width: 85px;
     height: 85px;
@@ -142,19 +149,23 @@ ol, main p {
     margin-right: 10px;
 }
 
+.bot_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .bot_list .bot {
-    display: inline-block;
-    height: ;
     vertical-align: top;
     width: 100%;
     padding: 20px;
     margin-right: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     background: white;
-    border-radius: 6px;
+    border-radius: 20px;
 }
 .bot_list .avatar {
-    margin-right: 6px;
+    margin-right: 8px;
 }
 .bot h4 {
     font-size: 27px;
@@ -172,8 +183,8 @@ ol, main p {
 .pill {
     display: inline-block;
     color: #00aff0;
-    padding: 8px 10px;
-    margin: 6px 0;
+    padding: 8px 0;
+    margin: 6px 3px;
     border-radius: 4px;
 }
 .bot .description {
@@ -182,6 +193,21 @@ ol, main p {
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin: 4px 0;
+}
+
+.profile {
+    padding: 20px 10px 30px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.profile .avatar {
+    margin-right: 8px;
+}
+.profile .details {
+    text-align: center;
 }
 
 article {
@@ -197,10 +223,10 @@ a {
 
 @media (min-width: 940px) {
     header {
-        padding-left: 25px;
+        padding: 8px 25px;
     }
     main {
-        padding: 20px 25px;
+        padding: 12px 25px;
     }
     .bot_list .bot {
         width: 4.5in;
