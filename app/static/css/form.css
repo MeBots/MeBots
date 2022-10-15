@@ -1,25 +1,58 @@
-form {}
+form {
+    color: white;
+    max-width: 100%;
+}
 form div {
     margin: 5px 0;
 }
-form label {
+label {
     display: block;
 }
+select, input, textarea, button, .button {
+    font: inherit;
+    margin: 2px 0;
+    border: none;
+    border-radius: 18px;
+    outline: none;
+}
+
+/* Textual inputs */
 textarea,
 input[type="text"],
 input[type="password"] {
-    padding: 5px;
+    width: 300px;
+    display: block;
+    padding: 8px 10px;
     width: 350px;
-    border: solid 1px #ddd;
     display: inline;
-    font: inherit;
-    outline: none;
 }
 textarea {
     min-height: 80px;
 }
-form span input[type="checkbox"],
-form span label {
+
+/* Buttons */
+input[type="submit"],
+button,
+.button {
+    font: inherit;
+    background: #00aff0;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 50px;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: 0.5s color background;
+    cursor: pointer;
+    display: inline-block;
+}
+input[type="submit"]:hover, input[type="submit"]:focus, input[type="submit"]:active,
+button:hover, button:focus, button:active,
+.button:hover, .button:focus, .button:active {
+    transition: 0.6s color background;
+}
+
+/* Misc */
+input[type="checkbox"] {
     display: inline;
 }
 form .error {

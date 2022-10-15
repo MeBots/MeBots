@@ -102,6 +102,15 @@ ol {
 ol, main p {
     line-height: 1.4;
 }
+
+.columns .column {
+    display: inline-block;
+    vertical-align: top;
+}
+.columns.major .column:not(:last-child) {
+    margin-right: 10px;
+}
+
 .profile {
     padding-bottom: 10px;
 }
@@ -125,9 +134,6 @@ ol, main p {
     margin-right: 10px;
 }
 
-.bot_list {
-
-}
 .bot_list .bot {
     display: inline-block;
     height: ;
@@ -136,13 +142,8 @@ ol, main p {
     padding: 20px;
     margin-right: 10px;
     margin-bottom: 12px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
     background: white;
     border-radius: 6px;
-}
-.bot_list .row {
-    display: flex;
-    flex-direction: row;
 }
 .bot_list .avatar {
     margin-right: 6px;
@@ -184,41 +185,6 @@ article p {
 }
 a {
     color: inherit;
-}
-select, input, .button {
-    font: inherit;
-    margin: 2px 0;
-    border-radius: 50px;
-    outline: none;
-}
-input[type="text"] {
-    width: 300px;
-    display: block;
-}
-label {
-    display: block;
-}
-input[type="submit"],
-button,
-.button {
-    font: inherit;
-    background: #00aff0;
-    color: white;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 50px;
-    text-decoration: none;
-    vertical-align: middle;
-    transition: 0.5s color background;
-    cursor: pointer;
-    display: inline-block;
-}
-input[type="submit"]:hover, input[type="submit"]:focus, input[type="submit"]:active,
-button:hover, button:focus, button:active,
-.button:hover, .button:focus, .button:active {
-    transition: 0.6s color background;
-}
-.button-row {
 }
 
 @media (min-width: 800px) {
