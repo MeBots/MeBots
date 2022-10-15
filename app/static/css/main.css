@@ -110,6 +110,14 @@ ol, main p {
 .columns.major .column:not(:last-child) {
     margin-right: 10px;
 }
+.row {
+    display: inline-flex;
+    flex-direction: row;
+    max-width: 100%;
+}
+.row .cell {
+    max-width: 100%;
+}
 
 .profile {
     padding-bottom: 10px;
@@ -138,7 +146,7 @@ ol, main p {
     display: inline-block;
     height: ;
     vertical-align: top;
-    width: 4.5in;
+    width: 100%;
     padding: 20px;
     margin-right: 10px;
     margin-bottom: 12px;
@@ -187,11 +195,14 @@ a {
     color: inherit;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 940px) {
     header {
         padding-left: 25px;
     }
     main {
         padding: 20px 25px;
+    }
+    .bot_list .bot {
+        width: 4.5in;
     }
 }

@@ -1,11 +1,11 @@
 <div class="bot">
-    <div class="columns">
-        <div class="column">
+    <div class="row">
+        <div class="cell">
             <a href="{{ url_for('bot', slug=bot.slug) }}">
                 <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
             </a>
         </div>
-        <div class="column">
+        <div class="cell">
             <h4><a href="{{ url_for('bot', slug=bot.slug) }}">{{ bot.name }}</a></h4>
             {% include "_status.html" %}
             <div class="button-row">
