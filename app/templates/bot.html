@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
 
-{% block head %}
-<link rel="stylesheet" href="/static/css/manager.css">
-{% endblock %}
-
 {% block content %}
 <article>
     <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large">
