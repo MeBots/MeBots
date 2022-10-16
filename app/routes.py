@@ -186,7 +186,7 @@ def user(user_id):
     return render_template('user.html', user=user, bots=bots.items, title=user.name)
 
 
-@app.route('/bot/<slug>')
+@app.route('/bot/<slug>', methods=['GET', 'POST'])
 def bot(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
 
@@ -234,7 +234,7 @@ def bot(slug):
                     # Usually an unauthorized error.
                     pass
             db.session.commit()
-            flash('Missing bots have been restored where possible.')
+            #flash('Missing bots have been restored where possible.')
 
         form = InstanceForm()
         form.group_id.choices = [(group['id'], group['name']) for group in groups]
@@ -258,6 +258,8 @@ def bot(slug):
                                 bot_id=bot.id)
             db.session.add(instance)
             db.session.commit()
+            # Refresh after creation of bot
+            return redirect(url_for('bot', slug=slug))
         else:
             form.name.data = bot.name
             form.avatar_url.data = bot.avatar_url
@@ -280,6 +282,7 @@ def create_bot():
                   description=form.description.data,
                   website=form.website.data,
                   prefix=form.prefix.data,
+                  prefix_filter=form.prefix_filter.data,
                   test_group=form.test_group.data,
                   repo=form.repo.data)
         bot.reset_token()

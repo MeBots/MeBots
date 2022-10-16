@@ -53,7 +53,6 @@ header, h1, h2, h3, h4, h5, h6 {
 }
 nav {
     margin-top: 4px;
-    overflow: hidden;
     position: absolute;
     top: -100px;
     transition: 0.3s;
@@ -196,6 +195,7 @@ ol, main p {
 }
 .row .cell {
     max-width: 100%;
+    overflow: hidden;
 }
 
 .avatar {
@@ -261,6 +261,14 @@ ol, main p {
     margin: 4px 0;
 }
 
+.search {
+    color: white;
+    margin: 0 auto;
+}
+.search input {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
 .profile {
     padding: 0 10px 30px;
     color: white;
@@ -305,7 +313,7 @@ a {
     color: inherit;
 }
 
-@media (min-width: 590px) {
+@media (min-width: 645px) {
     #nav-button {
         display: none;
     }
@@ -313,6 +321,9 @@ a {
         height: auto;
         position: static;
         top: 0;
+    }
+    #logo.hidden {
+        opacity: 1;
     }
 }
 @media (min-width: 775px) {
