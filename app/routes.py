@@ -154,7 +154,6 @@ def login():
     me = api_get('users/me', token=token)
     user_id = me.get('user_id')
     if not user_id:
-        flash('Invalid user.')
         return redirect(url_for('index'))
     user = User.query.get(user_id)
     if user is None:
@@ -287,7 +286,6 @@ def create_bot():
         bot.owner = current_user
         db.session.add(bot)
         db.session.commit()
-        flash('Successfully created bot ' + bot.name + '!')
         return redirect(url_for('edit_bot', slug=bot.slug))
     return render_template('edit_bot.html',
                            title='Create new bot',
@@ -331,8 +329,12 @@ def edit_bot(slug):
     return render_template('edit_bot.html',
                            title='Editing ' + bot.name,
                            form=form,
-                           token=bot.token,
-                           slug=bot.slug)
+                           bot=bot)
+
+
+@app.route('/manager/<slug>')
+def manager(slug):
+    return redirect(url_for('bot', slug=slug))
 
 
 @app.route('/delete', methods=['POST'])
