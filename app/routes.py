@@ -310,6 +310,7 @@ def edit_bot(slug):
         bot.description = form.description.data
         bot.website = form.website.data
         bot.prefix = form.prefix.data
+        bot.prefix_filter = form.prefix_filter.data
         bot.test_group = form.test_group.data
         bot.repo = form.repo.data
         db.session.commit()
@@ -324,6 +325,7 @@ def edit_bot(slug):
     form.description.data = bot.description
     form.website.data = bot.website
     form.prefix.data = bot.prefix
+    form.prefix_filter.data = bot.prefix_filter
     form.test_group.data = bot.test_group
     form.repo.data = bot.repo
     return render_template('edit_bot.html',
