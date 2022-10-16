@@ -1,5 +1,6 @@
 <div>
     {{ item.label }}
+    <p class="minor">{{ item.description }}</p>
     {{ item }}
     {% for error in item.errors %}
     <span class="error">{{ error }}</span>

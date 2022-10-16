@@ -38,7 +38,7 @@
                     <li><a href="{{ url_for('create_bot') }}">Create Bot</a></li>
 
                     {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}" class="session">Log in with GroupMe</a></li>
+                    <li><a href="{{ url_for('login') }}" class="emphasized">Log in with GroupMe</a></li>
                     {% else %}
                     <li><a href="{{ url_for('user', user_id=current_user.id) }}" class="iconic"><img src="{{ current_user.avatar_url() }}" alt="Your Profile"></a></li>
                     {% endif %}

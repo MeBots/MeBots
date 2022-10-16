@@ -4,31 +4,33 @@
 <article>
     <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large">
     {% set owner = bot.owner %}
-    <h1>
-        {{ bot.name }}
-        {% if owner == current_user %}
+    <div class="header_row">
+        <h1>
+            {{ bot.name }}
+        </h1>
+        {% include "_population.html" %}
+    </div>
+    <div class="button_row">
+        {% if bot.website %}
+        <a class="button" href="{{ bot.website }}"><i class="fa fa-globe"></i> Bot website</a>
         {% endif %}
-    </h1>
-
-    {% include "_population.html" %}
-    {% if bot.website %}
-    <a class="button" href="{{ bot.website }}"><i class="fa fa-globe"></i> Bot website</a>
-    {% endif %}
-    {% if bot.prefix %}
-    <div class="pill">Message Prefix: {{ bot.prefix }}</div>
-    {% endif %}
-
-    <p>{{ bot.description }}</p>
-    <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
-    <div class="button-row">
-        <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
         {% if bot.test_group %}
-        <a class="button" href="{{ bot.test_group }}"><i class="fa fa-comments"></i> Help and Testing Group</a>
+        <a class="button" href="{{ bot.test_group }}"><i class="fa fa-comments"></i> Help & Testing Group</a>
         {% endif %}
         {% if bot.repo %}
-        <a class="button" href="{{ bot.repo }}"><i class="fa fa-code"></i> Source Code Repo</a>
+        <a class="button" href="{{ bot.repo }}"><i class="fa fa-code"></i> Source Code</a>
         {% endif %}
     </div>
+
+    <p>{{ bot.description }}</p>
+    {% if bot.prefix %}
+    <p>Message Prefix: {{ bot.prefix }}</p>
+    {% endif %}
+    <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
+
+    {% if owner == current_user %}
+    <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
+    {% endif %}
 </article>
 {% if current_user.is_authenticated %}
 <article>
@@ -91,5 +93,9 @@
     {% endif %}
 </article>
 <script src="/static/js/manager.js"></script>
+{% else %}
+<article>
+    <h2><a href="{{ url_for('login') }}">Log in with GroupMe</a> to add {{ bot.name }} to your groups!</h2>
+</article>
 {% endif %}
 {% endblock %}
