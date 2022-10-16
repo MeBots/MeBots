@@ -233,10 +233,24 @@ article {
 article p {
     margin: 10px 0;
 }
+p.minor {
+    color: #bbb;
+    font-size: 12px;
+    margin: 4px 0;
+}
 a {
     color: inherit;
 }
 
+@media (min-width: 775px) {
+    .columns .column {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .columns.major .column:not(:last-child) {
+        margin-right: 10px;
+    }
+}
 @media (min-width: 940px) {
     header {
         padding: 15px 20px;
