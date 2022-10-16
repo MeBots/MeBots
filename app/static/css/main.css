@@ -146,8 +146,8 @@ ol, main p {
     height: 50px;
 }
 .avatar.large {
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
     float: left;
     margin-right: 10px;
 }
@@ -218,7 +218,7 @@ article {
     background: white;
     border-radius: 18px;
     padding: 20px;
-    margin: 0 auto;
+    margin: 0 auto 10px;
 }
 article p {
     margin: 10px 0;

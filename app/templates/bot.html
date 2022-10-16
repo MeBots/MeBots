@@ -1,33 +1,36 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="/static/css/manager.css">
+{% endblock %}
+
 {% block content %}
+<article>
     <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large">
     {% set owner = bot.owner %}
     <h1>
         {{ bot.name }}
         {% if owner == current_user %}
-        [<a href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a>]
         {% endif %}
     </h1>
 
     {% include "_population.html" %}
-    {% include "_status.html" %}
+    {% if bot.website %}
+    <a class="button" href="{{ bot.website }}"><i class="fa fa-globe"></i> Bot website</a>
+    {% endif %}
     {% if bot.prefix %}
-    <div class="pill">Prefix: {{ bot.prefix }}</div>
+    <div class="pill">Message Prefix: {{ bot.prefix }}</div>
     {% endif %}
 
     <p>{{ bot.description }}</p>
     <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
     <div class="button-row">
-        <a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a>
-        {% if bot.website %}
-        <a class="button" href="{{ bot.website }}">Bot website</a>
-        {% endif %}
+        <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
         {% if bot.test_group %}
-        <a class="button" href="{{ bot.test_group }}">Join test/info group</a>
+        <a class="button" href="{{ bot.test_group }}"><i class="fa fa-comments"></i> Help and Testing Group</a>
         {% endif %}
         {% if bot.repo %}
-        <a class="button" href="{{ bot.repo }}">Source repository</a>
+        <a class="button" href="{{ bot.repo }}"><i class="fa fa-code"></i> Source Code Repo</a>
         {% endif %}
     </div>
 {% endblock %}
