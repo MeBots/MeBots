@@ -120,13 +120,12 @@ ol, main p {
     line-height: 1.4;
 }
 
-.columns .column {
-    display: inline-block;
-    vertical-align: top;
+.jumbotron {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
 }
-.columns.major .column:not(:last-child) {
-    margin-right: 10px;
-}
+
 .row {
     display: inline-flex;
     flex-direction: row;
@@ -140,6 +139,7 @@ ol, main p {
     width: 85px;
     height: 85px;
     border-radius: 100%;
+    display: block;
 }
 .avatar.small {
     width: 50px;
@@ -162,7 +162,7 @@ ol, main p {
 .bot_list .bot {
     vertical-align: top;
     width: 100%;
-    padding: 20px;
+    padding: 20px 20px 15px;
     margin: 0 6px 12px;
     background: white;
     border-radius: 20px;
@@ -212,6 +212,16 @@ ol, main p {
 .profile .details {
     text-align: center;
 }
+
+.header_row h1 {
+    display: inline-block;
+    margin-right: 3px;
+}
+.header_row .pill {
+    vertical-align: top;
+    margin-top: -2px;
+}
+
 
 article {
     max-width: 8in;
