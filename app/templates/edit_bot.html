@@ -1,30 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
 {% include "_token.html" %}
-<form action="" method="post">
-    <div class="major columns">
-        <div class="column">
-            {{ form.hidden_tag() }}
+<article class="form">
+    <h1>
+        {% if bot %}
+        Editing {{ bot.name }}
+        {% else %}
+        Create a bot
+        {% endif %}
+    </h1>
+    <form action="" method="post">
+        <div class="major columns">
+            <div class="column">
+                {{ form.hidden_tag() }}
 
-            {% with item = form.name %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.name %}{% include "_input.html" %}{% endwith %}
 
-            <span>{{ form.name_customizable() }} {{ form.name_customizable.label }}</span>
+                <span>{{ form.name_customizable() }} {{ form.name_customizable.label }}</span>
 
-            {% with item = form.slug %}{% include "_input.html" %}{% endwith %}
-            {% with item = form.avatar_url %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.slug %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.avatar_url %}{% include "_input.html" %}{% endwith %}
 
-            <span>{{ form.avatar_url_customizable() }} {{ form.avatar_url_customizable.label }}</span>
+                <span>{{ form.avatar_url_customizable() }} {{ form.avatar_url_customizable.label }}</span>
+            </div>
+            <div class="column">
+                {% with item = form.callback_url %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.description %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.website %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.repo %}{% include "_input.html" %}{% endwith %}
+            </div>
         </div>
-        <div class="column">
-            {% with item = form.callback_url %}{% include "_input.html" %}{% endwith %}
-            {% with item = form.description %}{% include "_input.html" %}{% endwith %}
-            {% with item = form.website %}{% include "_input.html" %}{% endwith %}
-            {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
-            {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
-            {% with item = form.repo %}{% include "_input.html" %}{% endwith %}
-
-            <p>{{ form.submit() }}</p>
-        </div>
-    </div>
-</form>
+        {{ form.submit() }}
+    </form>
+</article>
 {% endblock %}

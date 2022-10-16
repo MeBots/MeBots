@@ -4,11 +4,7 @@
     {% if current_user.is_anonymous %}
     <div class="jumbotron">
         <h1>Enhance your GroupMe chats!</h1>
-        <div class="button-row">
-            <a class="button" href="{{ url_for('about') }}">About</a>
-            <a class="button" href="{{ url_for('create_bot') }}">Create bot</a>
-            <a class="button" href="{{ url_for('login') }}">Browse bots</a>
-        </div>
+        <p>Choose a bot to add to your group, or launch your own scalable bot in just a few clicks!</p>
     </div>
     {% endif %}
 
