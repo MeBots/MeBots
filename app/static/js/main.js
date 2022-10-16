@@ -8,6 +8,7 @@ function previewAvatar() {
 }
 if (avatarInput) {
     avatarPreview = document.createElement('div');
+    avatarPreview.className = 'avatar';
     avatarPreview.id = 'avatar_preview';
     insertAfter(avatarPreview, avatarInput);
     previewAvatar();
