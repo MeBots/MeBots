@@ -190,7 +190,81 @@ def user(user_id):
 @app.route('/bot/<slug>')
 def bot(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
-    return render_template('bot.html', bot=bot, title=bot.name)
+
+    form = None
+    groups = None
+    instances = None
+    if current_user.is_authenticated:
+        me = api_get('users/me')
+
+        legacy_callback_url = bot.callback_url
+        callback_url = f'https://mebots.co/api/bots/{bot.id}/callback'
+
+        groups = []
+        page = 1
+        while True:
+            groups_page = api_get('groups', params={
+                'page': page,
+                'per_page': GROUPS_PAGE_SIZE,
+                'omit': 'memberships',
+            })
+            groups += groups_page
+            if len(groups_page) < GROUPS_PAGE_SIZE:
+                break
+            page += 1
+
+        # TODO: simplify
+        # Dictionary list of the bots that GroupMe has registered with the same callback URL
+        # TODO: stop allowing legacy
+        groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] in (legacy_callback_url, callback_url)]
+        # All the instances we have in our database owned by you for this bot
+        instances = Instance.query.filter_by(bot_id=bot.id, owner_id=me['user_id']).all()
+        # Groups without the bot in them
+        groups = [group for group in groups if group['id'] not in [instance.group_id for instance in instances]]
+        # Groups that we have a record of a bot for, but for which GroupMe's copy is gone
+        missing_instances = [instance for instance in instances if instance.group_id not in
+                             [groupme_instance['group_id'] for groupme_instance in groupme_instances]]
+
+        if missing_instances:
+            for instance in missing_instances:
+                print('Adding back to group ' + instance.group_name)
+                try:
+                    result = api_create_bot_instance(bot, instance.group_id, instance.name, instance.avatar_url)
+                    instance.id = result['bot_id']
+                except TypeError:
+                    # Usually an unauthorized error.
+                    pass
+            db.session.commit()
+            flash('Missing bots have been restored where possible.')
+
+        form = InstanceForm()
+        form.group_id.choices = [(group['id'], group['name']) for group in groups]
+        if form.validate_on_submit():
+            # Build and send instance data
+            group_id = form.group_id.data
+            name = form.name.data if bot.name_customizable else bot.name
+            name_changed = not (name == bot.name)
+            avatar_url = form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url
+            avatar_url_changed = not (avatar_url == bot.avatar_url)
+            result = api_create_bot_instance(bot, group_id, name, avatar_url)
+            group = api_get(f'groups/{group_id}')
+
+            # Store in database
+            instance = Instance(id=result['bot_id'],
+                                group_id=group_id,
+                                group_name=group['name'],
+                                name=name if name_changed else None,
+                                avatar_url=avatar_url if avatar_url_changed else None,
+                                owner_id=me['user_id'],
+                                bot_id=bot.id)
+            db.session.add(instance)
+            db.session.commit()
+        else:
+            form.name.data = bot.name
+            form.avatar_url.data = bot.avatar_url
+
+    return render_template('bot.html', title='Add ' + bot.name,
+                           bot=bot, form=form, groups=groups, instances=instances)
 
 
 @app.route('/create_bot', methods=['GET', 'POST'])
@@ -259,81 +333,6 @@ def edit_bot(slug):
                            form=form,
                            token=bot.token,
                            slug=bot.slug)
-
-
-@app.route('/manager/<slug>', methods=['GET', 'POST'])
-@login_required
-def manager(slug):
-    bot = Bot.query.filter_by(slug=slug).first_or_404()
-    me = api_get('users/me')
-
-    legacy_callback_url = bot.callback_url
-    callback_url = f'https://mebots.co/api/bots/{bot.id}/callback'
-
-    groups = []
-    page = 1
-    while True:
-        groups_page = api_get('groups', params={
-            'page': page,
-            'per_page': GROUPS_PAGE_SIZE,
-            'omit': 'memberships',
-        })
-        groups += groups_page
-        if len(groups_page) < GROUPS_PAGE_SIZE:
-            break
-        page += 1
-
-    # TODO: simplify
-    # Dictionary list of the bots that GroupMe has registered with the same callback URL
-    # TODO: stop allowing legacy
-    groupme_instances = [instance for instance in api_get('bots') if instance['callback_url'] in (legacy_callback_url, callback_url)]
-    # All the instances we have in our database owned by you for this bot
-    instances = Instance.query.filter_by(bot_id=bot.id, owner_id=me['user_id']).all()
-    # Groups without the bot in them
-    groups = [group for group in groups if group['id'] not in [instance.group_id for instance in instances]]
-    # Groups that we have a record of a bot for, but for which GroupMe's copy is gone
-    missing_instances = [instance for instance in instances if instance.group_id not in
-                         [groupme_instance['group_id'] for groupme_instance in groupme_instances]]
-
-    if missing_instances:
-        for instance in missing_instances:
-            print('Adding back to group ' + instance.group_name)
-            try:
-                result = api_create_bot_instance(bot, instance.group_id, instance.name, instance.avatar_url)
-                instance.id = result['bot_id']
-            except TypeError:
-                # Usually an unauthorized error.
-                pass
-        db.session.commit()
-        flash('Missing bots have been restored where possible.')
-
-    form = InstanceForm()
-    form.group_id.choices = [(group['id'], group['name']) for group in groups]
-    if form.validate_on_submit():
-        # Build and send instance data
-        group_id = form.group_id.data
-        name = form.name.data if bot.name_customizable else bot.name
-        name_changed = not (name == bot.name)
-        avatar_url = form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url
-        avatar_url_changed = not (avatar_url == bot.avatar_url)
-        result = api_create_bot_instance(bot, group_id, name, avatar_url)
-        group = api_get(f'groups/{group_id}')
-
-        # Store in database
-        instance = Instance(id=result['bot_id'],
-                            group_id=group_id,
-                            group_name=group['name'],
-                            name=name if name_changed else None,
-                            avatar_url=avatar_url if avatar_url_changed else None,
-                            owner_id=me['user_id'],
-                            bot_id=bot.id)
-        db.session.add(instance)
-        db.session.commit()
-    else:
-        form.name.data = bot.name
-        form.avatar_url.data = bot.avatar_url
-
-    return render_template('manager.html', form=form, bot=bot, groups=groups, instances=instances, title='Add ' + bot.name)
 
 
 @app.route('/delete', methods=['POST'])
