@@ -111,6 +111,10 @@ article.form input[type="submit"] {
     margin: 0 auto;
 }
 
+form .column div {
+    margin-bottom: 8px;
+}
+
 @media (min-width: 775px) {
     select,
     textarea,

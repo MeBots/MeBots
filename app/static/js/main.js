@@ -2,7 +2,8 @@
 function insertAfter(element, anchor) {
     anchor.parentNode.insertBefore(element, anchor.nextSibling);
 }
-let avatarInput = document.getElementById('avatar_url'), avatarPreview;
+const avatarInput = document.getElementById('avatar_url');
+let avatarPreview;
 function previewAvatar() {
     avatarPreview.style.backgroundImage = 'url(' + avatarInput.value + '), url(/static/images/unknown.png)';
 }
@@ -15,7 +16,7 @@ if (avatarInput) {
     avatarInput.oninput = previewAvatar;
 }
 
-let nameInput = document.querySelector('input#name'),
+const nameInput = document.querySelector('input#name'),
     slugInput = document.querySelector('input#slug');
 if (nameInput && slugInput) {
     let slugModified = false;
@@ -28,3 +29,13 @@ if (nameInput && slugInput) {
         slugModified = true;
     }
 }
+
+const navButton = document.getElementById('nav-button'),
+      nav = document.getElementsByTagName('nav')[0],
+      logo = document.getElementById('logo');
+navButton.onclick = function(e) {
+    e.preventDefault();
+    navButton.classList.toggle('open');
+    nav.classList.toggle('open');
+    logo.classList.toggle('hidden');
+};
