@@ -24,6 +24,7 @@ input[type="password"] {
     display: block;
     padding: 8px 10px;
     width: 350px;
+    max-width: 100%;
     display: inline;
 }
 textarea {

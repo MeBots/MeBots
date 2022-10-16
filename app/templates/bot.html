@@ -33,7 +33,7 @@
 {% if current_user.is_authenticated %}
 <article>
     <h2>
-        Add {{ bot.name }} to a group {% if bot.owner == current_user %}<a href="{{ url_for('edit_bot', slug=bot.slug) }}">(Edit)</a>{% endif %}
+        Add {{ bot.name }} to a group
     </h2>
     <form method="post">
         {{ form.hidden_tag() }}
