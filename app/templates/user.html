@@ -6,8 +6,8 @@
     <div class="details">
         <h1>{{ user.name }}</h1>
         {% if user == current_user %}
-        <a class="button" href="https://web.groupme.com/profile">Edit Profile</a>
-        <a class="button" href="{{ url_for('logout') }}">Logout</a>
+        <a class="button" href="https://web.groupme.com/profile"><i class="fa fa-pencil"></i> Edit Profile</a>
+        <a class="button" href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Logout</a>
         {% endif %}
     </div>
 </section>

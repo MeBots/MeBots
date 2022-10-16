@@ -11,9 +11,9 @@
             <div class="button-row">
                 {% set owner = bot.owner %}
                 {% if owner == current_user %}
-                <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}">Edit</a>
+                <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
                 {% endif %}
-                <a class="button" href="{{ url_for('manager', slug=bot.slug) }}">Add</a>
+                <a class="button" href="{{ url_for('manager', slug=bot.slug) }}"><i class="fa fa-plus-circle"></i> Add</a>
                 {% include "_population.html" %}
             </div>
         </div>
