@@ -20,15 +20,19 @@ select,
 textarea,
 input[type="text"],
 input[type="password"] {
-    background: #eee;
+    background: rgba(0, 21, 42, 0.05);
     display: block;
     padding: 8px 10px;
-    width: 350px;
+    width: 100%;
     max-width: 100%;
     display: inline;
 }
+form p {
+    max-width: 100%;
+}
 textarea {
     min-height: 80px;
+    resize: none;
 }
 
 /* Buttons */
@@ -54,8 +58,11 @@ button:hover, button:focus, button:active,
 }
 
 /* Misc */
+input[type="checkbox"],
+input[type="checkbox"] + label {
+    display: inline-block;
+}
 input[type="checkbox"] {
-    display: inline;
 }
 form .error {
     display: block;
@@ -93,3 +100,23 @@ th:first-child, td:first-child {
     padding-left: 0;
 }
 
+article.form {
+    text-align: center;
+}
+article.form form {
+    text-align: left;
+}
+article.form input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+}
+
+@media (min-width: 775px) {
+    select,
+    textarea,
+    input[type="text"],
+    input[type="password"],
+    form p {
+        width: 350px;
+    }
+}
