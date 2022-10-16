@@ -162,7 +162,9 @@ def login():
                     token=token)
         user.from_json(me)
         db.session.add(user)
-        db.session.commit()
+    else:
+        user.from_json(me)
+    db.session.commit()
     login_user(user)
     # Check next cookie to see if we need to go anywhere
     return redirect(url_for('index'))
