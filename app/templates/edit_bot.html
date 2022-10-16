@@ -16,18 +16,24 @@
 
                 {% with item = form.name %}{% include "_input.html" %}{% endwith %}
 
-                <span>{{ form.name_customizable() }} {{ form.name_customizable.label }}</span>
+                <div>{{ form.name_customizable() }} {{ form.name_customizable.label }}</div>
 
                 {% with item = form.slug %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.avatar_url %}{% include "_input.html" %}{% endwith %}
 
-                <span>{{ form.avatar_url_customizable() }} {{ form.avatar_url_customizable.label }}</span>
+                <div>{{ form.avatar_url_customizable() }} {{ form.avatar_url_customizable.label }}</div>
+
+                {% with item = form.description %}{% include "_input.html" %}{% endwith %}
             </div>
             <div class="column">
                 {% with item = form.callback_url %}{% include "_input.html" %}{% endwith %}
-                {% with item = form.description %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.website %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
+
+                <div>{{ form.prefix_filter() }} {{ form.prefix_filter.label }}
+                <p class="minor">{{ form.prefix_filter.description }}</p>
+                </div>
+
                 {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.repo %}{% include "_input.html" %}{% endwith %}
             </div>
