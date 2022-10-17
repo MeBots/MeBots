@@ -16,6 +16,12 @@ for (let bot of bots) {
 let searchBar = document.getElementById('search_bar');
 searchBar.oninput = function() {
     let terms = searchBar.value.toLowerCase().split(' ').filter((term) => term);
+    if (terms.length == 0) {
+        for (let bot of bots) {
+            bot.style.display = 'block';
+        }
+        return;
+    }
     for (let ind = 0; ind < strings.length; ind++) {
         for (let term of terms) {
             if (!strings[ind].includes(term)) {
