@@ -15,6 +15,8 @@ class User(UserMixin, db.Model):
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
 
     def avatar_url(self, size='preview'):
+        if not self.avatar:
+            return '/static/images/unknown.png'
         return app.config['IMAGE_ROOT'] + self.avatar + '.' + size
 
     def from_json(self, json, token=None):
