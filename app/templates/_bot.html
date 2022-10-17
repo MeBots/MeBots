@@ -24,6 +24,6 @@
         </div>
     </div>
     {% if bot.description %}
-    <p class="description">{{ bot.description }}</p>
+    <p class="description"><a href="{{ url_for('bot', slug=bot.slug) }}">{{ bot.description }}</a></p>
     {% endif %}
 </div>
