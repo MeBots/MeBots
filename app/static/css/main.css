@@ -193,6 +193,7 @@ ol, main p {
 .row {
     display: inline-flex;
     flex-direction: row;
+    align-items: center;
     max-width: 100%;
 }
 .row .cell {
@@ -215,8 +216,8 @@ ol, main p {
     height: 50px;
 }
 .avatar.large {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     margin-right: 10px;
 }
 
@@ -232,7 +233,7 @@ ol, main p {
     padding: 20px 20px 15px;
     margin: 0 0 12px;
     background: white;
-    border-radius: 20px;
+    border-radius: 23px;
 }
 .bot .avatar {
     margin-right: 8px;
@@ -271,8 +272,8 @@ ol, main p {
     padding-left: 12px;
     margin-bottom: 25px;
     max-width: 100%;
-    width: 350px;
-    border-radius: 50px;
+    width: 4.5in;
+    border-radius: 23px;
     font-size: 20px;
 }
 #search_bar {
@@ -280,6 +281,18 @@ ol, main p {
     width: auto;
     background: none;
     color: white;
+}
+#search_bar::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    opacity: 1;
+}
+
+#search_bar:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#search_bar::-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .profile {

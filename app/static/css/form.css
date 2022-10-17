@@ -46,6 +46,7 @@ button,
     text-decoration: none;
     transition: 0.5s color background;
     display: inline-block;
+    cursor: pointer;
 }
 input[type="submit"]:hover, input[type="submit"]:focus, input[type="submit"]:active,
 button:hover, button:focus, button:active,
