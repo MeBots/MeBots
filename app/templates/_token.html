@@ -1,9 +1,11 @@
-{% if token %}
+{% if bot %}
 Token
 <div id="token">
-    <input type="text" id="readout_token" value="{{ token }}" readonly>
-    <button id="copy_token">Copy</button>
-    <button id="reset_token" slug="{{ slug }}">Reset</button>
+    <input type="text" id="readout_token" value="{{ bot.token }}" readonly>
+    <div>
+        <button id="copy_token">Copy</button>
+        <button id="reset_token" slug="{{ bot.slug }}">Reset</button>
+    </div>
 </div>
 <script src="/static/js/token.js"></script>
 {% endif %}

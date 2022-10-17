@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% include "_token.html" %}
 <article class="form">
     <h1>
         {% if bot %}
@@ -39,6 +38,8 @@
             </div>
         </div>
         {{ form.submit() }}
+
+        {% include "_token.html" %}
     </form>
 </article>
 {% endblock %}
