@@ -18,10 +18,10 @@ body {
     color: #222;
 }
 main {
-    padding: 10px;
+    padding: 10px 16px;
 }
 header {
-    padding: 8px 5px 8px 10px;
+    padding: 8px 12px 10px;
     color: white;
     overflow: hidden;
     display: flex;
@@ -226,7 +226,7 @@ ol, main p {
     vertical-align: top;
     width: 100%;
     padding: 20px 20px 15px;
-    margin: 0 6px 12px;
+    margin: 0 0 12px;
     background: white;
     border-radius: 20px;
 }
@@ -344,5 +344,6 @@ a {
     }
     .bot_list .bot {
         width: 4.5in;
+        margin: 0 6px 12px;
     }
 }
