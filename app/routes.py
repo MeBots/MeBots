@@ -115,7 +115,7 @@ def login():
     # Check next cookie to see if we need to go anywhere
     next_page = request.cookies.get('next')
     if next_page:
-        resp = make_response(next_page)
+        resp = make_response(redirect(next_page))
         resp.set_cookie('next', '', expires=0)
         return resp
     return redirect(url_for('index'))
