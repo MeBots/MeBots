@@ -63,11 +63,12 @@ def centralize_bots():
 
 @app.before_request
 def before_request():
-    new_url = request.url
-    new_url = new_url.replace('mebots.co', 'mebots.io')
-    new_url = new_url.replace('mebots.herokuapp.com', 'mebots.io')
-    if 'mebots.co' in request.url or 'mebots.herokuapp.com' in request.url:
-         = request.url.replace('mebots.co', 'mebots.io')
+    if request.method == 'GET':
+        new_url = request.url
+        new_url = new_url.replace('mebots.co', 'mebots.io')
+        new_url = new_url.replace('mebots.herokuapp.com', 'mebots.io')
+        if new_url != request.url:
+            return redirect(new_url)
     if current_user.is_authenticated:
         current_user.last_seen = get_now()
         db.session.commit()
