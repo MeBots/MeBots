@@ -221,13 +221,12 @@ ol, main p {
 }
 
 .bot_list {
-    margin: 0 -6px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
 }
-.bot_list .bot {
+.bot {
     vertical-align: top;
     width: 100%;
     padding: 20px 20px 15px;
@@ -235,7 +234,7 @@ ol, main p {
     background: white;
     border-radius: 20px;
 }
-.bot_list .avatar {
+.bot .avatar {
     margin-right: 8px;
 }
 .bot h4 {
@@ -246,10 +245,6 @@ ol, main p {
 }
 .bot h4 a {
     text-decoration: none;
-}
-.status {
-    display: inline-block;
-    color: #31c793;
 }
 .pill {
     display: inline-block;
@@ -269,9 +264,24 @@ ol, main p {
 .search {
     color: white;
     margin: 0 auto;
+    background: rgba(255, 255, 255, 0.3);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 12px;
+    margin-bottom: 25px;
+    max-width: 100%;
+    width: 350px;
+    border-radius: 50px;
+    font-size: 20px;
 }
-.search input {
-    background-color: rgba(255, 255, 255, 0.3);
+.search i {
+}
+.search input[type="text"] {
+    flex-grow: 1;
+    width: auto;
+    background: none;
+    color: white;
 }
 
 .profile {
@@ -340,7 +350,7 @@ a {
         margin-right: 10px;
     }
 }
-@media (min-width: 926px) {
+@media (min-width: 938px) {
     header {
         padding: 15px 20px;
     }

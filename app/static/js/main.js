@@ -17,7 +17,7 @@ if (avatarInput) {
 }
 
 const nameInput = document.querySelector('input#name'),
-    slugInput = document.querySelector('input#slug');
+      slugInput = document.querySelector('input#slug');
 if (nameInput && slugInput) {
     let slugModified = false;
     nameInput.oninput = function() {
