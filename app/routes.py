@@ -1,58 +1,18 @@
-import requests
 import traceback
 from threading import Thread
 from flask import render_template, flash, redirect, url_for, request, abort, make_response, send_from_directory, copy_current_request_context
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
+from sqlalchemy import func, desc
 from app import app, db
 from app.forms import BotForm, InstanceForm
 from app.models import User, Bot, Instance
 from app.util import get_now
-from sqlalchemy import func, desc
+from app.groupme_api import api_get, api_post, api_create_bot_instance, api_destroy_bot_instance
 
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
-API_ROOT = 'https://api.groupme.com/v3/'
 GROUPS_PAGE_SIZE = 500
-
-
-def api_get(endpoint, token=None, params={}):
-    if token is None:
-        token = current_user.token
-    j = requests.get(API_ROOT + endpoint, params={'token': token, **params}).json()
-    response = j.get('response')
-    if response is None:
-        print('Error response from GroupMe API:')
-        print(j)
-    return response
-
-
-def api_post(endpoint, json={}, token=None, expect_json=True):
-    if token is None:
-        token = current_user.token
-    req = requests.post(API_ROOT + endpoint,
-                        params={'token': token},
-                        json=json)
-    if expect_json:
-        j = req.json()
-        print('Response from GroupMe API:')
-        print(j)
-        return j['response']
-    return req
-
-
-def api_create_bot_instance(bot, group_id, name=None, avatar_url=None):
-    bot_params = {
-        'name': name or bot.name,
-        'group_id': group_id,
-        'avatar_url': avatar_url or bot.avatar_url,
-        'callback_url': f'https://mebots.io/api/bots/{bot.id}/callback',
-    }
-    return api_post('bots', {'bot': bot_params})['bot']
-
-
-def api_destroy_bot_instance(bot_id):
-    return api_post('bots/destroy', {'bot_id': bot_id}, expect_json=False)
 
 
 def centralize_bots():
@@ -130,18 +90,9 @@ def index():
                            prev_url=prev_url)
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
-@app.route('/documentation')
-def documentation():
-    return render_template('documentation.html')
-
-
 @app.route('/login')
 def login():
+    """
     if current_user.is_authenticated:
         next_page = request.cookies.get('next')
         print('Next page: ' + next_page)
@@ -149,8 +100,8 @@ def login():
         if next_page is not None:
             resp.set_cookie('next', '')
         return resp
+    """
     token = request.args.get('access_token')
-    print('token: %s' % token)
     if token is None:
         # Store next parameter in cookie to be used after login
         resp = make_response(redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID']))
@@ -180,6 +131,15 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/documentation')
+def documentation():
+    return render_template('documentation.html')
 
 
 @app.route('/user/<user_id>')
