@@ -261,7 +261,7 @@ ol, main p {
     margin: 4px 0;
 }
 
-.search {
+#search {
     color: white;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.3);
@@ -275,9 +275,7 @@ ol, main p {
     border-radius: 50px;
     font-size: 20px;
 }
-.search i {
-}
-.search input[type="text"] {
+#search_bar {
     flex-grow: 1;
     width: auto;
     background: none;
