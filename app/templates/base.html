@@ -33,10 +33,10 @@
             <nav>
                 <ul>
                     <li><a href="{{ url_for('index') }}">Explore</a></li>
-                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('create_bot') }}">Add Bot</a></li>
                     <li><a href="{{ url_for('documentation') }}">Docs</a></li>
-                    <li><a href="{{ url_for('create_bot') }}">Create Bot</a></li>
                     <li><a href="https://groupme.com/join_group/90126249/eNj22Ofs">Help</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
 
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('login') }}" class="emphasized">Log in with GroupMe</a></li>

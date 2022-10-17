@@ -46,7 +46,7 @@ def api_create_bot_instance(bot, group_id, name=None, avatar_url=None):
         'name': name or bot.name,
         'group_id': group_id,
         'avatar_url': avatar_url or bot.avatar_url,
-        'callback_url': f'https://mebots.co/api/bots/{bot.id}/callback',
+        'callback_url': f'https://mebots.io/api/bots/{bot.id}/callback',
     }
     return api_post('bots', {'bot': bot_params})['bot']
 
@@ -63,7 +63,7 @@ def centralize_bots():
     problematic_bots = [
         bot for bot in groupme_bots
         # Check if each bot instance is in our database and has a non-centralized callback URL
-        if bot['bot_id'] in instance_ids and 'https://mebots.co/api/bots/' not in bot['callback_url']
+        if bot['bot_id'] in instance_ids and 'https://mebots.io/api/bots/' not in bot['callback_url']
     ]
 
     for old_bot in problematic_bots:
@@ -81,7 +81,7 @@ def centralize_bots():
                 'group_id': old_bot['group_id'],
                 # This time, let's ignore custom bot IDs since many are broken anyway
                 'avatar_url': bot.avatar_url,
-                'callback_url': f'https://mebots.co/api/bots/{bot.id}/callback',
+                'callback_url': f'https://mebots.io/api/bots/{bot.id}/callback',
             }
             print('Creating new bot instance...')
             result = api_post('bots', {'bot': bot_params})['bot']
@@ -204,7 +204,7 @@ def bot(slug):
         me = api_get('users/me')
 
         legacy_callback_url = bot.callback_url
-        callback_url = f'https://mebots.co/api/bots/{bot.id}/callback'
+        callback_url = f'https://mebots.io/api/bots/{bot.id}/callback'
 
         groups = []
         page = 1
