@@ -3,6 +3,7 @@ from flask_login import current_user
 
 
 API_ROOT = 'https://api.groupme.com/v3/'
+PAGE_SIZE = 500
 
 
 def api_get(endpoint, token=None, params={}):
@@ -43,3 +44,18 @@ def api_create_bot_instance(bot, group_id, name=None, avatar_url=None):
 def api_destroy_bot_instance(bot_id):
     return api_post('bots/destroy', {'bot_id': bot_id}, expect_json=False)
 
+
+def api_get_all_groups():
+    groups = []
+    page = 1
+    while True:
+        groups_page = api_get('groups', params={
+            'page': page,
+            'per_page': PAGE_SIZE,
+            'omit': 'memberships',
+        })
+        groups += groups_page
+        if len(groups_page) < PAGE_SIZE:
+            break
+        page += 1
+    return groups

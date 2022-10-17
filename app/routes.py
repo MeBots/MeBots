@@ -8,11 +8,10 @@ from app import app, db
 from app.forms import BotForm, InstanceForm
 from app.models import User, Bot, Instance
 from app.util import get_now
-from app.groupme_api import api_get, api_post, api_create_bot_instance, api_destroy_bot_instance
+from app.groupme_api import api_get, api_post, api_create_bot_instance, api_destroy_bot_instance, api_get_all_groups
 
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
-GROUPS_PAGE_SIZE = 500
 
 
 def centralize_bots():
@@ -166,18 +165,7 @@ def bot(slug):
         legacy_callback_url = bot.callback_url
         callback_url = f'https://mebots.io/api/bots/{bot.id}/callback'
 
-        groups = []
-        page = 1
-        while True:
-            groups_page = api_get('groups', params={
-                'page': page,
-                'per_page': GROUPS_PAGE_SIZE,
-                'omit': 'memberships',
-            })
-            groups += groups_page
-            if len(groups_page) < GROUPS_PAGE_SIZE:
-                break
-            page += 1
+        groups = api_get_all_groups()
 
         # TODO: simplify
         # Dictionary list of the bots that GroupMe has registered with the same callback URL
