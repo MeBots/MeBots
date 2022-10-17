@@ -13,6 +13,10 @@
                 {% include "_population.html" %}
             </div>
             <div class="button_row">
+                {% if owner == current_user %}
+                <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
+                {% endif %}
+
                 {% if bot.website %}
                 <a class="button" href="{{ bot.website }}"><i class="fa fa-globe"></i> Website</a>
                 {% endif %}
@@ -31,10 +35,6 @@
     </div>
 
     <p>{{ bot.description }}</p>
-
-    {% if owner == current_user %}
-    <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
-    {% endif %}
 </article>
 {% if current_user.is_authenticated %}
 <article>
