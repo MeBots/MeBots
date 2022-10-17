@@ -26,11 +26,12 @@
                 {% if bot.repo %}
                 <a class="button" href="{{ bot.repo }}"><i class="fa fa-code"></i> Source</a>
                 {% endif %}
+
+                {% if bot.prefix %}
+                <span class="button">Command Prefix: <strong>{{ bot.prefix }}</strong></span>
+                {% endif %}
+                <a class="button" href="{{ url_for('user', user_id=owner.id) }}">By: {{ owner.name }} <img class="avatar" src="{{ owner.avatar_url() }}"></a>
             </div>
-            {% if bot.prefix %}
-            <p>Message Prefix: {{ bot.prefix }}</p>
-            {% endif %}
-            <a class="button" href="{{ url_for('user', user_id=owner.id) }}">By <strong>{{ owner.name }}</strong> <img class="avatar" src="{{ owner.avatar_url() }}"></a>
         </div>
     </div>
 

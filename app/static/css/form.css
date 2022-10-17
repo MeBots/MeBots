@@ -45,7 +45,6 @@ button,
     padding: 8px 12px;
     text-decoration: none;
     transition: 0.5s color background;
-    cursor: pointer;
     display: inline-block;
 }
 input[type="submit"]:hover, input[type="submit"]:focus, input[type="submit"]:active,
