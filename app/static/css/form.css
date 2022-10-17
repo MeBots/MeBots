@@ -57,6 +57,14 @@ button:hover, button:focus, button:active,
     background: #ea0404;
 }
 
+.button img {
+    display: inline;
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    margin: -8px -12px -12px 0;
+}
+
 /* Misc */
 input[type="checkbox"],
 input[type="checkbox"] + label {

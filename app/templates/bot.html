@@ -30,7 +30,7 @@
             {% if bot.prefix %}
             <p>Message Prefix: {{ bot.prefix }}</p>
             {% endif %}
-            <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
+            <a class="button" href="{{ url_for('user', user_id=owner.id) }}">By <strong>{{ owner.name }}</strong> <img class="avatar" src="{{ owner.avatar_url() }}"></a>
         </div>
     </div>
 
