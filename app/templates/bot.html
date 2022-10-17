@@ -2,31 +2,35 @@
 
 {% block content %}
 <article>
-    <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large">
-    {% set owner = bot.owner %}
-    <div class="header_row">
-        <h1>
-            {{ bot.name }}
-        </h1>
-        {% include "_population.html" %}
-    </div>
-    <div class="button_row">
-        {% if bot.website %}
-        <a class="button" href="{{ bot.website }}"><i class="fa fa-globe"></i> Bot website</a>
-        {% endif %}
-        {% if bot.test_group %}
-        <a class="button" href="{{ bot.test_group }}"><i class="fa fa-comments"></i> Help & Testing Group</a>
-        {% endif %}
-        {% if bot.repo %}
-        <a class="button" href="{{ bot.repo }}"><i class="fa fa-code"></i> Source Code</a>
-        {% endif %}
+    <div class="row">
+        <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large cell rigid">
+        <div class="cell">
+            {% set owner = bot.owner %}
+            <div class="header_row">
+                <h1>
+                    {{ bot.name }}
+                </h1>
+                {% include "_population.html" %}
+            </div>
+            <div class="button_row">
+                {% if bot.website %}
+                <a class="button" href="{{ bot.website }}"><i class="fa fa-globe"></i> Website</a>
+                {% endif %}
+                {% if bot.test_group %}
+                <a class="button" href="{{ bot.test_group }}"><i class="fa fa-comments"></i> Help/Test Group</a>
+                {% endif %}
+                {% if bot.repo %}
+                <a class="button" href="{{ bot.repo }}"><i class="fa fa-code"></i> Source</a>
+                {% endif %}
+            </div>
+            {% if bot.prefix %}
+            <p>Message Prefix: {{ bot.prefix }}</p>
+            {% endif %}
+            <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
+        </div>
     </div>
 
     <p>{{ bot.description }}</p>
-    {% if bot.prefix %}
-    <p>Message Prefix: {{ bot.prefix }}</p>
-    {% endif %}
-    <p>Owner: <a href="{{ url_for('user', user_id=owner.id) }}">{{ owner.name }}</a></p>
 
     {% if owner == current_user %}
     <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
