@@ -16,9 +16,8 @@ for (let bot of bots) {
 let searchBar = document.getElementById('search_bar');
 searchBar.oninput = function() {
     let terms = searchBar.value.toLowerCase().split(' ').filter((term) => term);
-    console.log(terms);
     for (let ind = 0; ind < strings.length; ind++) {
-        for (let term in terms) {
+        for (let term of terms) {
             if (!strings[ind].includes(term)) {
                 bots[ind].style.display = 'none';
                 break;
