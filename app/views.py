@@ -66,7 +66,7 @@ def before_request():
     if request.method == 'GET':
         new_url = request.url
         new_url = new_url.replace('mebots.co', 'mebots.io')
-        new_url = new_url.replace('mebots.herokuapp.com', 'mebots.io')
+        new_url = new_url.replace('mebotsco.herokuapp.com', 'mebots.io')
         if new_url != request.url:
             return redirect(new_url, code=301)
     if current_user.is_authenticated:
