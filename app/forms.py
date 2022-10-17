@@ -14,9 +14,9 @@ class BotForm(FlaskForm):
     description = TextAreaField('Description', validators=[Length(max=1000)])
     website = StringField('Website', validators=[Length(max=128)])
     prefix = StringField('Command prefix', validators=[Length(max=20)], render_kw={'placeholder': '/, !, #, etc.'})
-    prefix_filter = BooleanField('Ignore messages without prefix', validators=[Length(max=20)], default=True, description='Prevent receipt of messages that don\'t query your bot. May help save on hosting costs.')
-    test_group = StringField('Link to join testing/informational group', validators=[Length(max=60)], render_kw={'placeholder': 'groupme.com/join_group/abcdef/123456'})
-    repo = StringField('Source code repository', validators=[Length(max=100)], render_kw={'placeholder': 'github.com/Dave/Hal9000'})
+    prefix_filter = BooleanField('Ignore messages without prefix', validators=[], default=True, description='Prevent receipt of messages that don\'t query your bot. May help save on hosting costs.')
+    test_group = StringField('Link to join testing/informational group', validators=[Length(max=60)])
+    repo = StringField('Source code repository', validators=[Length(max=100)])
 
     submit = SubmitField('Submit')
 
