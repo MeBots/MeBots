@@ -52,6 +52,7 @@ def centralize_bots():
             print('Updating instance record...')
             instance.id = result['bot_id']
             instance.avatar_url = None
+            instance.created = get_now()
             db.session.commit()
             print('Instated new bot instance ID ' + instance.id)
         except Exception as e:
