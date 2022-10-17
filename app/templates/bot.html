@@ -99,7 +99,7 @@
 <script src="/static/js/manager.js"></script>
 {% else %}
 <article>
-    <h2><a href="{{ url_for('login') }}">Log in with GroupMe</a> to add {{ bot.name }} to your groups!</h2>
+    <h2><a href="{{ url_for('login') }}?next={{ url_for('bot', slug=bot.slug) }}">Log in with GroupMe</a> to add {{ bot.name }} to your groups!</h2>
 </article>
 {% endif %}
 {% endblock %}

@@ -91,15 +91,6 @@ def index():
 
 @app.route('/login')
 def login():
-    """
-    if current_user.is_authenticated:
-        next_page = request.cookies.get('next')
-        print('Next page: ' + next_page)
-        resp = make_response(redirect(next_page or url_for('index')))
-        if next_page is not None:
-            resp.set_cookie('next', '')
-        return resp
-    """
     token = request.args.get('access_token')
     if token is None:
         # Store next parameter in cookie to be used after login
@@ -111,18 +102,22 @@ def login():
     me = api_get('users/me', token=token)
     user_id = me.get('user_id')
     if not user_id:
+        # Invalid user
         return redirect(url_for('index'))
     user = User.query.get(user_id)
     if user is None:
         user = User(id=user_id,
                     token=token)
-        user.from_json(me)
         db.session.add(user)
-    else:
-        user.from_json(me)
+    user.from_json(me)
     db.session.commit()
     login_user(user)
     # Check next cookie to see if we need to go anywhere
+    next_page = request.cookies.get('next')
+    if next_page:
+        resp = make_response(next_page)
+        resp.set_cookie('next', '', expires=0)
+        return resp
     return redirect(url_for('index'))
 
 
