@@ -68,7 +68,7 @@ def before_request():
         new_url = new_url.replace('mebots.co', 'mebots.io')
         new_url = new_url.replace('mebots.herokuapp.com', 'mebots.io')
         if new_url != request.url:
-            return redirect(new_url)
+            return redirect(new_url, code=301)
     if current_user.is_authenticated:
         current_user.last_seen = get_now()
         db.session.commit()
