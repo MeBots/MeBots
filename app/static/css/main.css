@@ -91,6 +91,8 @@ nav a:hover:before, nav a:focus:before, nav a:active:before {
 }
 nav a img {
     height: 40px;
+    width: 40px;
+    object-fit: cover;
     border-radius: 100%;
 }
 nav a.iconic {
@@ -196,6 +198,9 @@ ol, main p {
 .row .cell {
     max-width: 100%;
     overflow: hidden;
+}
+.row .cell.rigid {
+    flex-shrink: 0;
 }
 
 .avatar {
@@ -335,7 +340,7 @@ a {
         margin-right: 10px;
     }
 }
-@media (min-width: 940px) {
+@media (min-width: 926px) {
     header {
         padding: 15px 20px;
     }
