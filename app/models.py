@@ -1,7 +1,9 @@
 from flask_login import UserMixin
 from app import app, db, login
+from app.util import get_now
 import os
 import binascii
+
 
 
 class User(UserMixin, db.Model):
@@ -11,8 +13,16 @@ class User(UserMixin, db.Model):
     avatar = db.Column(db.String(60))
     token = db.Column(db.String(60))
 
+    registered = db.Column(db.Integer)
+    last_seen = db.Column(db.Integer)
+
     bots = db.relationship('Bot', backref='owner', lazy='dynamic')
     instances = db.relationship('Instance', backref='owner', lazy='dynamic')
+
+    def __init__(self, **kwargs):
+        for kw, arg in kwargs.items():
+            setattr(self, kw, arg)
+        self.registered = get_now()
 
     def avatar_url(self, size='preview'):
         if not self.avatar:
@@ -57,6 +67,14 @@ class Bot(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
 
+    created = db.Column(db.Integer)
+    updated = db.Column(db.Integer)
+
+    def __init__(self, **kwargs):
+        for kw, arg in kwargs.items():
+            setattr(self, kw, arg)
+        self.created = get_now()
+
     def json(self):
         return {c.name: getattr(self, c.name) for c in ('slug', 'name',
                                                         'avatar_url')}.update({'instances': len(self.instances.all())})
@@ -77,3 +95,11 @@ class Instance(db.Model):
 
     bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    created = db.Column(db.Integer)
+    updated = db.Column(db.Integer)
+
+    def __init__(self, **kwargs):
+        for kw, arg in kwargs.items():
+            setattr(self, kw, arg)
+        self.created = get_now()

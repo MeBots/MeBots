@@ -7,6 +7,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import BotForm, InstanceForm
 from app.models import User, Bot, Instance
+from app.util import get_now
 from sqlalchemy import func, desc
 
 
@@ -99,6 +100,12 @@ def centralize_bots():
             print(e)
             print(traceback.format_exc())
 
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = get_now()
+        db.session.commit()
 
 
 @app.route('/')
@@ -316,6 +323,7 @@ def edit_bot(slug):
         bot.prefix_filter = form.prefix_filter.data
         bot.test_group = form.test_group.data
         bot.repo = form.repo.data
+        bot.updated = get_now()
         db.session.commit()
         return redirect(url_for('bot', slug=bot.slug))
     # TODO: this repetition feels wrong...

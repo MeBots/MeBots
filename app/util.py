@@ -51,3 +51,7 @@ def fail(message, code=400):
         }),
         code
     )
+
+
+def get_now():
+    return int(datetime.datetime.utcnow().timestamp())
