@@ -351,6 +351,10 @@ a {
     #logo.hidden {
         opacity: 1;
     }
+    .avatar.large {
+        width: 150px;
+        height: 150px;
+    }
 }
 @media (min-width: 775px) {
     .columns .column {

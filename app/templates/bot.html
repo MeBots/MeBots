@@ -28,7 +28,7 @@
                 {% endif %}
 
                 {% if bot.prefix %}
-                <span class="button">Command Prefix: <strong>{{ bot.prefix }}</strong></span>
+                <span class="button">Command Prefix: {{ bot.prefix }}</span>
                 {% endif %}
                 <a class="button" href="{{ url_for('user', user_id=owner.id) }}">By: {{ owner.name }} <img class="avatar" src="{{ owner.avatar_url() }}"></a>
             </div>
