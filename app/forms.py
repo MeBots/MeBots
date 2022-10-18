@@ -18,7 +18,7 @@ class BotForm(FlaskForm):
     test_group = StringField('Link to join testing/informational group', validators=[Length(max=60)])
     repo = StringField('Source code repository', validators=[Length(max=100)])
 
-    submit = SubmitField('Submit')
+    submit = SubmitField('Save')
 
 
 class InstanceForm(FlaskForm):

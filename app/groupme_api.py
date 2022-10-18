@@ -14,6 +14,7 @@ def api_get(endpoint, token=None, params={}):
     if response is None:
         print('Error response from GroupMe API:')
         print(j)
+        return None
     return response
 
 
@@ -31,18 +32,18 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
     return req
 
 
-def api_create_bot_instance(bot, group_id, name=None, avatar_url=None):
+def api_create_bot_instance(bot, group_id, name=None, avatar_url=None, token=None):
     bot_params = {
         'name': name or bot.name,
         'group_id': group_id,
         'avatar_url': avatar_url or bot.avatar_url,
         'callback_url': f'https://mebots.io/api/bots/{bot.id}/callback',
     }
-    return api_post('bots', {'bot': bot_params})['bot']
+    return api_post('bots', {'bot': bot_params}, token=token)['bot']
 
 
-def api_destroy_bot_instance(bot_id):
-    return api_post('bots/destroy', {'bot_id': bot_id}, expect_json=False)
+def api_destroy_bot_instance(bot_id, token=None):
+    return api_post('bots/destroy', {'bot_id': bot_id}, expect_json=False, token=token)
 
 
 def api_get_all_groups():
