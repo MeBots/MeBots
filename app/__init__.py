@@ -15,4 +15,5 @@ login = LoginManager(app)
 login.login_view = 'login'
 
 from app import views, models, errors, api, util, groupme_api
+app.register_blueprint(views.views_blueprint)
 app.register_blueprint(api.api_blueprint, url_prefix='/api')

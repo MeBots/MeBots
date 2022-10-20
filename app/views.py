@@ -1,6 +1,6 @@
 import traceback
 from threading import Thread
-from flask import render_template, flash, redirect, url_for, request, abort, make_response, send_from_directory, copy_current_request_context
+from flask import Blueprint, render_template, flash, redirect, url_for, request, abort, make_response, send_from_directory, copy_current_request_context
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from sqlalchemy import func, desc
@@ -12,6 +12,8 @@ from app.groupme_api import api_get, api_post, api_create_bot_instance, api_dest
 
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
+
+views_blueprint = Blueprint('views', __name__)
 
 
 def centralize_bots():
@@ -61,7 +63,7 @@ def centralize_bots():
             print(traceback.format_exc())
 
 
-@app.before_request
+@views_blueprint.before_request
 def before_request():
     if request.method == 'GET':
         new_url = request.url
@@ -74,7 +76,7 @@ def before_request():
         db.session.commit()
 
 
-@app.route('/')
+@views_blueprint.route('/')
 def index():
     # Temporary! Until everybody is migrated over
     @copy_current_request_context
@@ -96,7 +98,7 @@ def index():
                            prev_url=prev_url)
 
 
-@app.route('/login')
+@views_blueprint.route('/login')
 def login():
     token = request.args.get('access_token')
     if token is None:
@@ -128,22 +130,22 @@ def login():
     return redirect(url_for('index'))
 
 
-@app.route('/logout')
+@views_blueprint.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/about')
+@views_blueprint.route('/about')
 def about():
     return render_template('about.html')
 
 
-@app.route('/documentation')
+@views_blueprint.route('/documentation')
 def documentation():
     return render_template('documentation.html')
 
 
-@app.route('/user/<user_id>')
+@views_blueprint.route('/user/<user_id>')
 def user(user_id):
     user = User.query.get_or_404(user_id)
     page = request.args.get('page', 1, type=int)
@@ -154,7 +156,7 @@ def user(user_id):
     return render_template('user.html', user=user, bots=bots.items, title=user.name)
 
 
-@app.route('/bot/<slug>', methods=['GET', 'POST'])
+@views_blueprint.route('/bot/<slug>', methods=['GET', 'POST'])
 def bot(slug):
     bot = Bot.query.filter_by(slug=slug).first_or_404()
 
@@ -225,7 +227,7 @@ def bot(slug):
                            bot=bot, form=form, groups=groups, instances=instances)
 
 
-@app.route('/create_bot', methods=['GET', 'POST'])
+@views_blueprint.route('/create_bot', methods=['GET', 'POST'])
 @login_required
 def create_bot():
     form = BotForm()
@@ -252,7 +254,7 @@ def create_bot():
                            form=form)
 
 
-@app.route('/edit_bot/<slug>', methods=['GET', 'POST'])
+@views_blueprint.route('/edit_bot/<slug>', methods=['GET', 'POST'])
 @login_required
 def edit_bot(slug):
     # TODO: merge with above function
@@ -295,12 +297,12 @@ def edit_bot(slug):
                            bot=bot)
 
 
-@app.route('/manager/<slug>')
+@views_blueprint.route('/manager/<slug>')
 def manager(slug):
     return redirect(url_for('bot', slug=slug))
 
 
-@app.route('/delete', methods=['POST'])
+@views_blueprint.route('/delete', methods=['POST'])
 def delete_instance():
     data = request.get_json()
     instance = Instance.query.get(data['instance_id'])
@@ -313,7 +315,7 @@ def delete_instance():
         return 'ok', 200
 
 
-@app.route('/reset_token', methods=['POST'])
+@views_blueprint.route('/reset_token', methods=['POST'])
 def reset_token():
     data = request.get_json()
     bot = Bot.query.filter_by(slug=data['slug']).first_or_404()
@@ -325,6 +327,6 @@ def reset_token():
     return '', 500
 
 
-@app.route('/robots.txt')
+@views_blueprint.route('/robots.txt')
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
