@@ -15,7 +15,7 @@
                     {% if current_user.is_authenticated %}
                     href="{{ url_for('views.bot', slug=bot.slug) }}"
                     {% else %}
-                    href="{{ url_for('views.login') }}?next={{ url_for('bot', slug=bot.slug) }}"
+                    href="{{ url_for('views.login') }}?next={{ url_for('views.bot', slug=bot.slug) }}"
                     {% endif %}
                     >
                     <i class="fa fa-plus-circle"></i> Add</a>
