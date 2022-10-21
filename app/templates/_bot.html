@@ -1,21 +1,21 @@
 <div class="bot">
     <div class="row">
-        <a href="{{ url_for('bot', slug=bot.slug) }}" class="cell rigid">
+        <a href="{{ url_for('views.bot', slug=bot.slug) }}" class="cell rigid">
             <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
         </a>
         <div class="cell">
-            <h4><a href="{{ url_for('bot', slug=bot.slug) }}">{{ bot.name }}</a></h4>
+            <h4><a href="{{ url_for('views.bot', slug=bot.slug) }}">{{ bot.name }}</a></h4>
             {% include "_status.html" %}
             <div class="button-row">
                 {% set owner = bot.owner %}
                 {% if owner == current_user %}
-                <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
+                <a class="button" href="{{ url_for('views.edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
                 {% endif %}
                 <a class="button"
                     {% if current_user.is_authenticated %}
-                    href="{{ url_for('bot', slug=bot.slug) }}"
+                    href="{{ url_for('views.bot', slug=bot.slug) }}"
                     {% else %}
-                    href="{{ url_for('login') }}?next={{ url_for('bot', slug=bot.slug) }}"
+                    href="{{ url_for('views.login') }}?next={{ url_for('bot', slug=bot.slug) }}"
                     {% endif %}
                     >
                     <i class="fa fa-plus-circle"></i> Add</a>
@@ -24,6 +24,6 @@
         </div>
     </div>
     {% if bot.description %}
-    <p class="description"><a href="{{ url_for('bot', slug=bot.slug) }}">{{ bot.description }}</a></p>
+    <p class="description"><a href="{{ url_for('views.bot', slug=bot.slug) }}">{{ bot.description }}</a></p>
     {% endif %}
 </div>

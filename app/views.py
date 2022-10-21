@@ -91,8 +91,8 @@ def index():
             .group_by(Bot.id)
             .order_by(desc(func.count(Instance.bot_id)))
             .paginate(page=page, per_page=app.config['ITEMS_PER_PAGE']))
-    next_url = url_for('index', page=bots.next_num) if bots.has_next else None
-    prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
+    next_url = url_for('views.views.index', page=bots.next_num) if bots.has_next else None
+    prev_url = url_for('views.views.index', page=bots.prev_num) if bots.has_prev else None
     return render_template('index.html',
                            bots=bots.items, next_url=next_url,
                            prev_url=prev_url)
@@ -112,7 +112,7 @@ def login():
     user_id = me.get('user_id')
     if not user_id:
         # Invalid user
-        return redirect(url_for('index'))
+        return redirect(url_for('views.views.index'))
     user = User.query.get(user_id)
     if user is None:
         user = User(id=user_id,
@@ -127,13 +127,13 @@ def login():
         resp = make_response(redirect(next_page))
         resp.set_cookie('next', '', expires=0)
         return resp
-    return redirect(url_for('index'))
+    return redirect(url_for('views.views.index'))
 
 
 @views_blueprint.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('views.views.index'))
 
 @views_blueprint.route('/about')
 def about():
@@ -150,8 +150,8 @@ def user(user_id):
     user = User.query.get_or_404(user_id)
     page = request.args.get('page', 1, type=int)
     bots = Bot.query.filter_by(user_id=user.id).paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
-    next_url = url_for('index', page=bots.next_num) if bots.has_next else None
-    prev_url = url_for('index', page=bots.prev_num) if bots.has_prev else None
+    next_url = url_for('views.views.index', page=bots.next_num) if bots.has_next else None
+    prev_url = url_for('views.index', page=bots.prev_num) if bots.has_prev else None
     #bots = user.bots
     return render_template('user.html', user=user, bots=bots.items, title=user.name)
 
@@ -218,7 +218,7 @@ def bot(slug):
             db.session.add(instance)
             db.session.commit()
             # Refresh after creation of bot
-            return redirect(url_for('bot', slug=slug))
+            return redirect(url_for('views.bot', slug=slug))
         else:
             form.name.data = bot.name
             form.avatar_url.data = bot.avatar_url
@@ -248,7 +248,7 @@ def create_bot():
         bot.owner = current_user
         db.session.add(bot)
         db.session.commit()
-        return redirect(url_for('edit_bot', slug=bot.slug))
+        return redirect(url_for('views.edit_bot', slug=bot.slug))
     return render_template('edit_bot.html',
                            title='Create new bot',
                            form=form)
@@ -277,7 +277,7 @@ def edit_bot(slug):
         bot.repo = form.repo.data
         bot.updated = get_now()
         db.session.commit()
-        return redirect(url_for('bot', slug=bot.slug))
+        return redirect(url_for('views.bot', slug=bot.slug))
     # TODO: this repetition feels wrong...
     form.slug.data = bot.slug
     form.name.data = bot.name
@@ -299,7 +299,7 @@ def edit_bot(slug):
 
 @views_blueprint.route('/manager/<slug>')
 def manager(slug):
-    return redirect(url_for('bot', slug=slug))
+    return redirect(url_for('views.bot', slug=slug))
 
 
 @views_blueprint.route('/delete', methods=['POST'])

@@ -14,7 +14,7 @@
             </div>
             <div class="button_row">
                 {% if owner == current_user %}
-                <a class="button" href="{{ url_for('edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
+                <a class="button" href="{{ url_for('views.edit_bot', slug=bot.slug) }}"><i class="fa fa-pencil"></i> Edit</a>
                 {% endif %}
 
                 {% if bot.website %}
@@ -30,7 +30,7 @@
                 {% if bot.prefix %}
                 <span class="button">Command Prefix: {{ bot.prefix }}</span>
                 {% endif %}
-                <a class="button" href="{{ url_for('user', user_id=owner.id) }}">By: {{ owner.name }} <img class="avatar" src="{{ owner.avatar_url() }}"></a>
+                <a class="button" href="{{ url_for('views.user', user_id=owner.id) }}">By: {{ owner.name }} <img class="avatar" src="{{ owner.avatar_url() }}"></a>
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
 <script src="/static/js/manager.js"></script>
 {% else %}
 <article>
-    <h2><a href="{{ url_for('login') }}?next={{ url_for('bot', slug=bot.slug) }}">Log in with GroupMe</a> to add {{ bot.name }} to your groups!</h2>
+    <h2><a href="{{ url_for('views.login') }}?next={{ url_for('views.bot', slug=bot.slug) }}">Log in with GroupMe</a> to add {{ bot.name }} to your groups!</h2>
 </article>
 {% endif %}
 {% endblock %}

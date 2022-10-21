@@ -26,22 +26,22 @@
     </head>
     <body>
         <header>
-            <a id="logo" href="{{ url_for('index') }}">
+            <a id="logo" href="{{ url_for('views.index') }}">
                 <img src="/static/images/logo/icon-plain.png" alt="MeBots logo">
                 <h2>MeBots</h2>
             </a>
             <nav>
                 <ul>
-                    <li><a href="{{ url_for('index') }}">Explore</a></li>
-                    <li><a href="{{ url_for('create_bot') }}">Add Bot</a></li>
-                    <li><a href="{{ url_for('documentation') }}">API</a></li>
+                    <li><a href="{{ url_for('views.index') }}">Explore</a></li>
+                    <li><a href="{{ url_for('views.create_bot') }}">Add Bot</a></li>
+                    <li><a href="{{ url_for('views.documentation') }}">API</a></li>
                     <li><a href="https://groupme.com/join_group/90126249/eNj22Ofs">Help</a></li>
-                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('views.about') }}">About</a></li>
 
                     {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}" class="emphasized">Log in with GroupMe</a></li>
+                    <li><a href="{{ url_for('views.login') }}" class="emphasized">Log in with GroupMe</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('user', user_id=current_user.id) }}" class="iconic"><img src="{{ current_user.avatar_url() }}" alt="Your Profile"></a></li>
+                    <li><a href="{{ url_for('views.user', user_id=current_user.id) }}" class="iconic"><img src="{{ current_user.avatar_url() }}" alt="Your Profile"></a></li>
                     {% endif %}
                 </ul>
             </nav>

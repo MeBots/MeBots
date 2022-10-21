@@ -6,5 +6,5 @@
     {% include '_pagination.html' %}
 </div>
 {% else %}
-<p>No bots were found. <a href="{{ url_for('create_bot') }}">Create one?</a></p>
+<p>No bots were found. <a href="{{ url_for('views.create_bot') }}">Create one?</a></p>
 {% endif %}
