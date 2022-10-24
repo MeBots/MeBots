@@ -12,9 +12,9 @@ class BotForm(FlaskForm):
     avatar_url_customizable = BooleanField('Allow customizing avatar')
     callback_url = StringField('Callback URL', validators=[Optional(), Length(max=128), URL()], description='Publicly accessible URL where your bot server can receive message POST requests.')
     description = TextAreaField('Description', validators=[Length(max=1000)])
-    website = StringField('Website', validators=[Length(max=128)])
     prefix = StringField('Command prefix', validators=[Length(max=20)], render_kw={'placeholder': '/, !, #, etc.'})
     prefix_filter = BooleanField('Ignore messages without prefix', validators=[], default=True, description='Prevent receipt of messages that don\'t query your bot. May help save on hosting costs.')
+    website = StringField('Website', validators=[Length(max=128)])
     test_group = StringField('Link to join testing/informational group', validators=[Length(max=60)])
     repo = StringField('Source code repository', validators=[Length(max=100)])
 

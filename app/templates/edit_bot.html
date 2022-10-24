@@ -25,7 +25,6 @@
             </div>
             <div class="column">
                 {% with item = form.callback_url %}{% include "_input.html" %}{% endwith %}
-                {% with item = form.website %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
 
                 <div>{{ form.prefix_filter() }} {{ form.prefix_filter.label }}
@@ -35,6 +34,7 @@
                     </div>
                 </div>
 
+                {% with item = form.website %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.repo %}{% include "_input.html" %}{% endwith %}
             </div>
