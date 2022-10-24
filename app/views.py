@@ -239,9 +239,10 @@ def create_bot():
                   avatar_url_customizable=form.avatar_url_customizable.data,
                   callback_url=form.callback_url.data,
                   description=form.description.data,
-                  website=form.website.data,
                   prefix=form.prefix.data,
                   prefix_filter=form.prefix_filter.data,
+                  has_user_token_access=form.has_user_token_access.data,
+                  website=form.website.data,
                   test_group=form.test_group.data,
                   repo=form.repo.data)
         bot.reset_token()
@@ -270,9 +271,10 @@ def edit_bot(slug):
         bot.avatar_url_customizable = form.avatar_url_customizable.data
         bot.callback_url = form.callback_url.data
         bot.description = form.description.data
-        bot.website = form.website.data
         bot.prefix = form.prefix.data
         bot.prefix_filter = form.prefix_filter.data
+        bot.has_user_token_access = form.has_user_token_access.data
+        bot.website = form.website.data
         bot.test_group = form.test_group.data
         bot.repo = form.repo.data
         bot.updated = get_now()
@@ -286,9 +288,10 @@ def edit_bot(slug):
     form.avatar_url_customizable.data = bot.avatar_url_customizable
     form.callback_url.data = bot.callback_url
     form.description.data = bot.description
-    form.website.data = bot.website
     form.prefix.data = bot.prefix
     form.prefix_filter.data = bot.prefix_filter
+    form.has_user_token_access.data = bot.has_user_token_access
+    form.website.data = bot.website
     form.test_group.data = bot.test_group
     form.repo.data = bot.repo
     return render_template('edit_bot.html',

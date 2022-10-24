@@ -28,10 +28,17 @@
                 {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
 
                 <div>{{ form.prefix_filter() }} {{ form.prefix_filter.label }}
-                    <div class="tooltip">
+                    <span class="tooltip">
                         <i class="fa fa-question-circle"></i>
                         <p>{{ form.prefix_filter.description }}</p>
-                    </div>
+                    </span>
+                </div>
+
+                <div>{{ form.has_user_token_access() }} {{ form.has_user_token_access.label }}
+                    <span class="tooltip">
+                        <i class="fa fa-question-circle"></i>
+                        <p>{{ form.has_user_token_access.description }}</p>
+                    </span>
                 </div>
 
                 {% with item = form.website %}{% include "_input.html" %}{% endwith %}

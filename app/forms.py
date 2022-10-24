@@ -14,6 +14,7 @@ class BotForm(FlaskForm):
     description = TextAreaField('Description', validators=[Length(max=1000)])
     prefix = StringField('Command prefix', validators=[Length(max=20)], render_kw={'placeholder': '/, !, #, etc.'})
     prefix_filter = BooleanField('Ignore messages without prefix', validators=[], default=True, description='Prevent receipt of messages that don\'t query your bot. May help save on hosting costs.')
+    has_user_token_access = BooleanField('Bot needs user token access', validators=[], default=False, description='Does your bot need to act on behalf of the user that adds it? Most bots do not require this. Use of this option is strictly monitored.')
     website = StringField('Website', validators=[Length(max=128)])
     test_group = StringField('Link to join testing/informational group', validators=[Length(max=60)])
     repo = StringField('Source code repository', validators=[Length(max=100)])
