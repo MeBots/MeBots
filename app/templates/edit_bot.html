@@ -29,7 +29,10 @@
                 {% with item = form.prefix %}{% include "_input.html" %}{% endwith %}
 
                 <div>{{ form.prefix_filter() }} {{ form.prefix_filter.label }}
-                <p class="minor">{{ form.prefix_filter.description }}</p>
+                    <div class="tooltip">
+                        <i class="fa fa-question-circle"></i>
+                        <p>{{ form.prefix_filter.description }}</p>
+                    </div>
                 </div>
 
                 {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
