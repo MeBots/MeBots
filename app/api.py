@@ -76,6 +76,6 @@ def api_bot_receive(bot_id):
         payload = request.get_json(force=True)
     except Exception:
         return fail('Invalid JSON payload.')
-    if not g.bot.prefix_filter or payload['text'].strip().lower().startswith(g.bot.prefix.strip().lower()):
+    if g.bot.callback_url and (not g.bot.prefix_filter or payload['text'].strip().lower().startswith(g.bot.prefix.strip().lower())):
         forward = requests.post(g.bot.callback_url, json=payload)
     return succ('Message processed.')
