@@ -1,6 +1,13 @@
 <div>
-    {{ item.label }}
-    <p class="minor">{{ item.description }}</p>
+    <div class="label-container">
+        {{ item.label }}
+        {% if item.description %}
+        <span class="tooltip">
+            <i class="fa fa-question-circle"></i>
+            <p>{{ item.description }}</p>
+        </span>
+        {% endif %}
+    </div>
     {{ item }}
     {% for error in item.errors %}
     <span class="error">{{ error }}</span>

@@ -7,6 +7,9 @@ form div {
 label {
     display: block;
 }
+.label-container label {
+    display: inline-block;
+}
 select, input, textarea, button, .button {
     font: inherit;
     margin: 2px 0;
