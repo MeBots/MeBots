@@ -74,7 +74,7 @@ def api_bot_receive(bot_id):
     print('Received callback for ' + g.bot.name)
     try:
         payload = request.get_json(force=True)
-        print(payload)
+        print('{group_id} | {name}: {text}'.format(**payload))
     except Exception:
         return fail('Invalid JSON payload.')
     if g.bot.callback_url and (not g.bot.prefix_filter or payload['text'].strip().lower().startswith(g.bot.prefix.strip().lower())):
