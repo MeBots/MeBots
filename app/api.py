@@ -77,10 +77,10 @@ def api_bot_receive(bot_id):
         print(payload)
     except Exception:
         return fail('Invalid JSON payload.')
-    instance = Instance.query.filter_by(bot_id=bot_id, group_id=payload['group_id']).first_or_404()
-    payload['bot_id'] = instance.id
-    if g.bot.has_user_token_access:
-        payload['user_token'] = User.query.get(instance.owner_id).token
     if g.bot.callback_url and (not g.bot.prefix_filter or payload['text'].strip().lower().startswith(g.bot.prefix.strip().lower())):
+        instance = Instance.query.filter_by(bot_id=bot_id, group_id=payload['group_id']).first_or_404()
+        payload['bot_id'] = instance.id
+        if g.bot.has_user_token_access:
+            payload['user_token'] = User.query.get(instance.owner_id).token
         forward = requests.post(g.bot.callback_url, json=payload)
     return succ('Message processed.')
