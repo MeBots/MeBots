@@ -7,10 +7,32 @@
     <ol>
         <li>To create a bot, first ensure that you're signed in to MeBots.</li>
         <li>Click "Create Bot" in the toolbar.</li>
-        <li>Fill out the form! Most fields are not mandatory, but will help people locate and use your bot more effectively.</li>
+        <li>Fill out the form! Most fields are not mandatory, but will help people locate and use your bot more effectively. Take particular note of the Callback URL. This is the URL where your bot is hosted on the internet, and where messages will be forwarded to for processing.</li>
         <li>Hit submit to create your bot.</li>
-        <li>When the creation is successful, you will notice that there is a new "Token" input at the top, with an automatically generated hexadecimal string. Take note of this token and your bot's shortname, as you will need them for authentication from your bot's code later on. Do not share the token with anyone.</li>
+        <!--<li>When the creation is successful, you will notice that there is a new "Token" input at the top, with an automatically generated hexadecimal string. Take note of this token and your bot's shortname, as you will need them for authentication from your bot's code later on. Do not share the token with anyone.</li>-->
     </ol>
+    <p>Congratulations! Users can now add your bot to GroupMe through the MeBots website. In your bot code, you will need to accept HTTP POST requests to the callback URL you specified. The request will contain a JSON body just like in a conventional GroupMe bot, but with a few fields added:
+    <code>
+    {
+        "attachments": [],
+        "avatar_url": "https://i.groupme.com/123456789",
+        "created_at": 1302623328,
+        "group_id": "1234567890",
+        "id": "1234567890",
+        "name": "John",
+        "sender_id": "12345",
+        "sender_type": "user",
+        "source_guid": "GUID",
+        "system": false,
+        "text": "Hello world, this is an example message! 😊",
+        "user_id": "1234567890",
+        <strong>
+        "bot_id": "a1b2c3d4e5f61728394",
+        "token": "a02h1d0/9fn032h9en0=293n40wqm0s9wjd"
+        </strong>
+    }
+    </code>
+    <p>The <code>bot_id</code> can be used to send messages through your bot as described <a href="https://dev.groupme.com/tutorials/bots">here</a> under the headline "Next: make your bot do something." With the bot ID provided from MeBots, you can easily operate the bot across multiple groups rather than hardcoding the ID for a single chat.</p>
     <h3>Authenticating your bot with the API</h3>
     <p><strong>NOTE: There are official premade libraries for some languages that handle connection logic for you, so you can more easily integrate the MeBots API with your bot code.</strong> Choose your language: <a href="https://github.com/MeBots/mebots.py">Python</a>, <a href="https://github.com/MeBots/mebotsjs">JavaScript</a></strong>, <a href="https://github.com/MeBots/mebotsrb">Ruby</a>. Please see the READMEs of those projects for detailed information on API interaction in these languages. Each library has a corresponding example bot demonstrating one possible way to implement it into a bot program: <a href="https://github.com/MeBots/mebots-example-python">Python</a>, <a href="https://github.com/MeBots/mebots-example-javascript">JavaScript</a>, <a href="https://github.com/MeBots/mebotsrb">Ruby</a>.</p>
     <p>If there's no library for your language, or if you want to handle things yourself, you will need to communicate directly to the MeBots API. Don't worry—this process is quite simple!</p>
