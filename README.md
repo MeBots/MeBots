@@ -1,7 +1,7 @@
 # [MeBots](https://mebots.io)
 [![Build Status](https://travis-ci.org/ErikBoesen/MeBots.svg?branch=master)](https://travis-ci.org/ErikBoesen/MeBots)
 
-> A simple API framework for managing large-scale GroupMe bots.
+> The app store for GroupMe bots, with a simple API framework for managing bots at scale.
 
 ![Banner](app/static/images/logo/banner.png)
 ![Screenshot](screenshot.png)
