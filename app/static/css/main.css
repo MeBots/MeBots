@@ -188,6 +188,16 @@ ol, main p {
     text-align: center;
     color: white;
     margin-bottom: 20px;
+    max-width: 8in;
+    margin: 0 auto;
+}
+.jumbotron h1 {
+    font-size: 50px;
+}
+.jumbotron p {
+    font-size: 20px;
+    max-width: 8in;
+    padding: 8px 0 12px;
 }
 
 .row {
