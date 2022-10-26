@@ -91,8 +91,8 @@ def index():
             .group_by(Bot.id)
             .order_by(desc(func.count(Instance.bot_id)))
             .paginate(page=page, per_page=app.config['ITEMS_PER_PAGE']))
-    next_url = url_for('views.views.index', page=bots.next_num) if bots.has_next else None
-    prev_url = url_for('views.views.index', page=bots.prev_num) if bots.has_prev else None
+    next_url = url_for('views.index', page=bots.next_num) if bots.has_next else None
+    prev_url = url_for('views.index', page=bots.prev_num) if bots.has_prev else None
     return render_template('index.html',
                            bots=bots.items, next_url=next_url,
                            prev_url=prev_url)
@@ -112,7 +112,7 @@ def login():
     user_id = me.get('user_id')
     if not user_id:
         # Invalid user
-        return redirect(url_for('views.views.index'))
+        return redirect(url_for('views.index'))
     user = User.query.get(user_id)
     if user is None:
         user = User(id=user_id,
@@ -127,13 +127,13 @@ def login():
         resp = make_response(redirect(next_page))
         resp.set_cookie('next', '', expires=0)
         return resp
-    return redirect(url_for('views.views.index'))
+    return redirect(url_for('views.index'))
 
 
 @views_blueprint.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('views.views.index'))
+    return redirect(url_for('views.index'))
 
 @views_blueprint.route('/about')
 def about():
@@ -150,7 +150,7 @@ def user(user_id):
     user = User.query.get_or_404(user_id)
     page = request.args.get('page', 1, type=int)
     bots = Bot.query.filter_by(user_id=user.id).paginate(page=page, per_page=app.config['ITEMS_PER_PAGE'])
-    next_url = url_for('views.views.index', page=bots.next_num) if bots.has_next else None
+    next_url = url_for('views.index', page=bots.next_num) if bots.has_next else None
     prev_url = url_for('views.index', page=bots.prev_num) if bots.has_prev else None
     #bots = user.bots
     return render_template('user.html', user=user, bots=bots.items, title=user.name)
