@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 from app import app, db, login
 from app.util import get_now
+from app.groupme_api import api_send_message
 import os
 import binascii
 
@@ -103,3 +104,6 @@ class Instance(db.Model):
         for kw, arg in kwargs.items():
             setattr(self, kw, arg)
         self.created = get_now()
+
+    def send_message(self, text):
+        api_send_message(self.bot_id, text)

@@ -32,6 +32,15 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
     return req
 
 
+def api_send_message(bot_id, text):
+    url = API_ROUTE + 'bots/post'
+    message = {
+        'bot_id': bot_id,
+        'text': text,
+    }
+    r = requests.post(url, json=message)
+
+
 def api_create_bot_instance(bot, group_id, name=None, avatar_url=None, token=None):
     bot_params = {
         'name': name or bot.name,
