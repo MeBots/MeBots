@@ -1,6 +1,6 @@
 addEventListener('click', function(e) {
     if (e.target.tagName == 'BUTTON' && e.target.classList.contains('delete')) {
-        if (confirm('Really delete bot?')) {
+        if (confirm('Really remove bot?')) {
             var req = new XMLHttpRequest();
             req.open('POST', '/delete');
             req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
