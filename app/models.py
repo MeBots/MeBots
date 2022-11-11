@@ -107,4 +107,4 @@ class Instance(db.Model):
         self.created = get_now()
 
     def send_message(self, text):
-        api_send_message(self.bot_id, text)
+        api_send_message(self.id, text)
