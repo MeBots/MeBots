@@ -217,6 +217,11 @@ def bot(slug):
                                 bot_id=bot.id)
             db.session.add(instance)
             db.session.commit()
+            if bot.welcome_message:
+                instance.send_message(bot.welcome_message)
+                instance.send_message(bot.name + ' can be added and removed at https://mebots.io/bot/' + bot.slug + '.')
+            else:
+                instance.send_message(bot.name + ' has been added to the group. Add or remove me at https://mebots.io/bot/' + bot.slug + '!')
             # Refresh after creation of bot
             return redirect(url_for('views.bot', slug=slug))
         else:
