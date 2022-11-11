@@ -56,6 +56,7 @@ class Bot(db.Model):
     avatar_url_customizable = db.Column(db.Boolean)
     callback_url = db.Column(db.String(128))
     description = db.Column(db.String(1000))
+    welcome_message = db.Column(db.String)
     website = db.Column(db.String(128))
     prefix = db.Column(db.String(20))
     prefix_filter = db.Column(db.Boolean, default=True)
