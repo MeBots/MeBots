@@ -33,7 +33,7 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
 
 
 def api_send_message(bot_id, text):
-    url = API_ROUTE + 'bots/post'
+    url = API_ROOT + 'bots/post'
     message = {
         'bot_id': bot_id,
         'text': text,
