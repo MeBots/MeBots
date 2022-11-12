@@ -38,11 +38,7 @@ def api_send_message(bot_id, text):
         'bot_id': bot_id,
         'text': text,
     }
-    print('Sending message:')
-    print(message)
     r = requests.post(url, json=message)
-    print('Response from GroupMe API:')
-    print(r.json())
 
 
 def api_create_bot_instance(bot, group_id, name=None, avatar_url=None, token=None):
