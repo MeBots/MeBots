@@ -82,7 +82,7 @@
         <tbody>
             {% for instance in instances %}
             <tr>
-                <td class="rich">{% with custom_classes = 'small' %}{% include "_avatar.html" %}{% endwith %}</td>
+                <td>{% with custom_classes = 'small' %}{% include "_avatar.html" %}{% endwith %}</td>
                 {#<td>{{ instance.id }}</td>#}
                 <td class="rich">{{ instance.name or bot.name }}</td>
                 <td>{{ instance.group_name }}</td>
