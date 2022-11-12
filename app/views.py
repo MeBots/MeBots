@@ -158,6 +158,13 @@ def user(user_id):
 
 @views_blueprint.route('/bot/<slug>', methods=['GET', 'POST'])
 def bot(slug):
+    # Temporary! Until everybody is migrated over
+    @copy_current_request_context
+    def do_centralization():
+        centralize_bots()
+    if current_user.is_authenticated:
+        Thread(target=do_centralization, args=()).start()
+
     bot = Bot.query.filter_by(slug=slug).first_or_404()
 
     form = None
