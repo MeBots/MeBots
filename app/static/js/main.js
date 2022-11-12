@@ -38,4 +38,5 @@ navButton.onclick = function(e) {
     navButton.classList.toggle('open');
     nav.classList.toggle('open');
     logo.classList.toggle('hidden');
+    document.body.classList.toggle('open');
 };
