@@ -1,7 +1,8 @@
 <div class="bot">
     <div class="row">
         <a href="{{ url_for('views.bot', slug=bot.slug) }}" class="cell rigid">
-            <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar">
+            <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar"
+                 onerror="if (this.src != '/static/images/unknown.png') this.src = '/static/images/unknown.png';">
         </a>
         <div class="cell">
             <h4><a href="{{ url_for('views.bot', slug=bot.slug) }}">{{ bot.name }}</a></h4>
