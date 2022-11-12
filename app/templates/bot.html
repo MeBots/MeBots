@@ -72,7 +72,7 @@
     <h2>Active groups</h2>
     {% if instances %}
     <table>
-        <thead>
+        <thead class="rich">
             <th>Avatar</th>
             {#<th>Bot ID</th>#}
             <th>Name</th>
@@ -82,9 +82,9 @@
         <tbody>
             {% for instance in instances %}
             <tr>
-                <td>{% with custom_classes = 'small' %}{% include "_avatar.html" %}{% endwith %}</td>
+                <td class="rich">{% with custom_classes = 'small' %}{% include "_avatar.html" %}{% endwith %}</td>
                 {#<td>{{ instance.id }}</td>#}
-                <td>{{ instance.name or bot.name }}</td>
+                <td class="rich">{{ instance.name or bot.name }}</td>
                 <td>{{ instance.group_name }}</td>
                 {# we should avoid revealing the bot IDs if we can! That'd be neat. Although they
                    could just get it through the bot management panel anyway... #}

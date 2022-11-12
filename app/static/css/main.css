@@ -343,6 +343,11 @@ a {
     color: inherit;
 }
 
+@media (max-width: 500px) {
+    table .rich {
+        display: none;
+    }
+}
 @media (min-width: 645px) {
     #nav-button {
         display: none;
