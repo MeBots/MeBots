@@ -3,7 +3,7 @@
 {% block content %}
 <article>
     <div class="row">
-        <img src="{{ bot.avatar_url or '/static/images/unknown.png' }}" alt="{{ bot.name }} bot avatar" class="avatar large cell rigid">
+        {% with custom_classes = 'large cell rigid' %}{% include "_avatar.html" %}{% endwith %}
         <div class="cell">
             {% set owner = bot.owner %}
             <div class="header_row">
