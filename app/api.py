@@ -76,9 +76,9 @@ def api_bot_receive(bot_id):
         payload = request.get_json(force=True)
     except Exception:
         return fail('Invalid JSON payload.')
+    print('{group_id} | {name}: {text}'.format(**payload))
     if g.bot.callback_url and (not g.bot.prefix_filter or payload['text'].strip().lower().startswith(g.bot.prefix.strip().lower())):
         print('Forwarding matched query:')
-        print('{group_id} | {name}: {text}'.format(**payload))
         instance = Instance.query.filter_by(bot_id=bot_id, group_id=payload['group_id']).first_or_404()
         payload['bot_id'] = instance.id
         if g.bot.has_user_token_access:
