@@ -44,11 +44,12 @@
                 {% with item = form.website %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.test_group %}{% include "_input.html" %}{% endwith %}
                 {% with item = form.repo %}{% include "_input.html" %}{% endwith %}
+
+                {% include "_token.html" %}
             </div>
         </div>
         {{ form.submit() }}
 
-        {% include "_token.html" %}
     </form>
 </article>
 {% endblock %}
