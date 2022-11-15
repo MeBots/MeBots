@@ -39,6 +39,7 @@ def api_send_message(bot_id, text):
         'text': text,
     }
     r = requests.post(url, json=message)
+    print(r.text)
 
 
 def api_create_bot_instance(bot, group_id, name=None, avatar_url=None, token=None):
