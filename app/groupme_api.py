@@ -1,5 +1,5 @@
 import requests
-from flask_login import current_user
+from flask_login import current_user, logout_user
 
 
 API_ROOT = 'https://api.groupme.com/v3/'
@@ -9,7 +9,12 @@ PAGE_SIZE = 500
 def api_get(endpoint, token=None, params={}):
     if token is None:
         token = current_user.token
-    j = requests.get(API_ROOT + endpoint, params={'token': token, **params}).json()
+    print(f'GET: {endpoint}, {token}, {current_user.name}')
+    r = requests.get(API_ROOT + endpoint, params={'token': token, **params})
+    if r.status == 401:
+        #logout_user()
+        pass
+    j = r.json()
     response = j.get('response')
     if response is None:
         print('Error response from GroupMe API:')
