@@ -9,7 +9,7 @@ PAGE_SIZE = 500
 def api_get(endpoint, token=None, params={}):
     if token is None:
         token = current_user.token
-    print(f'GET: {endpoint}, {token}, {current_user.name}')
+    print(f'GET: {endpoint}, {token}, {current_user}')
     r = requests.get(API_ROOT + endpoint, params={'token': token, **params})
     if r.status_code == 401:
         #logout_user()
