@@ -11,7 +11,7 @@ def api_get(endpoint, token=None, params={}):
         token = current_user.token
     print(f'GET: {endpoint}, {token}, {current_user.name}')
     r = requests.get(API_ROOT + endpoint, params={'token': token, **params})
-    if r.status == 401:
+    if r.status_code == 401:
         #logout_user()
         pass
     j = r.json()
