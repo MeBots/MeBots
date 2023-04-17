@@ -87,7 +87,7 @@ def index():
 
     page = request.args.get('page', 1, type=int)
     bots = (db.session.query(Bot)
-            .join(Instance)
+            .join(Instance, isouter=True)
             .group_by(Bot.id)
             .order_by(desc(func.count(Instance.bot_id)))
             .paginate(page=page, per_page=app.config['ITEMS_PER_PAGE']))
