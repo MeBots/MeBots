@@ -251,6 +251,7 @@ def create_bot():
                   avatar_url_customizable=form.avatar_url_customizable.data,
                   callback_url=form.callback_url.data,
                   description=form.description.data,
+                  welcome_message=form.welcome_message.data,
                   prefix=form.prefix.data,
                   prefix_filter=form.prefix_filter.data,
                   has_user_token_access=form.has_user_token_access.data,
@@ -283,6 +284,7 @@ def edit_bot(slug):
         bot.avatar_url_customizable = form.avatar_url_customizable.data
         bot.callback_url = form.callback_url.data
         bot.description = form.description.data
+        bot.welcome_message = form.welcome_message.data
         bot.prefix = form.prefix.data
         bot.prefix_filter = form.prefix_filter.data
         bot.has_user_token_access = form.has_user_token_access.data
@@ -300,6 +302,7 @@ def edit_bot(slug):
     form.avatar_url_customizable.data = bot.avatar_url_customizable
     form.callback_url.data = bot.callback_url
     form.description.data = bot.description
+    form.welcome_message.data = bot.welcome_message
     form.prefix.data = bot.prefix
     form.prefix_filter.data = bot.prefix_filter
     form.has_user_token_access.data = bot.has_user_token_access
