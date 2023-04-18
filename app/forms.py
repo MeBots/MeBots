@@ -12,6 +12,7 @@ class BotForm(FlaskForm):
     avatar_url_customizable = BooleanField('Allow customizing avatar')
     callback_url = StringField('Callback URL', validators=[Optional(), Length(max=128), URL()], description='Publicly accessible URL where your bot server can receive message POST requests.')
     description = TextAreaField('Description', validators=[Length(max=1000)])
+    welcome_message = TextAreaField('Welcome Message', description='This message will be sent when your bot is added to a new server.', validators=[Length(max=128)])
     prefix = StringField('Command prefix', validators=[Length(max=20)], render_kw={'placeholder': '/, !, #, etc.'})
     prefix_filter = BooleanField('Ignore messages without prefix', validators=[], default=True, description='Prevent receipt of messages that don\'t query your bot. May help save on hosting costs.')
     has_user_token_access = BooleanField('Bot needs user token access', validators=[], default=False, description='Does your bot need to act on behalf of the user that adds it? Most bots do not require this. Use of this option is strictly monitored.')
