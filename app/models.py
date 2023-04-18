@@ -9,10 +9,10 @@ import binascii
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64))
-    email = db.Column(db.String(120))
-    avatar = db.Column(db.String(60))
-    token = db.Column(db.String(60))
+    name = db.Column(db.String)
+    email = db.Column(db.String)
+    avatar = db.Column(db.String)
+    token = db.Column(db.String)
 
     registered = db.Column(db.Integer)
     last_seen = db.Column(db.Integer)
@@ -49,22 +49,22 @@ def load_user(id):
 
 class Bot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String(32), unique=True)
-    name = db.Column(db.String(32))
+    slug = db.Column(db.String, unique=True)
+    name = db.Column(db.String)
     name_customizable = db.Column(db.Boolean)
-    avatar_url = db.Column(db.String(100))
+    avatar_url = db.Column(db.String)
     avatar_url_customizable = db.Column(db.Boolean)
-    callback_url = db.Column(db.String(128))
-    description = db.Column(db.String(1000))
+    callback_url = db.Column(db.String)
+    description = db.Column(db.String)
     welcome_message = db.Column(db.String)
-    website = db.Column(db.String(128))
-    prefix = db.Column(db.String(20))
+    website = db.Column(db.String)
+    prefix = db.Column(db.String)
     prefix_filter = db.Column(db.Boolean, default=True)
-    test_group = db.Column(db.String(60))
-    repo = db.Column(db.String(100))
+    test_group = db.Column(db.String)
+    repo = db.Column(db.String)
     has_user_token_access = db.Column(db.Boolean, default=False)
 
-    token = db.Column(db.String(22))
+    token = db.Column(db.String)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     instances = db.relationship('Instance', backref='bot', lazy='dynamic')
@@ -87,12 +87,12 @@ class Bot(db.Model):
 
 class Instance(db.Model):
     # This is both the internal primary key and GroupMe's bot_id field.
-    id = db.Column(db.String(26), primary_key=True)
-    group_id = db.Column(db.String(16))
-    group_name = db.Column(db.String(200))
+    id = db.Column(db.String, primary_key=True)
+    group_id = db.Column(db.String)
+    group_name = db.Column(db.String)
 
     # These two fields will be nulled if the user cannot or has not made these customizations.
-    name = db.Column(db.String(32), nullable=True)
+    name = db.Column(db.String, nullable=True)
     avatar_url = db.Column(db.String, nullable=True)
 
     bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
