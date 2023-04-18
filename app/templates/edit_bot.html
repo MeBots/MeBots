@@ -22,6 +22,7 @@
                 <div>{{ form.avatar_url_customizable() }} {{ form.avatar_url_customizable.label }}</div>
 
                 {% with item = form.description %}{% include "_input.html" %}{% endwith %}
+                {% with item = form.welcome_message %}{% include "_input.html" %}{% endwith %}
             </div>
             <div class="column">
                 {% with item = form.callback_url %}{% include "_input.html" %}{% endwith %}
