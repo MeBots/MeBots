@@ -5,20 +5,20 @@ from app.models import User
 
 
 class BotForm(FlaskForm):
-    name = StringField('Bot name', validators=[DataRequired(), Length(max=32)])
-    slug = StringField('Shortname', validators=[DataRequired(), Length(max=32)])
+    name = StringField('Bot name', validators=[DataRequired()])
+    slug = StringField('Shortname', validators=[DataRequired()])
     name_customizable = BooleanField('Allow customizing name')
     avatar_url = StringField('Avatar URL', validators=[])
     avatar_url_customizable = BooleanField('Allow customizing avatar')
-    callback_url = StringField('Callback URL', validators=[Optional(), Length(max=128), URL()], description='Publicly accessible URL where your bot server can receive message POST requests.')
-    description = TextAreaField('Description', validators=[Length(max=1000)])
-    welcome_message = TextAreaField('Welcome Message', description='This message will be sent when your bot is added to a new server.', validators=[Length(max=128)])
-    prefix = StringField('Command prefix', validators=[Length(max=20)], render_kw={'placeholder': '/, !, #, etc.'})
+    callback_url = StringField('Callback URL', validators=[Optional(), URL()], description='Publicly accessible URL where your bot server can receive message POST requests.')
+    description = TextAreaField('Description')
+    welcome_message = TextAreaField('Welcome Message', description='This message will be sent when your bot is added to a new server.')
+    prefix = StringField('Command prefix', render_kw={'placeholder': '/, !, #, etc.'})
     prefix_filter = BooleanField('Ignore messages without prefix', validators=[], default=True, description='Prevent receipt of messages that don\'t query your bot. May help save on hosting costs.')
     has_user_token_access = BooleanField('Bot needs user token access', validators=[], default=False, description='Does your bot need to act on behalf of the user that adds it? Most bots do not require this. Use of this option is strictly monitored.')
-    website = StringField('Website', validators=[Length(max=128)])
-    test_group = StringField('Link to join testing/informational group', validators=[Length(max=60)])
-    repo = StringField('Source code repository', validators=[Length(max=100)])
+    website = StringField('Website')
+    test_group = StringField('Link to join testing/informational group')
+    repo = StringField('Source code repository')
 
     submit = SubmitField('Save')
 
