@@ -14,7 +14,7 @@ for instance in instances:
         print('Skipping instance with unknown owner.')
         continue
     print(f'{instance.bot.name} in group {instance.group_name} owned by {email}')
-    message = f'Due to a recent GroupMe update, this bot needs to be reset to keep working. The bot owner, {instance.owner.name}, will need to log in at https://mebots.io/bot/{instance.bot.slug} and all bots disabled by the update will be automatically restored. We apologize for the inconvenience, and thank you for your help!'
+    message = f'Due to a recent GroupMe update, this bot needs to be reset to keep working. The bot owner, {instance.owner.name}, can log in at https://mebots.io/bot/{instance.bot.slug} and all bots disabled by the update will be automatically restored. Thanks!'
     print(message)
     instance.send_message(message)
 """
