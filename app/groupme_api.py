@@ -70,6 +70,8 @@ def api_get_all_groups():
             'per_page': PAGE_SIZE,
             'omit': 'memberships',
         })
+        if groups_page is None:
+            break
         groups += groups_page
         if len(groups_page) < PAGE_SIZE:
             break
