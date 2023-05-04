@@ -35,7 +35,7 @@
                     <li><a href="{{ url_for('views.index') }}">Explore</a></li>
                     <li><a href="{{ url_for('views.create_bot') }}">Create Bot</a></li>
                     <li><a href="{{ url_for('views.documentation') }}">Docs</a></li>
-                    <li><a href="https://groupme.com/join_group/90126249/eNj22Ofs">Help</a></li>
+                    <li><a href="{{ url_for('views.help') }}">Help</a></li>
                     <li><a href="{{ url_for('views.about') }}">About</a></li>
 
                     {% if current_user.is_anonymous %}

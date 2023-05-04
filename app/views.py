@@ -145,6 +145,11 @@ def documentation():
     return render_template('documentation.html')
 
 
+@views_blueprint.route('/help')
+def help():
+    return redirect('https://groupme.com/join_group/90126249/eNj22Ofs')
+
+
 @views_blueprint.route('/user/<user_id>')
 def user(user_id):
     user = User.query.get_or_404(user_id)
