@@ -267,7 +267,7 @@ def create_bot():
         bot.owner = current_user
         db.session.add(bot)
         db.session.commit()
-        return redirect(url_for('views.edit_bot', slug=bot.slug))
+        return redirect(url_for('views.bot', slug=bot.slug))
     return render_template('edit_bot.html',
                            title='Create new bot',
                            form=form)
