@@ -19,7 +19,7 @@ body {
 }
 main {
     padding: 10px 16px;
-    transition: 0.3s;
+    transition: 0.3s filter;
 }
 header {
     padding: 8px 12px 10px;
@@ -38,7 +38,7 @@ header, h1, h2, h3, h4, h5, h6 {
     flex: 1;
     white-space: nowrap;
     display: block;
-    transition: 0.3s;
+    transition: 0.3s opacity;
 }
 #logo.hidden {
     opacity: 0;
@@ -56,7 +56,7 @@ nav {
     margin-top: 4px;
     position: absolute;
     top: -100%;
-    transition: 0.4s;
+    transition: 0.4s top;
 }
 nav.open {
     top: 10px;
@@ -84,7 +84,7 @@ nav a:before {
     bottom: 0;
     background: white;
     height: 3px;
-    transition: 0.3s ease-out;
+    transition: 0.3s ease-out right;
 }
 nav a:hover:before, nav a:focus:before, nav a:active:before {
     right: 0;
@@ -364,7 +364,7 @@ a {
     }
     body.open main {
         filter: blur(4px);
-        transition: 0.4s;
+        transition: 0.4s filter;
     }
     nav li {
         display: block;
