@@ -137,7 +137,7 @@ nav a.emphasized:before {
     transform: rotate(0);
     transition-duration: .25s;
     transition-timing-function: ease-in-out;
-    transition-property: top, transform;
+    transition-property: top, transform, opacity;
 }
 #nav-button span:nth-child(1) {
     top: 0;
