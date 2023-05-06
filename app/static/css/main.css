@@ -135,7 +135,9 @@ nav a.emphasized:before {
     opacity: 1;
     left: 0;
     transform: rotate(0);
-    transition: .25s ease-in-out top transform;
+    transition-duration: .25s;
+    transition-timing-function: ease-in-out;
+    transition-property: top, transform;
 }
 #nav-button span:nth-child(1) {
     top: 0;
