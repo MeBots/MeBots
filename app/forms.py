@@ -27,5 +27,6 @@ class InstanceForm(FlaskForm):
     group_id = SelectField('Group')
     name = StringField('Custom name')
     avatar_url = StringField('Custom avatar')
+    silence = BooleanField('Silence introduction message?', default=False)
 
     submit = SubmitField('Add bot')
