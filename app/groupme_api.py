@@ -6,6 +6,10 @@ API_ROOT = 'https://api.groupme.com/v3/'
 PAGE_SIZE = 500
 
 
+class GroupMeAPIException(Exception):
+    pass
+
+
 def api_get(endpoint, token=None, params={}):
     if token is None:
         token = current_user.token
@@ -19,7 +23,6 @@ def api_get(endpoint, token=None, params={}):
     if response is None:
         print('Error response from GroupMe API:')
         print(j)
-        return None
     return response
 
 
@@ -33,7 +36,10 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
         j = req.json()
         print('Response from GroupMe API:')
         print(j)
-        return j['response']
+        response = j['response']
+        if response is None:
+            raise GroupMeAPIException(j['meta']['errors'][0])
+        return response
     return req
 
 

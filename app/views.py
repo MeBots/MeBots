@@ -216,7 +216,10 @@ def bot(slug):
             name_changed = not (name == bot.name)
             avatar_url = form.avatar_url.data if bot.avatar_url_customizable else bot.avatar_url
             avatar_url_changed = not (avatar_url == bot.avatar_url)
-            result = api_create_bot_instance(bot, group_id, name, avatar_url)
+            try:
+                result = api_create_bot_instance(bot, group_id, name, avatar_url)
+            except GroupMeAPIException as e:
+                return render_template('error.html', message=str(e)), 500
             group = api_get(f'groups/{group_id}')
 
             # Store in database
