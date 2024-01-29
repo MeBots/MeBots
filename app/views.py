@@ -219,7 +219,12 @@ def bot(slug):
             try:
                 result = api_create_bot_instance(bot, group_id, name, avatar_url)
             except GroupMeAPIException as e:
-                return render_template('error.html', message='GroupMe returned this error: "' + str(e) + '."'), 500
+                message = str(e)
+                if message == 'Group only admins can add bots':
+                    message = 'Sorry, you must be an admin of this group to add a bot.'
+                else:
+                    message = 'GroupMe returned this error: "' + message + '."'
+                return render_template('error.html', message=message), 500
             group = api_get(f'groups/{group_id}')
 
             # Store in database
