@@ -8,7 +8,7 @@ from app import app, db
 from app.forms import BotForm, InstanceForm
 from app.models import User, Bot, Instance
 from app.util import get_now
-from app.groupme_api import api_get, api_post, api_create_bot_instance, api_destroy_bot_instance, api_get_all_groups
+from app.groupme_api import GroupMeAPIException, api_get, api_post, api_create_bot_instance, api_destroy_bot_instance, api_get_all_groups
 
 
 OAUTH_ENDPOINT = 'https://oauth.groupme.com/oauth/authorize?client_id='
@@ -219,7 +219,7 @@ def bot(slug):
             try:
                 result = api_create_bot_instance(bot, group_id, name, avatar_url)
             except GroupMeAPIException as e:
-                return render_template('error.html', message=str(e)), 500
+                return render_template('error.html', message='GroupMe returned this error: "' + str(e) + '."'), 500
             group = api_get(f'groups/{group_id}')
 
             # Store in database
@@ -232,6 +232,7 @@ def bot(slug):
                                 bot_id=bot.id)
             db.session.add(instance)
             db.session.commit()
+            print('THIS IS THE SILENCE VALUE: ' + str(form.silence))
             if not form.silence:
                 if bot.welcome_message is not None:
                     instance.send_message(bot.welcome_message)
