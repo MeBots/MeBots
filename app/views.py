@@ -222,9 +222,11 @@ def bot(slug):
                 message = str(e)
                 if message == 'Group only admins can add bots':
                     message = 'Sorry, you must be an admin of this group to add a bot.'
+                if message.startswith('Callback url callback url ') and message.endswith(' already registered for group'):
+                    message = 'This bot has already been added to the group by someone else.'
                 else:
                     message = 'GroupMe returned this error: "' + message + '."'
-                return render_template('error.html', message=message), 500
+                return render_template('error.html', message=message), 400
             group = api_get(f'groups/{group_id}')
 
             # Store in database
