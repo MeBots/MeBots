@@ -81,9 +81,9 @@ def before_request():
         except GroupMeAPIException as e:
             # Invalid user
             print('Token seems to be invalid. Logging user out.')
-            #flash('Your authentication has expired. Please log in again.')
-            #logout_user()
-            #return redirect(url_for('login'))
+            flash('Your authentication has expired. Please log in again.')
+            logout_user()
+            return redirect(url_for('login'))
         current_user.last_seen = now
         db.session.commit()
 
