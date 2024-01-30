@@ -74,6 +74,7 @@ def before_request():
     if current_user.is_authenticated:
         now = get_now()
         if now - current_user.last_seen > 60:
+            print('User has not made a query in 60s, checking auth')
             me = api_get('users/me', token=current_user.token)
             try:
                 user_id = me.get('user_id')
