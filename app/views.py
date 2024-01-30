@@ -75,8 +75,8 @@ def before_request():
         now = get_now()
         #if now - current_user.last_seen > 60:
         print('User has not made a query in 60s, checking auth')
-        me = api_get('users/me', token=current_user.token)
         try:
+            me = api_get('users/me', token=current_user.token)
             user_id = me.get('user_id')
         except GroupMeAPIException as e:
             # Invalid user
