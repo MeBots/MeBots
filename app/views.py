@@ -73,17 +73,17 @@ def before_request():
             return redirect(new_url, code=301)
     if current_user.is_authenticated:
         now = get_now()
-        if now - current_user.last_seen > 60:
-            print('User has not made a query in 60s, checking auth')
-            me = api_get('users/me', token=current_user.token)
-            try:
-                user_id = me.get('user_id')
-            except GroupMeAPIException as e:
-                # Invalid user
-                print('Token seems to be invalid. Logging user out.')
-                flash('Your authentication has expired. Please log in again.')
-                logout_user()
-                return redirect(url_for('login'))
+        #if now - current_user.last_seen > 60:
+        print('User has not made a query in 60s, checking auth')
+        me = api_get('users/me', token=current_user.token)
+        try:
+            user_id = me.get('user_id')
+        except GroupMeAPIException as e:
+            # Invalid user
+            print('Token seems to be invalid. Logging user out.')
+            flash('Your authentication has expired. Please log in again.')
+            logout_user()
+            return redirect(url_for('login'))
         current_user.last_seen = now
         db.session.commit()
 
