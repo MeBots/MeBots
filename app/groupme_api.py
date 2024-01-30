@@ -44,7 +44,7 @@ def api_post(endpoint, json={}, token=None, expect_json=True):
         if response is None:
             raise GroupMeAPIException(j['meta']['errors'][0])
         return response
-    return req
+    return r
 
 
 def api_send_message(bot_id, text):
