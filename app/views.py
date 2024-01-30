@@ -113,6 +113,7 @@ def index():
 @views_blueprint.route('/login')
 def login():
     token = request.args.get('access_token')
+    print('PERFORMING LOGIN! Token is: ' + token)
     if token is None:
         # Store next parameter in cookie to be used after login
         resp = make_response(redirect(OAUTH_ENDPOINT + app.config['CLIENT_ID']))
