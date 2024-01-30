@@ -131,6 +131,7 @@ def login():
                     token=token)
         db.session.add(user)
     user.from_json(me)
+    user.token = token
     db.session.commit()
     login_user(user)
     # Check next cookie to see if we need to go anywhere
