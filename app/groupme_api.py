@@ -23,17 +23,21 @@ def api_get(endpoint, token=None, params={}):
     if response is None:
         print('Error response from GroupMe API:')
         print(j)
+        raise GroupMeAPIException(j['meta']['errors'][0])
     return response
 
 
 def api_post(endpoint, json={}, token=None, expect_json=True):
     if token is None:
         token = current_user.token
-    req = requests.post(API_ROOT + endpoint,
-                        params={'token': token},
-                        json=json)
+    r = requests.post(API_ROOT + endpoint,
+                      params={'token': token},
+                      json=json)
+    if r.status_code == 401:
+        logout_user()
+        return None
     if expect_json:
-        j = req.json()
+        j = r.json()
         print('Response from GroupMe API:')
         print(j)
         response = j['response']
