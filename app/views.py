@@ -207,6 +207,7 @@ def bot(slug):
         missing_instances = [instance for instance in instances if instance.group_id not in
                              [groupme_instance['group_id'] for groupme_instance in groupme_instances]]
 
+        """
         if missing_instances:
             for instance in missing_instances:
                 print('Adding back to group ' + instance.group_name)
@@ -218,6 +219,7 @@ def bot(slug):
                     pass
             db.session.commit()
             #flash('Missing bots have been restored where possible.')
+        """
 
         form = InstanceForm()
         form.group_id.choices = [(group['id'], group['name']) for group in groups]
