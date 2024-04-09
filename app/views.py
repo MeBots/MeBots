@@ -187,7 +187,7 @@ def bot(slug):
     form = None
     groups = None
     instances = None
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and not current_user.is_anonymous:
         me = api_get('users/me')
 
         legacy_callback_url = bot.callback_url
