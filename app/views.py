@@ -235,7 +235,7 @@ def bot(slug):
             except GroupMeAPIException as e:
                 message = str(e)
                 if message == 'Group only admins can add bots':
-                    message = 'Sorry, you must be an admin of this group to add a bot'
+                    message = 'Sorry, you must be an admin of this group to add a bot.'
                 elif message.startswith('Callback url callback url ') and message.endswith(' already registered for group'):
                     message = 'This bot has already been added to the group by someone else.'
                 else:
