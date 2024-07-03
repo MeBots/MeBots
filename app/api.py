@@ -72,8 +72,8 @@ def api_instance(slug, group_id):
 def api_bot_receive(bot_id):
     g.bot = Bot.query.get_or_404(bot_id)
     print(request.remote_addr)
-    if request.remote_addr != '10.1.82.76':
-        return fail('Invalid source IP.', 403)
+    if request.user_agent.string != 'GroupMeBotNotifier/1.0':
+        return fail('Invalid source.', 403)
     print('Received callback for ' + g.bot.name)
     try:
         payload = request.get_json(force=True)
