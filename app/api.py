@@ -71,6 +71,7 @@ def api_instance(slug, group_id):
 @api_blueprint.route('/bots/<bot_id>/callback', methods=['POST'])
 def api_bot_receive(bot_id):
     g.bot = Bot.query.get_or_404(bot_id)
+    print(request.remote_addr)
     if request.remote_addr != '10.1.82.76':
         return fail('Invalid source IP.', 403)
     print('Received callback for ' + g.bot.name)
